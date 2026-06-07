@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vahini Ummalaneni</title>
+<meta name="description" content="Vahini Ummalaneni — medical device systems engineer working on surgical robotics and intravascular imaging." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">Vahini Ummalaneni</a>
+        <div class="links">
+      <a href="index.html" class="active">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#publications">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="travel.html">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid reveal">
+    <!-- Photo at assets/img/headshot.jpeg. If it's missing, the VU monogram shows. -->
+    <div class="avatar"><img src="assets/img/headshot.jpeg" alt="Vahini Ummalaneni" onerror="this.remove()">VU</div>
+    <div>
+      <h1>Vahini Ummalaneni</h1>
+      <p class="tagline">Medical device systems engineer — taking Class II &amp; III systems from concept to FDA clearance, across surgical robotics and intravascular imaging.</p>
+      <div class="social">
+        <a href="mailto:vahini3001@gmail.com" aria-label="Email" title="Email">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 4.236V18h18V8.236l-9 5.625-9-5.625zM20.4 6H3.6L12 11.25 20.4 6z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/vahini-ummalaneni-737a70101/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm6 0h3.83v1.64h.05c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.14V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85V21H9V9z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ABOUT -->
+  <section class="first reveal" id="about">
+    <div class="section-label">About</div>
+    <h2>Hi, I'm Vahini.</h2>
+    <p>I'm a systems engineer who brings complex medical devices to life — from surgical
+       robotics at Johnson &amp; Johnson's Monarch platform to first-generation intravascular ultrasound
+       (IVUS) imaging at Evident Vascular. I love the part of the work where messy clinical reality,
+       engineering trade-offs, and regulatory rigor all have to meet in one coherent system.</p>
+    <p>My work spans 510(k) strategy and submissions — three of them hands-on — design verification &amp;
+       validation, system risk management (ISO&nbsp;14971), and direct FDA interactions, with working knowledge of both the US and
+       Indian medtech ecosystems. I've also worked on developing an early-stage digital health
+       venture and stay involved in community work around STEM education and women in tech.</p>
+    <p>I love a good collaboration and am always happy to talk about anything digital health or
+       medtech — if that's you, I'd love to connect.</p>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="reveal" id="experience">
+    <div class="section-label">Experience</div>
+    <h2>Where I've worked</h2>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <!-- logo loads live; if it fails, the EV monogram shows. To use your own file: <img src="assets/img/logo-evident.png" alt="Evident Vascular"> -->
+        <div class="tl-logo" style="--c1:#1f8a8a;--c2:#33b9a6">EV<img src="https://www.google.com/s2/favicons?domain=evidentvascular.com&sz=128" alt="Evident Vascular" loading="lazy" onerror="this.remove()"></div>
+        <div class="tl-body">
+          <div class="when">Jul 2025 – Present <span style="opacity:.8">(consultant 2023–24)</span></div>
+          <div class="org">Evident Vascular</div>
+          <div class="role">Staff Systems Engineer, Systems Integration · San Jose, CA</div>
+          <ul>
+            <li>System design verification and V&amp;V for a first-generation peripheral IVUS imaging platform, through to its FDA 510(k) submission.</li>
+            <li>Product risk management (ISO 14971) and system requirements, working across engineering, clinical, quality, and regulatory teams.</li>
+            <li>Systems development for the next-generation platform.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-logo" style="--c1:#c8102e;--c2:#e6485c">J&amp;J<img src="https://www.google.com/s2/favicons?domain=jnj.com&sz=128" alt="Johnson &amp; Johnson" loading="lazy" onerror="this.remove()"></div>
+        <div class="tl-body">
+          <div class="when">Mar 2024 – Jul 2025</div>
+          <div class="org">Johnson &amp; Johnson MedTech — Robotics &amp; Digital Surgery</div>
+          <div class="role">Senior Systems Engineer, Monarch Platform · Redwood City, CA</div>
+          <ul>
+            <li>Systems engineering for the Monarch Bronchoscopy platform.</li>
+            <li>Supported the Bronchoscopy platform's first release outside the US — adapting architecture, requirements, and risk files to a new regulatory regime.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-logo" id="india-logo" style="--c1:#ff9933;--c2:#138808;font-size:.95rem">IN</div>
+        <div class="tl-body">
+          <div class="when">Feb 2023 – Sep 2023</div>
+          <div class="org">Early-Stage Digital Health Venture (stealth)</div>
+          <div class="role">Founding team, IIIT-Delhi research lab · New Delhi, India</div>
+          <ul>
+            <li>Built a mental-health-focused digital health venture with a cross-functional team.</li>
+            <li>Product designed around India's national health stack (Ayushman Bharat, HL7, SNOMED CT, ICD-10).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-logo" style="--c1:#c8102e;--c2:#e6485c">J&amp;J<img src="https://www.google.com/s2/favicons?domain=jnj.com&sz=128" alt="Johnson &amp; Johnson" loading="lazy" onerror="this.remove()"></div>
+        <div class="tl-body">
+          <div class="when">Jan 2020 – Apr 2023</div>
+          <div class="org">Johnson &amp; Johnson MedTech — Robotics &amp; Digital Surgery</div>
+          <div class="role">Systems Engineer → Senior Systems Engineer, Monarch Platform · Redwood City, CA</div>
+          <ul>
+            <li>Systems engineering for the Monarch Endourology platform.</li>
+            <li>Work on the Fluidics subsystem and system requirements under ISO 13485/14971 design controls.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <!-- logo loads live; if it fails, the AH monogram shows. To use your own file: <img src="assets/img/logo-auris.png" alt="Auris Health"> -->
+        <div class="tl-logo" style="--c1:#1b3a6b;--c2:#3566a8">AH<img src="https://www.google.com/s2/favicons?domain=aurishealth.com&sz=128" alt="Auris Health" loading="lazy" onerror="this.remove()"></div>
+        <div class="tl-body">
+          <div class="when">May 2019 – Jul 2019</div>
+          <div class="org">Auris Health Inc. <span style="font-size:.85rem;color:var(--ink-soft)">(acquired by J&amp;J)</span></div>
+          <div class="role">Systems Engineering Intern · Redwood City, CA</div>
+          <ul>
+            <li>Test fixtures and scripts to characterize electromagnetic tracking accuracy of a robotic subsystem, with case-data analysis to surface failure trends.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="reveal" id="education">
+    <div class="section-label">Education</div>
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="when">Dec 2019</div>
+      <div>
+        <div class="org">The Ohio State University</div>
+        <div class="role">M.S., Electrical &amp; Computer Engineering · Columbus, OH</div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="when">May 2018</div>
+      <div>
+        <div class="org">IIIT-Delhi</div>
+        <div class="role">B.Tech., Electronics &amp; Communication Engineering; Minor in Economics</div>
+        <ul>
+          <li>Best B.Tech. Project in graduating batch · Dean's List for Leadership</li>
+        </ul>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="when">Dec 2022</div>
+      <div>
+        <div class="org">HarvardX (via edX)</div>
+        <div class="role">Certification: Entrepreneurship in Emerging Economies</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS & PATENTS -->
+  <section class="reveal" id="publications">
+    <div class="section-label">Research</div>
+    <h2>Patents &amp; Publications</h2>
+    <div class="pub">
+      <div class="ptitle">Predicting Anatomical Distension Based on Case-Specific Features for Percutaneous Access Procedures</div>
+      <div class="pmeta">US Patent Application 20260013941 (filed Jul 2024) — co-inventor of a machine-learning method for procedure planning in percutaneous access.</div>
+    </div>
+    <div class="pub">
+      <div class="ptitle">Mitigation of Through-wall Interference in Radar Images Using Denoising Autoencoders</div>
+      <div class="pmeta">IEEE RadarCon — applied machine learning to mitigate multipath interference in radar imaging. Awarded Best B.Tech. Project.</div>
+    </div>
+  </section>
+
+  <!-- HONORS -->
+  <section class="reveal" id="honors">
+    <div class="section-label">Honors</div>
+    <h2>Honors &amp; Awards</h2>
+    <div class="chips">
+      <span class="chip">Google Women Techmakers Scholar, APAC</span>
+      <span class="chip">Grace Hopper Celebration India Scholar</span>
+      <span class="chip">Best B.Tech. Project, IIIT-Delhi</span>
+      <span class="chip">Dean's List for Leadership, IIIT-Delhi</span>
+    </div>
+  </section>
+
+  <!-- COMMUNITY -->
+  <section class="reveal" id="community">
+    <div class="section-label">Community</div>
+    <h2>Service &amp; Leadership</h2>
+    <div class="cards">
+      <div class="card">
+        <img class="cover" src="assets/img/leocare.jpeg" alt="Leocare women empowerment program">
+        <h3>Leocare</h3>
+        <p class="muted">Team member since inception (Hyderabad, 2021–present). Its skill-development program has trained 450+ women from under-privileged rural communities.</p>
+      </div>
+      <div class="card">
+        <img class="cover" src="assets/img/esya.png" alt="Esya Tech Fest">
+        <h3>Esya Tech Fest, IIIT-Delhi</h3>
+        <p class="muted">Convenor &amp; Lead Organiser — led 20+ teams and 300 volunteers for a 5,000-attendee festival; first female head in its history; raised ~$25K in sponsorship.</p>
+      </div>
+      <div class="card">
+        <img class="cover" src="assets/img/summerschool_4.JPG" alt="Summer School Initiative">
+        <h3>Summer School Initiative</h3>
+        <p class="muted">Lead Organizer &amp; founding member — designed a STEM curriculum and ran workshops for 500+ underprivileged students over three years.</p>
+        <p><a href="https://www.thehansindia.com/hans/education-careers/iiit-delhi-launches-10th-edition-of-summer-camp-welcomes-143-school-students-for-a-20-day-learning-journey-1082148" target="_blank" rel="noopener">Read about it →</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni · <a href="mailto:vahini3001@gmail.com">Get in touch</a></div>
+</footer>
+
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3" defer></script>
+<script src="assets/js/india-logo.js" defer></script>
+</body>
+</html>

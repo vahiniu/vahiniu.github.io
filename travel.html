@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Travel diary · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">Vahini Ummalaneni</a>
+        <div class="links">
+      <a href="index.html">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#publications">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="travel.html" class="active">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section class="first reveal" id="travel">
+    <div class="section-label">Travel diary</div>
+    <h2>Trips &amp; itineraries</h2>
+    <p style="color:var(--ink-soft);max-width:660px">My favorite hobby. Each trip links to its own page
+       with a day-by-day itinerary, food and lodging picks, and a photo gallery — handy for me to
+       remember, and maybe useful if you're planning the same route.</p>
+
+    <div class="map-card reveal">
+      <svg id="travelmap" viewBox="0 0 1000 520" role="img" aria-label="World map of places I have visited"></svg>
+    </div>
+    <div class="map-legend">
+      <span><i class="lg-dot solid"></i> Trip write-up — click to open</span>
+      <span><i class="lg-dot hollow"></i> Visited</span>
+      <span><i class="lg-dot park"></i> National park (hover for name)</span>
+    </div>
+    <p class="map-hint">Scroll or pinch to zoom, drag to pan, click a solid pin to open the trip.</p>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+    <script src="assets/js/travelmap.js"></script>
+
+    <!-- ============================================================
+         TO ADD A TRIP:
+         1) Copy an existing file in /trips to trips/your-trip.html and edit it.
+         2) Copy one <a class="card"> block below, point href at the new file,
+            and change the emoji / title / summary / tag.
+         Trip pages are also generated from trips.json via the gen script.
+         ============================================================ -->
+    <div class="cards" style="margin-top:20px">
+
+      <a class="card" href="trips/san-diego.html">
+        <div class="cover">🏖️</div>
+        <h3>San Diego</h3>
+        <p class="muted">A relaxed coastal weekend in San Diego mixing iconic attractions, oceanfront walks, and water sports. Highlights include La Jolla Cove, Balboa Park, and sunsets over the Pacific.</p>
+        <span class="tag">California, USA · Long weekend</span>
+      </a>
+
+      <a class="card" href="trips/everest-base-camp.html">
+        <div class="cover">🏔️</div>
+        <h3>Everest Base Camp Trek</h3>
+        <p class="muted">A classic 12-day trek through Nepal&#x27;s Khumbu region to Everest Base Camp (5,364m) and Kala Patthar (5,550m), with a scenic helicopter return. The route passes Sherpa villages, monasteries, and dramatic Himalayan peaks.</p>
+        <span class="tag">Khumbu Region, Nepal · 12 days</span>
+      </a>
+
+      <a class="card" href="trips/hawaii.html">
+        <div class="cover">🌺</div>
+        <h3>Hawaii: Big Island &amp; Maui</h3>
+        <p class="muted">An eight-day island-hopping trip splitting time between the Big Island and Maui — volcanoes, waterfalls, black- and green-sand beaches, snorkeling, and the Road to Hana.</p>
+        <span class="tag">Hawaii, USA · 8 days</span>
+      </a>
+
+      <a class="card" href="trips/lassen.html">
+        <div class="cover">🌋</div>
+        <h3>Lassen Volcanic National Park</h3>
+        <p class="muted">A summer car-camping weekend at Lassen Volcanic National Park, basing at Summit Lake and mixing easy lakeside loops with a strenuous summit of Lassen Peak.</p>
+        <span class="tag">California, USA · 3 days, camping</span>
+      </a>
+
+      <a class="card" href="trips/lost-coast.html">
+        <div class="cover">🥾</div>
+        <h3>Lost Coast Trail</h3>
+        <p class="muted">A rugged 3-day backpacking trip along the Lost Coast Trail in the King Range, hiking roughly 24 miles point-to-point from Mattole Beach to Black Sands Beach, where tide timing is critical.</p>
+        <span class="tag">King Range, Northern California, USA · 4 days backpacking</span>
+      </a>
+
+      <a class="card" href="trips/glacier.html">
+        <div class="cover">🏞️</div>
+        <h3>Glacier National Park</h3>
+        <p class="muted">A late-September trip to Glacier National Park based out of Kalispell and Whitefish, packed with alpine day hikes, the Going-to-the-Sun Road, and small-town Montana food and breweries.</p>
+        <span class="tag">Kalispell &amp; Whitefish, Montana, USA · 6 days</span>
+      </a>
+
+      <a class="card" href="trips/bend-oregon.html">
+        <div class="cover">🌲</div>
+        <h3>Bend, Oregon</h3>
+        <p class="muted">A summer long-weekend in Bend mixing river floats and lava-tube caves with downtown coffee, food carts, and a lively cocktail-bar scene.</p>
+        <span class="tag">Bend, Oregon, USA · 3 days</span>
+      </a>
+
+      <a class="card" href="trips/peru.html">
+        <div class="cover">🏔️</div>
+        <h3>Peru</h3>
+        <p class="muted">A two-week Peru trip combining Cusco and the Sacred Valley, the multi-day Salkantay trek to Machu Picchu, and time in Lima&#x27;s food and coastal scene.</p>
+        <span class="tag">Cusco, Salkantay &amp; Lima, Peru · 14 days</span>
+      </a>
+
+      <a class="card" href="trips/pacific-northwest.html">
+        <div class="cover">🚐</div>
+        <h3>Pacific Northwest Parks Road Trip</h3>
+        <p class="muted">A campervan loop from San Francisco through four national parks — Redwoods, Crater Lake, Mt. Rainier, and Olympic — ending with a night in Portland before the long drive home.</p>
+        <span class="tag">California, Oregon &amp; Washington, USA · 9 days</span>
+      </a>
+
+      <a class="card" href="trips/sikkim.html">
+        <div class="cover">⛰️</div>
+        <h3>Sikkim, India</h3>
+        <p class="muted">A spring trip through the Indian Himalayan state of Sikkim, pairing Gangtok&#x27;s monasteries and momos with high-altitude lakes and valleys in North Sikkim.</p>
+        <span class="tag">Gangtok &amp; North Sikkim, India · 6 days</span>
+      </a>
+
+      <a class="card" href="trips/st-lucia.html">
+        <div class="cover">🏝️</div>
+        <h3>St. Lucia</h3>
+        <p class="muted">A relaxed Caribbean getaway based in Soufrière — beach and snorkeling days, scenic nature trails with Piton views, sulphur-springs mud baths, and a tree-to-bar chocolate experience.</p>
+        <span class="tag">Soufrière, St. Lucia · 5 days</span>
+      </a>
+
+      <a class="card" href="trips/utah-yellowstone.html">
+        <div class="cover">🏜️</div>
+        <h3>Utah &amp; Yellowstone Road Trip</h3>
+        <p class="muted">A nine-day autumn road trip from California through Yellowstone and Grand Teton, then down to Utah&#x27;s red-rock parks — Arches, Canyonlands, and Bryce — finishing at the Grand Canyon.</p>
+        <span class="tag">Nevada, Wyoming &amp; Utah, USA · 9 days</span>
+      </a>
+
+      <a class="card" href="trips/colombia.html">
+        <div class="cover">🇨🇴</div>
+        <h3>Colombia</h3>
+        <p class="muted">A nine-day loop through Colombia — colonial Cartagena, the jungle hill town of Minca, vibrant Medellín with Guatapé, and the capital Bogotá — mixing walking tours, waterfall hikes, and food experiences.</p>
+        <span class="tag">Cartagena, Minca, Medellín &amp; Bogotá · 9 days</span>
+      </a>
+
+      <a class="card" href="trips/vegas-page.html">
+        <div class="cover">🎰</div>
+        <h3>Las Vegas &amp; Page, Arizona</h3>
+        <p class="muted">A quick desert getaway pairing the slot canyons and viewpoints around Page, Arizona with the shows, attractions, and dining of the Las Vegas Strip.</p>
+        <span class="tag">Nevada &amp; Arizona, USA · 3 days</span>
+      </a>
+
+      <a class="card" href="trips/sonoma-ukiah.html">
+        <div class="cover">🍷</div>
+        <h3>Sonoma &amp; Ukiah Wine Country</h3>
+        <p class="muted">A cozy rainy-weekend road trip from San Francisco through the Sonoma redwoods and wineries up to Ukiah, mixing misty nature stops, wine tasting, and vegetarian dining.</p>
+        <span class="tag">Sonoma &amp; Mendocino County, California · 2 days</span>
+      </a>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

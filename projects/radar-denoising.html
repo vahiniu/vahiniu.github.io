@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Radar image denoising · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+    <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html" class="active">Projects</a>
+      <a href="../travel.html">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../projects.html">← Back to projects</a>
+    <h1 style="margin-top:18px">Radar image denoising with autoencoders</h1>
+    <p class="pmeta" style="color:var(--ink-soft)">IEEE Radar Conference (RadarConf), 2018 · with S. Vishwakarma, A. Iqbal, A. Majumdar &amp; S. S. Ram (IIIT-Delhi)</p>
+
+    <p class="lead">Radar can see through walls — but the wall wrecks the picture. We taught a neural network to fix it.</p>
+
+    <p>As a radar signal passes through a wall, attenuation, refraction, and multipath reflections distort the
+       returned image, so a person or object imaged through a wall looks very different from the same target in
+       open line-of-sight. Classical corrections need to know the wall's thickness and material and the room
+       geometry — information you rarely have in practice.</p>
+
+    <p>In this work we treated the distortion as a denoising problem. We trained a denoising
+       autoencoder — a neural network that learns to map a corrupted input back to a clean version — on pairs of
+       radar images: the distorted through-wall image as input, and the corresponding clean line-of-sight image as
+       the target. After training on a large set of such pairs, the network learns to undo the wall's effects and
+       reconstruct an image close to the free-space one, with no prior knowledge of the wall parameters or
+       room layout.</p>
+
+    <p>The paper, "Mitigation of through-wall interference in radar images using denoising autoencoders,"
+       was published at the IEEE Radar Conference (RadarConf) in 2018.</p>
+
+    <p><a href="https://ieeexplore.ieee.org/document/8378796/" target="_blank" rel="noopener">Read it on IEEE Xplore →</a></p>
+
+    <div class="chips" style="margin-top:14px">
+      <span class="chip">Machine learning</span>
+      <span class="chip">Autoencoders</span>
+      <span class="chip">Radar imaging</span>
+      <span class="chip">IEEE RadarConf 2018</span>
+    </div>
+
+    <a class="back" href="../projects.html" style="display:inline-block;margin-top:24px">← Back to projects</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

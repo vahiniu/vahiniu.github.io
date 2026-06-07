@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>San Diego · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+        <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../travel.html" class="active">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../travel.html">← Back to all trips</a>
+    <h1 style="margin-top:18px">🏖️ San Diego</h1>
+    <div class="trip-meta" style="margin-top:10px">
+      <span>📍 California, USA</span>
+      <span>⏱️ Long weekend</span>
+    </div>
+    <p class="lead">A relaxed coastal weekend in San Diego mixing iconic attractions, oceanfront walks, and water sports. Highlights include La Jolla Cove, Balboa Park, and sunsets over the Pacific.</p>
+
+    <!-- PHOTO GALLERY — replace each <div class="ph">…</div> with
+         <img src="../assets/img/san-diego-1.jpg" alt="describe photo"> after adding photos to assets/img -->
+    <div class="gallery">
+      <figure><div class="ph">🏖️</div><figcaption>Add a photo</figcaption></figure>
+      <figure><div class="ph">🏖️</div><figcaption>Add a photo</figcaption></figure>
+      <figure><div class="ph">🏖️</div><figcaption>Add a photo</figcaption></figure>
+    </div>
+    <div class="subhead">🗺️ Itinerary</div>
+    <div class="itinerary">
+      <div class="day">
+        <div class="dnum">Day 1</div>
+        <h3>Arrival &amp; city</h3>
+        <p>Evening arrival into San Diego. Settle in and explore.</p>
+      </div>
+      <div class="day">
+        <div class="dnum">Day 2</div>
+        <h3>Coast &amp; Oceanside</h3>
+        <p>Beach and coastal time, heading up toward Oceanside.</p>
+      </div>
+      <div class="day">
+        <div class="dnum">Day 3</div>
+        <h3>Breakfast &amp; departure</h3>
+        <p>Relaxed breakfast before an afternoon flight home.</p>
+      </div>
+    </div>
+    <div class="subhead">📌 Things to do</div>
+      <ul class="reclist">
+        <li><strong>San Diego Zoo</strong> — world-famous zoo in Balboa Park</li>
+        <li><strong>La Jolla Cove</strong> — stunning views, seals, and snorkeling; combine with La Jolla Shores</li>
+        <li><strong>Sunset Cliffs Natural Park</strong> — sunset views; a sea cave is accessible at low tide</li>
+        <li><strong>Torrey Pines State Natural Reserve</strong> — coastal bluffs and sunset spot</li>
+        <li><strong>Balboa Park</strong> — gardens, museums, and architecture</li>
+        <li><strong>Seaport Village &amp; Embarcadero</strong> — waterfront stroll to Tuna Harbor Park</li>
+        <li><strong>Stand-up paddleboarding</strong> — rentals at Shelter Island&#x27;s calm waters</li>
+        <li>Wakeboarding &amp; water skiing charters</li>
+        <li><strong>Encinitas Meditation Garden</strong> — peaceful ocean-view gardens</li>
+      </ul>
+    <div class="subhead">🛏️ Where to stay</div>
+      <ul class="reclist">
+        <li>Downtown / harbor area</li>
+        <li><strong>Oceanside</strong> — coastal town north of the city</li>
+      </ul>
+    <div class="subhead">💡 Good to know</div>
+      <ul class="reclist">
+        <li>Time a visit to the Sunset Cliffs sea cave for low tide.</li>
+        <li>Pair La Jolla Cove with nearby La Jolla Shores for beach time.</li>
+      </ul>
+    <a class="back" href="../travel.html">← Back to all trips</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

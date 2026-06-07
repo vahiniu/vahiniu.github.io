@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Non-invasive glucose sensing · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+    <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html" class="active">Projects</a>
+      <a href="../travel.html">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../projects.html">← Back to projects</a>
+    <h1 style="margin-top:18px">Non-invasive glucose sensing</h1>
+    <p class="pmeta" style="color:var(--ink-soft)">Side project · multi-sensor hardware + signal processing</p>
+
+    <p class="lead">Could you estimate blood glucose without pricking a finger? A weekend hardware experiment to find out.</p>
+
+    <!-- sensor architecture diagram -->
+    <div class="map-card reveal" style="padding:18px">
+      <svg viewBox="0 0 720 220" role="img" aria-label="Sensor architecture: PPG, GSR and temperature sensors feed an Arduino, which streams data to a model that estimates glucose" style="width:100%;height:auto;display:block">
+        <!-- three sensors -->
+        <g style="font-family:var(--font-sans);font-size:12px">
+          <rect x="20" y="26" width="150" height="40" rx="9" style="fill:var(--bg-soft);stroke:var(--line);stroke-width:1.5"/>
+          <text x="95" y="51" text-anchor="middle" style="fill:var(--ink);font-weight:600">PPG (pulse oximeter)</text>
+          <rect x="20" y="90" width="150" height="40" rx="9" style="fill:var(--bg-soft);stroke:var(--line);stroke-width:1.5"/>
+          <text x="95" y="115" text-anchor="middle" style="fill:var(--ink);font-weight:600">GSR (skin conductance)</text>
+          <rect x="20" y="154" width="150" height="40" rx="9" style="fill:var(--bg-soft);stroke:var(--line);stroke-width:1.5"/>
+          <text x="95" y="179" text-anchor="middle" style="fill:var(--ink);font-weight:600">Temperature</text>
+        </g>
+        <!-- arrows to arduino -->
+        <g style="stroke:var(--ink-soft);stroke-width:2;fill:none">
+          <path d="M170 46 C 210 46, 210 110, 250 110"/>
+          <path d="M170 110 H250"/>
+          <path d="M170 174 C 210 174, 210 110, 250 110"/>
+        </g>
+        <!-- arduino -->
+        <rect x="250" y="86" width="120" height="48" rx="10" style="fill:var(--accent);opacity:.9"/>
+        <text x="310" y="115" text-anchor="middle" style="fill:#fff;font-family:var(--font-sans);font-weight:700;font-size:13px">Arduino</text>
+        <!-- arrow -->
+        <path d="M370 110 H410" style="stroke:var(--ink-soft);stroke-width:2;fill:none"/>
+        <path d="M410 110 l-8 -5 v10 z" style="fill:var(--ink-soft)"/>
+        <!-- model -->
+        <rect x="412" y="86" width="130" height="48" rx="10" style="fill:var(--accent-2);opacity:.95"/>
+        <text x="477" y="110" text-anchor="middle" style="fill:#3a2a14;font-family:var(--font-sans);font-weight:700;font-size:13px">Model</text>
+        <text x="477" y="126" text-anchor="middle" style="fill:#3a2a14;font-family:var(--font-sans);font-size:10px">(maps signals → glucose)</text>
+        <!-- arrow -->
+        <path d="M542 110 H582" style="stroke:var(--ink-soft);stroke-width:2;fill:none"/>
+        <path d="M582 110 l-8 -5 v10 z" style="fill:var(--ink-soft)"/>
+        <!-- glucose readout -->
+        <rect x="584" y="80" width="116" height="60" rx="10" style="fill:var(--bg-soft);stroke:var(--line);stroke-width:1.5"/>
+        <text x="642" y="106" text-anchor="middle" style="fill:var(--ink);font-family:var(--font-sans);font-weight:600;font-size:12px">Estimated</text>
+        <text x="642" y="123" text-anchor="middle" style="fill:var(--accent-ink);font-family:var(--font-sans);font-weight:700;font-size:13px">glucose level</text>
+      </svg>
+    </div>
+
+    <p style="margin-top:18px">Standard glucometers need a blood sample. For this side project we built a small wearable sensor rig
+       to explore a fully non-invasive alternative, following a multi-sensor approach described by Mahmud, Limon,
+       Ahmed, and colleagues.</p>
+
+    <p>The architecture combined three skin-surface signals: a PPG (photoplethysmography)
+       pulse-oximeter that shines red, green, and near-infrared light through the skin and measures how blood flow
+       changes the reflected light; a GSR (galvanic skin response) sensor that measures skin
+       conductance; and a temperature sensor. An Arduino read all three sensors and
+       streamed the data out for processing, where the combined signals could be mapped to an estimated glucose
+       level and sanity-checked against a conventional glucometer.</p>
+
+    <p>The idea: glucose subtly changes how near-infrared light is absorbed in blood, so a model trained on these
+       multi-sensor signals can learn that signature and predict glucose without drawing blood. This was a
+       side project — a chance to wire up biosignal hardware and play with the signal processing end to end.</p>
+
+    <p>How it was validated: the model was trained on validated data collected with our own setup, using a
+       Freestyle Libre 3 continuous glucose monitor as the ground truth.</p>
+
+    <div class="chips" style="margin-top:14px">
+      <span class="chip">Arduino</span>
+      <span class="chip">PPG · GSR · temperature</span>
+      <span class="chip">Biosignals</span>
+      <span class="chip">Side project</span>
+    </div>
+
+    <a class="back" href="../projects.html" style="display:inline-block;margin-top:24px">← Back to projects</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

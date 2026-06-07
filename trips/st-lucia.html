@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>St. Lucia · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+        <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../travel.html" class="active">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../travel.html">← Back to all trips</a>
+    <h1 style="margin-top:18px">🏝️ St. Lucia</h1>
+    <div class="trip-meta" style="margin-top:10px">
+      <span>📍 Soufrière, St. Lucia</span>
+      <span>⏱️ 5 days</span>
+    </div>
+    <p class="lead">A relaxed Caribbean getaway based in Soufrière — beach and snorkeling days, scenic nature trails with Piton views, sulphur-springs mud baths, and a tree-to-bar chocolate experience.</p>
+
+    <!-- PHOTO GALLERY — replace each <div class="ph">…</div> with
+         <img src="../assets/img/st-lucia-1.jpg" alt="describe photo"> after adding photos to assets/img -->
+    <div class="gallery">
+      <figure><div class="ph">🏝️</div><figcaption>Add a photo</figcaption></figure>
+      <figure><div class="ph">🏝️</div><figcaption>Add a photo</figcaption></figure>
+      <figure><div class="ph">🏝️</div><figcaption>Add a photo</figcaption></figure>
+    </div>
+    <div class="subhead">🗺️ Itinerary</div>
+    <div class="itinerary">
+      <div class="day">
+        <div class="dnum">Day 1</div>
+        <h3>Arrival &amp; resort</h3>
+        <p>Transfer to the resort in Soufrière. Settle in, relax by the pool, dinner with Piton views.</p>
+      </div>
+      <div class="day">
+        <div class="dnum">Day 2</div>
+        <h3>Sugar Beach &amp; falls</h3>
+        <p>Morning yoga, then Sugar Beach for snorkeling (day pass), and an afternoon at Piton (Warm Mineral) Falls.</p>
+      </div>
+      <div class="day">
+        <div class="dnum">Day 3</div>
+        <h3>Tet Paul &amp; Anse Chastanet</h3>
+        <p>Early Tet Paul Nature Trail and Diamond Falls gardens, then a water taxi to Anse Chastanet for snorkeling and a walk to the quieter Anse Mamin.</p>
+      </div>
+      <div class="day">
+        <div class="dnum">Day 4</div>
+        <h3>Chocolate &amp; Sulphur Springs</h3>
+        <p>A wood-working workshop, a Hotel Chocolat tree-to-bar experience, and the Sulphur Springs mud baths (go late to miss the crowds).</p>
+      </div>
+      <div class="day">
+        <div class="dnum">Day 5</div>
+        <h3>Departure</h3>
+        <p>Breakfast and a final morning relaxing before the afternoon departure.</p>
+      </div>
+    </div>
+    <div class="subhead">📌 Things to do</div>
+      <ul class="reclist">
+        <li><strong>Sulphur Springs mud baths</strong> — the highlight; go late afternoon</li>
+        <li><strong>Tet Paul Nature Trail</strong> — easy, scenic Piton viewpoints</li>
+        <li>Snorkeling at Sugar Beach and Anse Chastanet Reef</li>
+        <li><strong>Anse Mamin</strong> — quiet, wild jungle beach near Anse Chastanet</li>
+        <li>Hotel Chocolat tree-to-bar tour</li>
+        <li><strong>Wood-carving workshop</strong> — souvenir-making</li>
+      </ul>
+    <div class="subhead">🍴 Where to eat</div>
+      <ul class="reclist">
+        <li><strong>Dasheene</strong> — on-site fine dining with Piton views</li>
+        <li><strong>Treetop</strong> — amazing food (the access road is dark at night)</li>
+        <li><strong>Emeralds (Anse Chastanet)</strong> — beachside dining</li>
+        <li><strong>Alor</strong> — great local food with good vegetarian options</li>
+        <li><strong>Bayside (Sugar Beach)</strong> — beach restaurant</li>
+      </ul>
+    <div class="subhead">🛏️ Where to stay</div>
+      <ul class="reclist">
+        <li><strong>Soufrière</strong> — open-wall suites with Piton views and complimentary beach shuttles</li>
+      </ul>
+    <div class="subhead">💡 Good to know</div>
+      <ul class="reclist">
+        <li>USD is accepted everywhere.</li>
+        <li>Dinners are smart casual: collared shirts, trousers, sundresses; no bathing suits.</li>
+        <li>Book water taxis at the Soufrière dock rather than through hotels for cheaper rates.</li>
+      </ul>
+    <a class="back" href="../travel.html">← Back to all trips</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lassen Volcanic National Park · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+        <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../travel.html" class="active">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../travel.html">← Back to all trips</a>
+    <h1 style="margin-top:18px">🌋 Lassen Volcanic National Park</h1>
+    <div class="trip-meta" style="margin-top:10px">
+      <span>📍 California, USA</span>
+      <span>⏱️ 3 days, camping</span>
+    </div>
+    <p class="lead">A summer car-camping weekend at Lassen Volcanic National Park, basing at Summit Lake and mixing easy lakeside loops with a strenuous summit of Lassen Peak.</p>
+
+    <!-- PHOTO GALLERY — replace each <div class="ph">…</div> with
+         <img src="../assets/img/lassen-1.jpg" alt="describe photo"> after adding photos to assets/img -->
+    <div class="gallery">
+      <figure><div class="ph">🌋</div><figcaption>Add a photo</figcaption></figure>
+      <figure><div class="ph">🌋</div><figcaption>Add a photo</figcaption></figure>
+      <figure><div class="ph">🌋</div><figcaption>Add a photo</figcaption></figure>
+    </div>
+    <div class="subhead">🗺️ Itinerary</div>
+    <div class="itinerary">
+      <div class="day">
+        <div class="dnum">Day 1</div>
+        <h3>Arrival &amp; set up camp</h3>
+        <p>Arrive in the evening and set up camp; an easy hike like the Manzanita Lake loop or Echo Lake trail.</p>
+      </div>
+      <div class="day">
+        <div class="dnum">Day 2</div>
+        <h3>Full day of hiking</h3>
+        <p>Summit Lassen Peak in the morning (~5 miles, 2,000 ft), then Bumpass Hell in the evening; optional Kings Creek Falls.</p>
+      </div>
+      <div class="day">
+        <div class="dnum">Day 3</div>
+        <h3>Sunrise &amp; departure</h3>
+        <p>Optional sunrise hike, break camp, and leave by early afternoon.</p>
+      </div>
+    </div>
+    <div class="subhead">📌 Things to do</div>
+      <ul class="reclist">
+        <li><strong>Lassen Peak</strong> — strenuous summit hike (~5 miles, ~2,000 ft)</li>
+        <li><strong>Bumpass Hell</strong> — hydrothermal basin trail (~2.7 miles)</li>
+        <li><strong>Manzanita Lake loop</strong> — easy 2-mile sightseeing loop</li>
+        <li><strong>Echo Lake trail</strong> — ~5 miles, trailhead at the campground</li>
+        <li>Kings Creek Falls / Bench &amp; Sifford Lakes loop (~5 miles)</li>
+        <li>Kohm Yah-mah-nee Visitor Center</li>
+      </ul>
+    <div class="subhead">🛏️ Where to stay</div>
+      <ul class="reclist">
+        <li>Summit Lake South Campground</li>
+      </ul>
+    <div class="subhead">💡 Good to know</div>
+      <ul class="reclist">
+        <li><strong>Campfires are not allowed at the campsite</strong> — bring a camp stove and gas.</li>
+        <li>Mosquitoes are heavy in June/July as snow melts; bring strong bug spray.</li>
+        <li>No showers at the campground; pack wilderness wipes.</li>
+        <li>Store all food properly per bear-safety guidance.</li>
+      </ul>
+    <a class="back" href="../travel.html">← Back to all trips</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
