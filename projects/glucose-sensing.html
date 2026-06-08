@@ -29,7 +29,7 @@
     <h1 style="margin-top:18px">Non-invasive glucose sensing</h1>
     <p class="pmeta" style="color:var(--ink-soft)">Side project · multi-sensor hardware + signal processing</p>
 
-    <p class="lead">Could you estimate blood glucose without pricking a finger? A weekend hardware experiment to find out.</p>
+    <p class="lead">Could you estimate blood glucose without a finger prick — frequently, and cheaply? A side project exploring non-invasive, multimodal glucose sensing.</p>
 
     <!-- sensor architecture diagram -->
     <div class="map-card reveal" style="padding:18px">
@@ -69,28 +69,31 @@
       </svg>
     </div>
 
-    <p style="margin-top:18px">Standard glucometers need a blood sample. For this side project we built a small wearable sensor rig
-       to explore a fully non-invasive alternative, following a multi-sensor approach described by Mahmud, Limon,
-       Ahmed, and colleagues.</p>
+    <p style="margin-top:18px">Managing diabetes usually means pricking a finger and reading a drop of blood on a strip — accurate, but
+       painful enough that people don't do it often. Continuous glucose monitors (CGMs) solve the frequency
+       problem but are expensive and reach only a small slice of the population. The goal of this side project was
+       to explore a non-invasive, low-cost alternative someone could use as often as they like — eventually from a
+       phone paired with a simple wearable — and, along the way, to look for a correlation between glucose and
+       galvanic skin response.</p>
 
-    <p>The architecture combined three skin-surface signals: a PPG (photoplethysmography)
-       pulse-oximeter that shines red, green, and near-infrared light through the skin and measures how blood flow
-       changes the reflected light; a GSR (galvanic skin response) sensor that measures skin
-       conductance; and a temperature sensor. An Arduino read all three sensors and
-       streamed the data out for processing, where the combined signals could be mapped to an estimated glucose
-       level and sanity-checked against a conventional glucometer.</p>
+    <p>The setup combined optical and electrical sensing: a PPG (photoplethysmography) pulse-oximeter, a GSR
+       (galvanic skin response) sensor, and a temperature sensor, read by an Arduino. The premise is that glucose
+       in the interstitial fluid leaves a faint signature across these biomarkers — for instance, glucose subtly
+       changes how near-infrared light is absorbed in blood. We used signal processing (filtering, denoising,
+       feature extraction) to clean the raw signals, then trained a deep-learning model to map the combined
+       features to a glucose estimate. A table-top fixture kept the sensors steady to cut motion noise.</p>
 
-    <p>The idea: glucose subtly changes how near-infrared light is absorbed in blood, so a model trained on these
-       multi-sensor signals can learn that signature and predict glucose without drawing blood. This was a
-       side project — a chance to wire up biosignal hardware and play with the signal processing end to end.</p>
-
-    <p>How it was validated: the model was trained on validated data collected with our own setup, using a
-       Freestyle Libre 3 continuous glucose monitor as the ground truth.</p>
+    <p>How it was validated: the model was trained on data we collected with our own setup, using a Freestyle
+       Libre 3 continuous glucose monitor as the ground truth. Each reading was timestamped and paired with a short
+       journal note — workout, meal, stress, mood — so the dataset captured real glucose swings. A small pilot also
+       chased a side question: can galvanic skin response on its own flag rising glucose? (Prior work has reported
+       correlations as high as ~94%.)</p>
 
     <div class="chips" style="margin-top:14px">
       <span class="chip">Arduino</span>
       <span class="chip">PPG · GSR · temperature</span>
-      <span class="chip">Biosignals</span>
+      <span class="chip">Signal processing</span>
+      <span class="chip">Deep learning</span>
       <span class="chip">Side project</span>
     </div>
 
