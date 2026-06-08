@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Direction-of-Arrival estimation · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+    <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html" class="active">Projects</a>
+      <a href="../travel.html">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../projects.html">← Back to projects</a>
+    <h1 style="margin-top:18px">Direction-of-arrival estimation in realistic radar</h1>
+    <p class="pmeta" style="color:var(--ink-soft)">M.S. thesis · The Ohio State University · 2019</p>
+
+    <p class="lead">How well do radar direction-finding algorithms actually hold up once you add the messiness of the real world?</p>
+
+    <!-- DoA diagram: plane wave arriving at an angle onto an antenna array, then a MUSIC-style spectral peak -->
+    <div class="map-card reveal" style="padding:18px">
+      <svg viewBox="0 0 720 230" role="img" aria-label="A plane wave arriving at angle theta on an antenna array, processed into a spectrum with a peak at the estimated direction of arrival" style="width:100%;height:auto;display:block">
+        <!-- incoming wavefronts (parallel slanted lines) -->
+        <g stroke="var(--accent-2)" stroke-width="2" opacity=".8">
+          <line x1="60" y1="20" x2="150" y2="92"/>
+          <line x1="92" y1="12" x2="190" y2="90"/>
+          <line x1="124" y1="6" x2="230" y2="90"/>
+        </g>
+        <!-- direction arrow -->
+        <path d="M150 26 L210 74" stroke="var(--accent)" stroke-width="2.5" fill="none"/>
+        <path d="M210 74 l-11 -1 4 -8 z" fill="var(--accent)"/>
+        <!-- array normal (dashed) + angle -->
+        <line x1="210" y1="170" x2="210" y2="86" stroke="var(--ink-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="196" y="74" style="fill:var(--ink-soft);font-family:var(--font-sans);font-size:13px">θ</text>
+        <!-- antenna array -->
+        <line x1="120" y1="172" x2="300" y2="172" stroke="var(--ink-soft)" stroke-width="2"/>
+        <g fill="var(--accent-ink)">
+          <circle cx="135" cy="172" r="6"/><circle cx="165" cy="172" r="6"/><circle cx="195" cy="172" r="6"/>
+          <circle cx="225" cy="172" r="6"/><circle cx="255" cy="172" r="6"/><circle cx="285" cy="172" r="6"/>
+        </g>
+        <text x="210" y="200" text-anchor="middle" style="fill:var(--ink);font-family:var(--font-sans);font-weight:600;font-size:12px">antenna array</text>
+
+        <!-- arrow to spectrum -->
+        <path d="M320 120 H368" stroke="var(--ink-soft)" stroke-width="2" fill="none"/>
+        <path d="M368 120 l-8 -5 v10 z" fill="var(--ink-soft)"/>
+
+        <!-- spectrum with a peak -->
+        <rect x="392" y="44" width="296" height="150" rx="10" style="fill:var(--bg-soft);stroke:var(--line);stroke-width:1.5"/>
+        <polyline points="408,180 470,176 520,170 545,150 560,86 575,150 600,172 660,176 672,178"
+                  fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <line x1="560" y1="86" x2="560" y2="180" stroke="var(--accent-2)" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <text x="560" y="78" text-anchor="middle" style="fill:var(--ink);font-family:var(--font-sans);font-weight:600;font-size:12px">estimated DoA</text>
+        <text x="540" y="208" text-anchor="middle" style="fill:var(--ink-soft);font-family:var(--font-sans);font-size:11px">angle →</text>
+      </svg>
+    </div>
+
+    <p style="margin-top:18px">Direction-of-arrival (DoA) estimation — working out the angle a signal is coming from — is one of the
+       core tasks in radar. Most published comparisons, though, evaluate these algorithms in idealized
+       conditions. My thesis asked how they behave under realistic impairments: multipath reflections (modeled
+       geometrically off one and two walls), additive white Gaussian noise, and the quantization error that comes
+       from finite angular resolution.</p>
+
+    <p>I modeled the radar array signal with these effects and compared three DoA approaches across a range of
+       signal-to-noise ratios and multipath parameters: the matched filter, the MUSIC subspace algorithm, and
+       basis-pursuit denoising (an L1-norm, compressed-sensing formulation solved with SPGL1). To ground the
+       comparison, I used the Cramér–Rao lower bound as the theoretical best-case benchmark for estimation error.</p>
+
+    <p>Finally, I explored a machine-learning angle: a denoising autoencoder trained to map interference-corrupted
+       radar measurements back toward their clean, interference-free counterparts. Feeding the denoised signals
+       back into the DoA estimators let me measure how much a learned denoiser could recover the accuracy lost to
+       multipath and noise.</p>
+
+    <div class="chips" style="margin-top:14px">
+      <span class="chip">Radar signal processing</span>
+      <span class="chip">DoA estimation</span>
+      <span class="chip">MUSIC</span>
+      <span class="chip">Compressed sensing</span>
+      <span class="chip">Denoising autoencoder</span>
+    </div>
+
+    <a class="back" href="../projects.html" style="display:inline-block;margin-top:24px">← Back to projects</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
