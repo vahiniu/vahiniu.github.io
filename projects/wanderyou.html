@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WanderYou · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+    <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html" class="active">Projects</a>
+      <a href="../travel.html">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../projects.html">← Back to projects</a>
+    <h1 style="margin-top:18px">WanderYou</h1>
+    <p class="pmeta" style="color:var(--ink-soft)">Mobile-first web app · AI-powered group trip planner · live</p>
+
+    <p class="lead">A mobile-first, AI-powered group trip planner that turns chaotic group-chat travel talk into a finished plan.</p>
+
+    <div style="text-align:center;margin:22px 0 6px">
+      <video controls playsinline preload="metadata" poster="../assets/img/wanderyou-poster.jpg"
+             style="width:100%;max-width:320px;border-radius:22px;border:1px solid var(--line);box-shadow:var(--shadow);background:#000">
+        <source src="../assets/video/wanderyou-demo.mp4" type="video/mp4">
+        Your browser can't play this video. <a href="../assets/video/wanderyou-demo.mp4">Download the demo</a>.
+      </video>
+      <p class="map-hint" style="text-align:center">A walkthrough of WanderYou (sped up 3×)</p>
+    </div>
+
+    <p style="margin-top:18px">We all know the pattern: someone floats a big trip idea in a group chat, a hundred
+       messages pile up — dates, destinations, "who's in?" — and nothing ever gets decided. WanderYou fixes exactly
+       that. You build a travel passport, gather your squad with a join code, and set your vibes, budget, and free
+       dates. Then everyone swipes to vote on real destinations until a winner emerges — with a per-person vote
+       breakdown, live flight prices from your own airport, and rich, cited detail on each place (weather, top
+       things to do, what it's famous for).</p>
+
+    <p>Once you lock in dates, the app generates a day-by-day itinerary with dining picks, an AI packing checklist,
+       and a local cheat sheet of phrases and etiquette. Friends plan together in real time — votes, chat, and the
+       itinerary all sync live across phones. It's designed to degrade gracefully too: a 100+ destination offline
+       fallback and a "fast mode" keep the flow from ever dead-ending.</p>
+
+    <p>Under the hood it's built with React 19, TypeScript, and Vite, styled with Tailwind, and powered by the
+       Anthropic Claude API — using web search for grounded, sourced facts — with optional Supabase for real-time
+       multiplayer.</p>
+
+    <p><a href="https://wanderyou.netlify.app/" target="_blank" rel="noopener">Try the live app →</a></p>
+
+    <div class="chips" style="margin-top:14px">
+      <span class="chip">React 19 · TypeScript · Vite</span>
+      <span class="chip">Tailwind</span>
+      <span class="chip">Claude API</span>
+      <span class="chip">Supabase</span>
+      <span class="chip">Real-time multiplayer</span>
+    </div>
+
+    <a class="back" href="../projects.html" style="display:inline-block;margin-top:24px">← Back to projects</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
