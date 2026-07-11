@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sahasra.AI · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+    <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html" class="active">Projects</a>
+      <a href="../travel.html">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../projects.html">← Back to projects</a>
+    <h1 style="margin-top:18px">Sahasra.AI</h1>
+    <p class="pmeta" style="color:var(--ink-soft)">Digital health startup · co-founder &amp; CEO · IIIT-Delhi (iHub Anubhuti)</p>
+
+    <p class="lead">A mental-health-first digital health startup I co-founded and led — building one life-course record of how you're doing, body and mind.</p>
+
+    <div style="text-align:center;margin:22px 0 6px">
+      <video controls playsinline preload="metadata" poster="../assets/img/mwellth-poster.jpg"
+             style="width:100%;max-width:640px;border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow);background:#000">
+        <source src="../assets/video/mwellth-demo.mp4" type="video/mp4">
+        Your browser can't play this video. <a href="../assets/video/mwellth-demo.mp4">Download the demo</a>.
+      </video>
+      <p class="map-hint" style="text-align:center">A walkthrough of the app</p>
+    </div>
+
+    <p style="margin-top:18px">Sahasra.AI was an early-stage digital health startup I co-founded and ran as CEO,
+       incubated at IIIT-Delhi's iHub Anubhuti. The idea: a mental-health-first, proactive wellness platform that
+       gives people a single, life-course record of how they're doing — physically and mentally — and uses it to
+       nudge them toward better outcomes, rather than waiting until something goes wrong.</p>
+
+    <p>The product bet was interoperability: health data only becomes useful when it can move. We built around open
+       health-data standards (HL7, SNOMED CT, ICD-10) so records aren't siloed, and around India's national
+       digital-health rails so a person's record could follow them across providers. That national layer is ABDM —
+       the Ayushman Bharat Digital Mission, India's government-backed digital health infrastructure. ABDM gives every
+       citizen a unique health account (an ABHA ID) and shared standards for securely linking and sharing records
+       across hospitals, labs, and apps, always with the individual's consent. Integrating with ABDM meant a user's
+       data was portable and interoperable by design instead of trapped in one more app.</p>
+
+    <p>On top of that record we layered AI to make care proactive. For physical health, algorithms assembled a
+       longitudinal, holistic profile to surface trends and risks across a person's timeline. For mental health, a
+       digital journal and mood tracker fed a transformer-based emotion model organized around Plutchik's wheel of
+       emotions — the eight primary emotions (joy, trust, fear, surprise, sadness, disgust, anger, anticipation) and
+       their blends. This "Plutchik transformer" read a user's journal and chat text and mapped it onto that
+       emotional spectrum, turning free-form writing into a structured, trackable signal of how someone was really
+       feeling over time.</p>
+
+    <p>As a founder, though, my job went well beyond the product. I owned the market strategy — defining who Sahasra
+       was for (individuals, employers with a workforce to keep healthy, large institutions like universities, and
+       downstream partners in pharma, insurance, research, and government) and how we would reach and retain them. I
+       built the business and financial model — a subscription plus pay-as-you-go mix with employer-focused plans and
+       premium services — along with the revenue projections, key metrics, and a phased roadmap behind it. And I put
+       the whole story into a pitch: I authored the deck, framed the problem and market, and pitched Sahasra to our
+       incubator and prospective partners to raise support and resources.</p>
+
+    <div class="chips" style="margin-top:14px">
+      <span class="chip">Co-founder &amp; CEO</span>
+      <span class="chip">Product &amp; market strategy</span>
+      <span class="chip">Financial model · GTM</span>
+      <span class="chip">ABDM · interoperability</span>
+      <span class="chip">NLP · transformers</span>
+    </div>
+
+    <a class="back" href="../projects.html" style="display:inline-block;margin-top:24px">← Back to projects</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
