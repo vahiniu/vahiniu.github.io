@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buy vs Rent — Trade Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAFAF7; --panel:#FFFFFF; --ink:#1A1D23; --ink-soft:#5B616E; --line:#E4E2DA;
+  --buy:#2456E6; --rent:#0E9F6E; --alert:#D6453D; --amber:#C77D0A;
+  --buy-soft:#E8EEFD; --rent-soft:#E4F5EE;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+body{
+  background:var(--paper);
+  background-image:linear-gradient(var(--line) 1px, transparent 1px),linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:32px 32px; background-position:-1px -1px;
+  color:var(--ink); font-family:'IBM Plex Sans',sans-serif; font-size:15px; line-height:1.45;
+}
+header{padding:26px 28px 10px; max-width:1240px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px}
+h1{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; letter-spacing:-0.01em}
+h1 .buy-w{color:var(--buy)} h1 .rent-w{color:var(--rent)}
+.sub{color:var(--ink-soft); font-size:13.5px; margin-top:2px; max-width:640px}
+.hdr-right{display:flex; gap:8px; align-items:center}
+select#currency{font-family:'IBM Plex Mono',monospace; font-size:13px; padding:6px 10px; border:1px solid var(--line); border-radius:8px; background:var(--panel); cursor:pointer}
+button.share{font-family:'IBM Plex Sans',sans-serif; font-size:13px; font-weight:500; padding:6px 12px; border:1px solid var(--ink); border-radius:8px; background:var(--panel); cursor:pointer}
+button.share:hover{background:var(--ink); color:var(--paper)}
+.wrap{max-width:1240px; margin:0 auto; padding:14px 28px 60px; display:grid; grid-template-columns:340px 1fr; gap:22px}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}}
+.controls{display:flex; flex-direction:column; gap:14px}
+.group{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px 10px; box-shadow:0 1px 2px rgba(26,29,35,.04)}
+.group h2{font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-soft); margin-bottom:10px}
+.presets{display:flex; gap:8px}
+.presets button{flex:1; font-size:12.5px; font-weight:500; padding:7px 4px; border:1px solid var(--line); border-radius:8px; background:var(--paper); cursor:pointer}
+.presets button:hover{border-color:var(--ink)}
+.ctl{margin-bottom:12px}
+.ctl-top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2px}
+.ctl label{font-size:13px; font-weight:500}
+.ctl .val{font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600}
+input[type=range]{width:100%; height:22px; -webkit-appearance:none; background:transparent; cursor:pointer}
+input[type=range]:focus-visible{outline:2px solid var(--buy); outline-offset:2px; border-radius:4px}
+input[type=range]::-webkit-slider-runnable-track{height:4px; background:var(--line); border-radius:2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--ink); margin-top:-6px; border:2.5px solid var(--paper); box-shadow:0 0 0 1px var(--ink)}
+input[type=range]::-moz-range-track{height:4px; background:var(--line); border-radius:2px}
+input[type=range]::-moz-range-thumb{width:13px; height:13px; border-radius:50%; background:var(--ink); border:2.5px solid var(--paper); box-shadow:0 0 0 1px var(--ink)}
+.hint{font-size:11.5px; color:var(--ink-soft); margin-top:-4px}
+.info{display:inline-block; margin-left:6px; width:15px; height:15px; border-radius:50%; border:1px solid var(--ink-soft); color:var(--ink-soft); font-family:'IBM Plex Mono',monospace; font-size:10px; line-height:13px; text-align:center; cursor:help; position:relative; vertical-align:1px; font-weight:600}
+.info:hover,.info:focus{border-color:var(--ink); color:var(--ink); outline:none}
+.info .tt{position:absolute; bottom:calc(100% + 8px); left:-8px; width:250px; background:var(--ink); color:var(--paper); font-size:12px; font-weight:400; line-height:1.5; padding:9px 12px; border-radius:8px; opacity:0; visibility:hidden; transition:opacity .12s; z-index:60; text-transform:none; letter-spacing:0; text-align:left; font-family:'IBM Plex Sans',sans-serif; box-shadow:0 4px 14px rgba(26,29,35,.18)}
+.info:hover .tt,.info:focus .tt{opacity:1; visibility:visible}
+.stat .info{width:13px; height:13px; line-height:11px; font-size:9px}
+.stat .info .tt{left:auto; right:-8px}
+.chip{display:flex; align-items:center; gap:8px; padding:6px 8px; border:1px solid var(--line); border-radius:8px; margin-top:8px; font-size:12.5px; background:var(--paper)}
+.chip .chipname{flex:1; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.chip button{font-size:11.5px; padding:3px 8px; border:1px solid var(--line); border-radius:6px; background:var(--panel); cursor:pointer}
+.chip button:hover{border-color:var(--ink)}
+.chip input[type=checkbox]{accent-color:var(--buy); width:14px; height:14px; cursor:pointer}
+.chip .curtag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-soft)}
+.results{display:flex; flex-direction:column; gap:16px; min-width:0}
+.verdict{border-radius:10px; padding:16px 20px; border:1px solid var(--line); background:var(--panel); box-shadow:0 1px 2px rgba(26,29,35,.04)}
+.verdict .v-line{font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:700; letter-spacing:-.01em}
+.verdict .v-line .win-rent{color:var(--rent)} .verdict .v-line .win-buy{color:var(--buy)}
+.verdict .v-detail{font-size:13.5px; color:var(--ink-soft); margin-top:3px}
+.stat-row{display:grid; grid-template-columns:repeat(5,1fr); gap:10px}
+@media(max-width:760px){.stat-row{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:10px 14px}
+.stat .k{font-size:11px; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-soft); font-weight:600}
+.stat .v{font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:600; margin-top:2px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px; box-shadow:0 1px 2px rgba(26,29,35,.04)}
+.card h3{font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; margin-bottom:8px}
+canvas{width:100%; height:auto; display:block}
+.legend{display:flex; gap:18px; font-size:12.5px; margin-top:6px; color:var(--ink-soft); flex-wrap:wrap}
+.legend .sw{display:inline-block; width:18px; height:3px; border-radius:2px; vertical-align:middle; margin-right:6px}
+.gauge{position:relative; height:64px; margin:22px 6px 8px}
+.gauge .track{position:absolute; top:28px; left:0; right:0; height:8px; background:var(--line); border-radius:4px}
+.gauge .band{position:absolute; top:28px; height:8px; background:linear-gradient(90deg,var(--buy-soft),var(--buy)); border-radius:4px; opacity:.85}
+.gauge .tick{position:absolute; top:20px; width:2px; height:24px; background:var(--ink)}
+.gauge .tick.rent-tick{background:var(--rent)}
+.gauge .tlabel{position:absolute; font-family:'IBM Plex Mono',monospace; font-size:11px; white-space:nowrap; transform:translateX(-50%)}
+.gauge .tlabel.top{top:0} .gauge .tlabel.bot{top:48px}
+.note{font-size:12px; color:var(--ink-soft); margin-top:8px}
+.warn{font-size:12px; color:var(--amber); margin-top:6px; display:none}
+table.bd{width:100%; border-collapse:collapse; font-size:13px}
+table.bd td{padding:4px 0; border-bottom:1px dashed var(--line)}
+table.bd td:last-child{text-align:right; font-family:'IBM Plex Mono',monospace; font-weight:500}
+table.bd tr.total td{border-bottom:none; font-weight:600; padding-top:7px}
+footer{max-width:1240px; margin:0 auto; padding:0 28px 40px; font-size:12px; color:var(--ink-soft)}
+@media (prefers-reduced-motion: no-preference){ .verdict,.stat .v{transition:color .2s} }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1><span class="buy-w">Buy</span> vs <span class="rent-w">Rent</span> — trade study console</h1>
+    <div class="sub">Every wealth figure is after taxes, selling costs, and capital-gains — comparing owner equity against a renter who invests the down payment and every monthly difference.</div>
+  </div>
+  <div class="hdr-right">
+    <select id="currency" aria-label="Currency">
+      <option value="USD">$ USD</option><option value="EUR">€ EUR</option>
+      <option value="GBP">£ GBP</option><option value="INR">₹ INR</option>
+      <option value="CAD">$ CAD</option><option value="AUD">$ AUD</option>
+      <option value="SGD">$ SGD</option><option value="JPY">¥ JPY</option>
+    </select>
+    <button class="share" id="share">Copy scenario link</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="controls">
+    <div class="group">
+      <h2>Location presets</h2>
+      <input id="loc" list="loc-list" placeholder="Type a city… e.g. Mountain View" style="width:100%; font-family:'IBM Plex Sans',sans-serif; font-size:13.5px; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--paper)">
+      <datalist id="loc-list"></datalist>
+      <div class="hint" id="loc-note" style="margin-top:6px">Fills price, rent, tax &amp; growth rates with rough metro averages (mid-2020s data — verify locally). Currency switches automatically.</div>
+    </div>
+    <div class="group">
+      <h2>Scenario presets</h2>
+      <div class="presets">
+        <button data-preset="bear" title="Modest appreciation, strong equities">Renter's world</button>
+        <button data-preset="base" title="Middle-of-road assumptions">Base case</button>
+        <button data-preset="bull" title="Hot housing, conservative investor">Owner's world</button>
+      </div>
+    </div>
+    <div class="group">
+      <h2>Saved scenarios</h2>
+      <div style="display:flex; gap:8px">
+        <input id="savename" placeholder="Label, e.g. Fremont + ADU" style="flex:1; font-family:'IBM Plex Sans',sans-serif; font-size:13px; padding:7px 10px; border:1px solid var(--line); border-radius:8px; background:var(--paper)">
+        <button id="savebtn" class="share">Save</button>
+      </div>
+      <div id="savedlist"></div>
+      <div class="hint" style="margin-top:8px">Snapshots every slider. Tick a box to overlay it in the comparison. Saved scenarios ride along in scenario links.</div>
+    </div>
+    <div id="sliders" style="display:flex; flex-direction:column; gap:14px"></div>
+  </div>
+
+  <div class="results">
+    <div class="verdict" id="verdict"></div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="k">Break-even year<span class="info" tabindex="0">i<span class="tt">The first year the buyer's total wealth catches up to the renter-who-invests. 'Never' means it doesn't happen within your horizon.</span></span></div><div class="v" id="s-be">—</div></div>
+      <div class="stat"><div class="k">Monthly P+I<span class="info" tabindex="0">i<span class="tt">The fixed monthly loan payment (Principal + Interest). Property tax, insurance, and HOA come on top of this.</span></span></div><div class="v" id="s-pmt">—</div></div>
+      <div class="stat"><div class="k">Cash to close<span class="info" tabindex="0">i<span class="tt">Down payment plus closing costs — the total cash you hand over on day 1.</span></span></div><div class="v" id="s-close">—</div></div>
+      <div class="stat"><div class="k">Break-even rent (yr 1)<span class="info" tabindex="0">i<span class="tt">If renting a comparable home costs MORE than this, buying wins in year 1; if less, renting wins. The single-number summary of the whole model.</span></span></div><div class="v" id="s-berent">—</div></div>
+      <div class="stat"><div class="k">Month-1 cash gap<span class="info" tabindex="0">i<span class="tt">How much more (red) or less (green) owning costs than renting in actual monthly cash flow, in the first month — the number your budget feels.</span></span></div><div class="v" id="s-gap">—</div></div>
+    </div>
+
+    <div class="card" id="cmp-card" style="display:none">
+      <h3>Scenario comparison — Buy − Rent wealth gap (above 0 = buying wins)</h3>
+      <canvas id="cmp-chart" width="860" height="320"></canvas>
+      <div class="legend" id="cmp-legend"></div>
+      <table class="bd" id="cmp-table" style="margin-top:10px"></table>
+      <div class="note" id="cmp-note"></div>
+    </div>
+
+    <div class="card">
+      <h3>Year-1 owning cost, itemized (annual) — updates live as you drag</h3>
+      <table class="bd" id="breakdown"></table>
+      <div class="warn" id="tax-warn">Non-USD currency selected: the tax model (mortgage-interest limits, SALT, CA rules) is US-specific and has been generalized — interest is treated as fully deductible at the rates you set. Set both tax sliders to your local relief rates, or to 0 if mortgage interest isn't deductible where you are.</div>
+    </div>
+
+    <div class="card">
+      <h3>Net worth trajectories</h3>
+      <canvas id="chart" width="860" height="380"></canvas>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--buy)"></span>Buy — home equity after sale costs &amp; cap-gains tax</span>
+        <span><span class="sw" style="background:var(--rent)"></span>Rent — portfolio after cap-gains tax</span>
+      </div>
+      <div class="warn" id="pmi-warn">Down payment under 20% — PMI of 0.5%/yr on the loan is being charged until equity reaches 22%.</div>
+    </div>
+
+    <div class="card">
+      <h3>The percentage view — rent yield vs cost-of-owning band<span class="info" tabindex="0">i<span class="tt">Rent yield = one year of rent ÷ home value. The blue band = what owning costs per year as a % of home value, from day 1 (mostly financed with the bank’s cheap money) to paid-off (all your own money, which could be earning elsewhere). Where the green rent line sits against the band is the whole decision.</span></span></h3>
+      <div class="gauge" id="gauge"></div>
+      <div class="note" id="gauge-note"></div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  Fixed background assumptions: property tax grows 2%/yr (Prop 13-style), other ownership and rental figures use the growth rates you set, portfolio taxed at the cap-gains slider rate on gains at the horizon, ADU/rental income modeled at an effective 15% tax after expenses and depreciation. USD mode applies the $750k federal / $1M California interest-deduction limits against the live loan balance and a $500k home-sale gain exclusion. This is a model, not advice — the two sliders that matter most are appreciation and investment return.
+</footer>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+
+const CUR = {
+  USD:{sym:"$", loc:"en-US", big:v=>"$"+(v/1e6).toFixed(2)+"M", house:[800000,3000000,25000,1500000], rent:[2000,9000,100,4000], adu:[0,4000,100,0]},
+  EUR:{sym:"€", loc:"de-DE", big:v=>"€"+(v/1e6).toFixed(2)+"M", house:[200000,2000000,25000,600000], rent:[600,5000,50,1800], adu:[0,2500,50,0]},
+  GBP:{sym:"£", loc:"en-GB", big:v=>"£"+(v/1e6).toFixed(2)+"M", house:[200000,2000000,25000,550000], rent:[700,6000,50,1900], adu:[0,2500,50,0]},
+  INR:{sym:"₹", loc:"en-IN", big:v=>"₹"+(v/1e7).toFixed(2)+"Cr", house:[5000000,150000000,2500000,30000000], rent:[15000,500000,5000,60000], adu:[0,150000,5000,0]},
+  CAD:{sym:"$", loc:"en-CA", big:v=>"$"+(v/1e6).toFixed(2)+"M", house:[400000,3000000,25000,1100000], rent:[1500,8000,100,3200], adu:[0,3000,100,0]},
+  AUD:{sym:"$", loc:"en-AU", big:v=>"$"+(v/1e6).toFixed(2)+"M", house:[400000,3000000,25000,1200000], rent:[1500,8000,100,3000], adu:[0,3000,100,0]},
+  SGD:{sym:"$", loc:"en-SG", big:v=>"$"+(v/1e6).toFixed(2)+"M", house:[500000,4000000,25000,1600000], rent:[1500,10000,100,3800], adu:[0,4000,100,0]},
+  JPY:{sym:"¥", loc:"ja-JP", big:v=>"¥"+(v/1e6).toFixed(0)+"M", house:[30000000,300000000,1000000,80000000], rent:[80000,1000000,10000,220000], adu:[0,300000,10000,0]},
+};
+let curCode="USD";
+const C=()=>CUR[curCode];
+const fmt$=v=>(v<0?"−":"")+C().sym+Math.abs(Math.round(v)).toLocaleString(C().loc);
+const fmtBig=v=>(v<0?"−":"")+C().big(Math.abs(v));
+const fmtP=v=>(v*100).toFixed(2)+"%";
+
+const SLIDERS = [
+ {grp:"House"},
+ {id:"value", label:"House value", tip:"The purchase price. Everything scales off this — property tax, upkeep, and appreciation are all charged or earned as a percentage of it.", cur:"house", fmt:v=>C().big(v)},
+ {id:"down", label:"Down payment", tip:"The share of the price you pay in cash upfront. More down = smaller loan and less interest, but more of your own money locked in the house. Below 20%, lenders add PMI (extra insurance you pay for their protection).", min:5, max:50, step:1, val:20, fmt:v=>v+"%"},
+ {id:"closing", label:"Closing costs (of loan)", tip:"One-time fees to get the loan and close the purchase — lender, title, escrow, inspections. This money buys you nothing back; it's gone on day 1.", min:0.5, max:4, step:0.25, val:2, fmt:v=>v+"%"},
+ {id:"sellcost", label:"Selling cost at exit", tip:"What it costs to sell later: agent commissions and transfer taxes. You only ever pocket ~94% of the home's value, so it quietly eats into your appreciation.", min:2, max:8, step:0.5, val:6, fmt:v=>v+"%"},
+ {grp:"Loan"},
+ {id:"rate", label:"Mortgage rate", tip:"The yearly interest the bank charges on whatever you still owe. Small changes are huge at this loan size — each 0.25% is roughly a couple hundred a month.", min:1, max:10, step:0.05, val:6.25, fmt:v=>v.toFixed(2)+"%"},
+ {id:"years", label:"Loan duration", tip:"How long you take to repay. Shorter = higher monthly payment but far less lifetime interest. Longer = easier months, much more interest overall.", min:10, max:30, step:5, val:30, fmt:v=>v+" yrs"},
+ {grp:"Carrying costs (%/yr of value)"},
+ {id:"ptax", label:"Property tax", tip:"Annual tax your county charges as a % of the home's value. In California it's anchored to your purchase price and can only grow ~2%/yr (Prop 13) — a quiet long-term subsidy for owners.", min:0, max:2.5, step:0.05, val:1.2, fmt:v=>v.toFixed(2)+"%"},
+ {id:"insm", label:"Insurance + maintenance", tip:"Homeowner's insurance plus the boring reality of repairs — roofs, water heaters, paint. About 1%/yr of home value is the standard rule of thumb. Renters never pay this line.", min:0.2, max:2, step:0.1, val:1.0, fmt:v=>v.toFixed(1)+"%"},
+ {id:"hoa", label:"HOA / society fees", tip:"Dues if the home is in an association (or society/strata fees elsewhere). Covers shared maintenance; in this comparison it's a pure carrying cost.", min:0, max:1.5, step:0.1, val:0.4, fmt:v=>v.toFixed(1)+"%"},
+ {grp:"Market beliefs — the two that decide everything"},
+ {id:"appr", label:"Home appreciation /yr", tip:"How fast you believe the house's price rises each year. The most powerful slider on the BUY side — it earns on the full house value even though you only put ~20% down. That multiplier is called leverage.", min:0, max:10, step:0.25, val:3, fmt:v=>v.toFixed(2)+"%", hint:"Bay Area long-run ≈ 5%; US national ≈ 3–4%"},
+ {id:"inv", label:"Alternative investment return /yr", tip:"What your money would earn if invested instead of parked in the house (index funds ≈ 8%, safe savings ≈ 4.5%). The most powerful slider on the RENT side — the renter's portfolio compounds at this rate.", min:1, max:12, step:0.25, val:8, fmt:v=>v.toFixed(2)+"%", hint:"Equities ≈ 8% nominal; safe/blended ≈ 4.5%"},
+ {grp:"Rent"},
+ {id:"rent", label:"Comparable monthly rent", tip:"What renting a truly comparable home costs — same size, same neighborhood. Comparing a house purchase against a cheaper apartment rigs the answer toward renting.", cur:"rent", fmt:v=>C().sym+v.toLocaleString(C().loc)},
+ {id:"rentg", label:"Rent growth /yr", tip:"How fast rent climbs each year. Higher growth punishes renting and helps buying — a fixed mortgage payment never gets a rent increase.", min:0, max:8, step:0.05, val:3.85, fmt:v=>v.toFixed(2)+"%"},
+ {grp:"Rental income if you buy"},
+ {id:"adu", label:"ADU / room / unit rent per month", tip:"Income from renting out part of the property (ADU, room, in-law unit). The strongest real-world lever for making buying win: it directly pays down your carrying costs every month.", cur:"adu", fmt:v=>C().sym+v.toLocaleString(C().loc), hint:"Grows with rent growth; taxed at ~15% effective after expenses & depreciation"},
+ {grp:"Taxes"},
+ {id:"fed", label:"Marginal federal / national rate", tip:"The tax on your LAST dollar of income — not your average rate. It's what each dollar of deductible mortgage interest actually saves you.", min:0, max:45, step:1, val:32, fmt:v=>v+"%"},
+ {id:"ca", label:"Marginal state / local rate", tip:"Same idea, for your state. In California both property tax and mortgage interest reduce state taxable income.", min:0, max:15, step:0.1, val:9.3, fmt:v=>v.toFixed(1)+"%"},
+ {id:"ltcg", label:"Cap-gains rate on investments", tip:"The tax on investment profits when sold (capital gains). It's charged on the renter's portfolio gains at the end — a higher rate makes renting less attractive.", min:0, max:40, step:0.5, val:28.1, fmt:v=>v.toFixed(1)+"%"},
+ {grp:"Horizon"},
+ {id:"horizon", label:"Years to evaluate", tip:"How many years until you'd realistically sell or compare outcomes. Buying almost never wins on short horizons — closing and selling costs need years to be earned back.", min:5, max:30, step:1, val:30, fmt:v=>v+" yrs"},
+];
+
+const P={};
+const box=$("sliders");
+let g=null;
+for(const s of SLIDERS){
+  if(s.grp){ g=document.createElement("div"); g.className="group"; g.innerHTML=`<h2>${s.grp}</h2>`; box.appendChild(g); continue; }
+  const cc = s.cur ? C()[s.cur] : null;
+  const [mn,mx,st,dv] = cc || [s.min,s.max,s.step,s.val];
+  P[s.id]=dv;
+  const d=document.createElement("div"); d.className="ctl"; d.id="ctl-"+s.id;
+  const info=s.tip?`<span class="info" tabindex="0" role="note" aria-label="${s.tip}">i<span class="tt">${s.tip}</span></span>`:"";
+  d.innerHTML=`<div class="ctl-top"><label for="in-${s.id}">${s.label}${info}</label>
+    <span class="val" id="v-${s.id}"></span></div>
+    <input type="range" id="in-${s.id}" min="${mn}" max="${mx}" step="${st}" value="${dv}">
+    ${s.hint?`<div class="hint">${s.hint}</div>`:""}`;
+  g.appendChild(d);
+  d.querySelector("input").addEventListener("input", e=>{
+    P[s.id]=parseFloat(e.target.value);
+    $("v-"+s.id).textContent=s.fmt(P[s.id]);
+    recompute(); saveHash();
+  });
+}
+function refreshLabels(){ for(const s of SLIDERS){ if(s.id) $("v-"+s.id).textContent=s.fmt(P[s.id]); } }
+
+function applyCurrency(code, resetDefaults){
+  curCode=code; $("currency").value=code;
+  for(const s of SLIDERS){
+    if(!s.cur) continue;
+    const [mn,mx,st,dv]=C()[s.cur];
+    const inp=$("in-"+s.id);
+    inp.min=mn; inp.max=mx; inp.step=st;
+    if(resetDefaults){ inp.value=dv; P[s.id]=dv; }
+  }
+  $("tax-warn").style.display = curCode==="USD" ? "none":"block";
+}
+$("currency").addEventListener("change", e=>{
+  applyCurrency(e.target.value, true);
+  refreshLabels(); recompute(); saveHash();
+});
+
+/* ---- Location presets: rough metro averages (mid-2020s; verify locally) ---- */
+const LOCS={
+ "Mountain View / South Bay, CA":{cur:"USD",value:1500000,rent:4500,rate:6.25,ptax:1.2,insm:1.0,hoa:0.4,appr:5,rentg:3.85},
+ "San Jose, CA":{cur:"USD",value:1450000,rent:3900,rate:6.25,ptax:1.25,insm:1.0,hoa:0.3,appr:5,rentg:3.8},
+ "Sunnyvale, CA":{cur:"USD",value:1900000,rent:4300,rate:6.25,ptax:1.2,insm:1.0,hoa:0.3,appr:5.5,rentg:3.8},
+ "San Ramon, CA":{cur:"USD",value:1350000,rent:3800,rate:6.25,ptax:1.35,insm:1.0,hoa:0.4,appr:4.5,rentg:3.5},
+ "Hayward, CA":{cur:"USD",value:850000,rent:2900,rate:6.25,ptax:1.25,insm:1.0,hoa:0.3,appr:4.5,rentg:3.5},
+ "Fremont, CA":{cur:"USD",value:1300000,rent:3600,rate:6.25,ptax:1.25,insm:1.0,hoa:0.3,appr:5,rentg:3.7},
+ "San Francisco, CA":{cur:"USD",value:1300000,rent:4200,rate:6.25,ptax:1.18,insm:1.0,hoa:0.6,appr:3.5,rentg:3},
+ "Los Angeles, CA":{cur:"USD",value:950000,rent:3800,rate:6.25,ptax:1.1,insm:1.1,hoa:0.3,appr:5,rentg:3.5},
+ "San Diego, CA":{cur:"USD",value:950000,rent:3600,rate:6.25,ptax:1.1,insm:1.0,hoa:0.3,appr:5.5,rentg:3.5},
+ "Seattle, WA":{cur:"USD",value:850000,rent:3200,rate:6.25,ptax:0.9,insm:0.9,hoa:0.4,appr:5,rentg:3.5},
+ "Portland, OR":{cur:"USD",value:550000,rent:2400,rate:6.25,ptax:1.0,insm:0.9,hoa:0.3,appr:4,rentg:3},
+ "Denver, CO":{cur:"USD",value:580000,rent:2500,rate:6.25,ptax:0.55,insm:1.0,hoa:0.3,appr:5,rentg:3},
+ "Austin, TX":{cur:"USD",value:450000,rent:2200,rate:6.25,ptax:1.9,insm:1.2,hoa:0.2,appr:4,rentg:2.5},
+ "Dallas, TX":{cur:"USD",value:400000,rent:2200,rate:6.25,ptax:2.2,insm:1.3,hoa:0.2,appr:4.5,rentg:3},
+ "Houston, TX":{cur:"USD",value:340000,rent:2000,rate:6.25,ptax:2.0,insm:1.5,hoa:0.2,appr:4,rentg:3},
+ "Phoenix, AZ":{cur:"USD",value:450000,rent:2100,rate:6.25,ptax:0.65,insm:1.0,hoa:0.3,appr:5.5,rentg:3},
+ "Las Vegas, NV":{cur:"USD",value:430000,rent:2000,rate:6.25,ptax:0.6,insm:0.9,hoa:0.3,appr:5,rentg:3},
+ "Salt Lake City, UT":{cur:"USD",value:550000,rent:2200,rate:6.25,ptax:0.55,insm:0.9,hoa:0.2,appr:5.5,rentg:3.5},
+ "Miami, FL":{cur:"USD",value:550000,rent:3300,rate:6.25,ptax:1.0,insm:1.8,hoa:0.8,appr:6,rentg:4},
+ "Atlanta, GA":{cur:"USD",value:400000,rent:2100,rate:6.25,ptax:1.0,insm:1.0,hoa:0.2,appr:5,rentg:3},
+ "Nashville, TN":{cur:"USD",value:460000,rent:2100,rate:6.25,ptax:0.65,insm:1.0,hoa:0.2,appr:5.5,rentg:3},
+ "Raleigh, NC":{cur:"USD",value:430000,rent:1900,rate:6.25,ptax:0.8,insm:0.9,hoa:0.2,appr:5,rentg:3},
+ "Chicago, IL":{cur:"USD",value:360000,rent:2300,rate:6.25,ptax:2.1,insm:1.1,hoa:0.5,appr:3,rentg:2.5},
+ "Minneapolis, MN":{cur:"USD",value:380000,rent:2000,rate:6.25,ptax:1.3,insm:1.1,hoa:0.3,appr:3.5,rentg:2.5},
+ "New York metro, NY":{cur:"USD",value:750000,rent:4200,rate:6.25,ptax:1.7,insm:1.0,hoa:0.8,appr:3.5,rentg:3},
+ "Boston, MA":{cur:"USD",value:750000,rent:3500,rate:6.25,ptax:1.1,insm:1.0,hoa:0.5,appr:4.5,rentg:3.5},
+ "Washington DC metro":{cur:"USD",value:620000,rent:3000,rate:6.25,ptax:0.95,insm:0.9,hoa:0.5,appr:3.5,rentg:3},
+ "Toronto, Canada":{cur:"CAD",value:1100000,rent:3300,rate:4.5,ptax:0.66,insm:0.9,hoa:0.6,appr:4,rentg:3},
+ "Vancouver, Canada":{cur:"CAD",value:1250000,rent:3500,rate:4.5,ptax:0.3,insm:0.9,hoa:0.6,appr:5,rentg:3},
+ "London, UK":{cur:"GBP",value:550000,rent:2300,rate:4.5,ptax:0.35,insm:1.0,hoa:0.4,appr:3,rentg:3.5},
+ "Berlin, Germany":{cur:"EUR",value:550000,rent:1800,rate:3.8,ptax:0.3,insm:1.0,hoa:0.4,appr:4,rentg:3},
+ "Amsterdam, Netherlands":{cur:"EUR",value:550000,rent:2200,rate:3.9,ptax:0.35,insm:0.9,hoa:0.3,appr:5,rentg:3.5},
+ "Sydney, Australia":{cur:"AUD",value:1400000,rent:3600,rate:6.1,ptax:0.3,insm:0.9,hoa:0.5,appr:6,rentg:4},
+ "Melbourne, Australia":{cur:"AUD",value:950000,rent:2800,rate:6.1,ptax:0.35,insm:0.9,hoa:0.5,appr:4,rentg:3.5},
+ "Singapore":{cur:"SGD",value:1800000,rent:4500,rate:3.5,ptax:0.35,insm:0.6,hoa:0.9,appr:4,rentg:3},
+ "Tokyo, Japan":{cur:"JPY",value:80000000,rent:250000,rate:1.5,ptax:0.3,insm:0.8,hoa:0.6,appr:3,rentg:1},
+ "Bangalore, India":{cur:"INR",value:15000000,rent:45000,rate:8.5,ptax:0.1,insm:0.7,hoa:0.8,appr:6,rentg:5},
+ "Mumbai, India":{cur:"INR",value:30000000,rent:90000,rate:8.5,ptax:0.15,insm:0.7,hoa:0.9,appr:5,rentg:4.5},
+ "Delhi NCR, India":{cur:"INR",value:18000000,rent:55000,rate:8.5,ptax:0.1,insm:0.7,hoa:0.7,appr:6,rentg:5},
+ "Hyderabad, India":{cur:"INR",value:12000000,rent:40000,rate:8.5,ptax:0.1,insm:0.7,hoa:0.7,appr:7,rentg:5},
+};
+const dl=$("loc-list");
+for(const name of Object.keys(LOCS)){
+  const o=document.createElement("option"); o.value=name; dl.appendChild(o);
+}
+$("loc").addEventListener("change", e=>{
+  const L=LOCS[e.target.value];
+  if(!L) return;
+  applyCurrency(L.cur, true);
+  for(const [k,v] of Object.entries(L)){
+    if(k==="cur") continue;
+    if(P.hasOwnProperty(k)){ P[k]=v; const inp=$("in-"+k); if(inp){
+      if(parseFloat(inp.min)>v) inp.min=v;
+      if(parseFloat(inp.max)<v) inp.max=v;
+      inp.value=v; } }
+  }
+  $("loc-note").textContent="Loaded rough averages for "+e.target.value+" — mid-2020s data, verify current figures locally. Tax sliders left untouched: set them to your own rates.";
+  refreshLabels(); recompute(); saveHash();
+});
+
+document.querySelectorAll(".presets button").forEach(b=>b.addEventListener("click",()=>{
+  const p=b.dataset.preset;
+  const set=(id,v)=>{ P[id]=v; $("in-"+id).value=v; };
+  if(p==="bear"){ set("appr",2); set("inv",9); }
+  if(p==="base"){ set("appr",3.5); set("inv",7); }
+  if(p==="bull"){ set("appr",5); set("inv",4.5); }
+  refreshLabels(); recompute(); saveHash();
+}));
+
+function saveHash(){
+  try{
+    let s=Object.entries(P).map(([k,v])=>k+"="+v).join("&");
+    if(SAVED.length) s+="&sv="+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(SAVED)))));
+    history.replaceState(null,"","#cur="+curCode+"&"+s);
+  }catch(e){ /* sandboxed preview (origin null) blocks history writes — sliders still work */ }
+}
+function loadHash(){
+  try{
+  if(!location.hash) return;
+  const q=new URLSearchParams(location.hash.slice(1));
+  if(q.get("cur") && CUR[q.get("cur")]) applyCurrency(q.get("cur"), false);
+  for(const s of SLIDERS){ if(!s.id) continue;
+    const v=q.get(s.id);
+    if(v!==null && !isNaN(parseFloat(v))){ P[s.id]=parseFloat(v); $("in-"+s.id).value=v; }
+  }
+  const sv=q.get("sv");
+  if(sv){ try{ SAVED=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(sv))))); renderSavedList(); }catch(e){} }
+  }catch(e){}
+}
+$("share").addEventListener("click", async ()=>{
+  saveHash();
+  try{
+    const base=(location.protocol==="about:"||location.origin==="null")?"":location.href.split("#")[0];
+    let s=Object.entries(P).map(([k,v])=>k+"="+v).join("&");
+    if(SAVED.length) s+="&sv="+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(SAVED)))));
+    await navigator.clipboard.writeText(base+"#cur="+curCode+"&"+s);
+    $("share").textContent="Copied ✓";
+  }catch(e){ $("share").textContent="Copy blocked here"; }
+  setTimeout(()=>$("share").textContent="Copy scenario link",1600);
+});
+
+function usd(){ return curCode==="USD"; }
+
+function simulate(pp, code){
+  pp=pp||P; code=code||curCode;
+  const isUSD=code==="USD";
+  const V=pp.value, L0=V*(1-pp.down/100), r=pp.rate/100/12, n=pp.years*12;
+  const pmt=L0*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  const closing=L0*pp.closing/100, cashClose=V*pp.down/100+closing;
+  const fed=pp.fed/100, ca=pp.ca/100, ltcg=pp.ltcg/100;
+  const sp=pp.inv/100, app=pp.appr/100, sell=pp.sellcost/100;
+  const H=Math.round(pp.horizon);
+  const fedLim=isUSD?750000:Infinity, caLim=isUSD?1000000:Infinity;
+  const caStd=isUSD?11700:0, exclusion=isUSD?500000:0;
+  const pmiOn=pp.down<20, pmiRate=0.005;
+  let bal=L0, port=cashClose, basis=cashClose;
+  const own=[], ren=[];
+  let yr1={}, m1gap=null;
+  for(let yr=1; yr<=H; yr++){
+    const ptax=V*pp.ptax/100*Math.pow(1.02,yr-1);
+    const insm=V*pp.insm/100*Math.pow(1.03,yr-1);
+    const hoa=V*pp.hoa/100*Math.pow(1.03,yr-1);
+    const rent=pp.rent*12*Math.pow(1+pp.rentg/100,yr-1);
+    const aduNet=pp.adu*12*Math.pow(1+pp.rentg/100,yr-1)*0.85;
+    let yint=0, ypmi=0;
+    for(let m=0;m<12;m++){
+      let pay=0;
+      if(bal>0.01){ const i=bal*r; const p=Math.min(pmt-i,bal); yint+=i; bal-=p; pay=i+p; }
+      let pmi=0;
+      if(pmiOn && bal>0.78*V){ pmi=L0*pmiRate/12; ypmi+=pmi; }
+      const diff=(pay+pmi+(hoa+ptax+insm)/12-aduNet/12)-rent/12;
+      if(m1gap===null) m1gap=diff;
+      port=port*(1+sp/12)+diff; basis+=diff;
+    }
+    const fs = yint>0 ? yint*Math.min(1,fedLim/Math.max(bal,1))*fed : 0;
+    const cs = Math.max(0,(yint>0?yint*Math.min(1,caLim/Math.max(bal,1)):0)+ptax-caStd)*ca;
+    port-=fs+cs; basis-=fs+cs;
+    const hv=V*Math.pow(1+app,yr), gross=hv*(1-sell);
+    const cgt=Math.max(0, Math.max(0,gross-V)-exclusion)*ltcg;
+    own.push(gross-bal-cgt);
+    ren.push(port-Math.max(0,port-basis)*ltcg);
+    if(yr===1) yr1={yint, ptax, insm, hoa, fs, cs, ypmi, adu:aduNet};
+  }
+  let be=null;
+  for(let i=0;i<H;i++) if(own[i]>=ren[i]){ be=i+1; break; }
+  return {own, ren, be, pmt, cashClose, yr1, m1gap};
+}
+
+function pctView(){
+  const V=P.value, L0=V*(1-P.down/100), cash=V*P.down/100+L0*P.closing/100;
+  const fed=P.fed/100, ca=P.ca/100, ltcg=P.ltcg/100;
+  const fedLim=usd()?750000:Infinity, caLim=usd()?1000000:Infinity;
+  const dedBen=Math.min(1,fedLim/L0)*fed+Math.min(1,caLim/L0)*ca;
+  const costDebt=P.rate/100*(1-dedBen);
+  const costEquity=P.inv/100*(1-ltcg);
+  const pmi=(P.down<20 ? L0*0.005/V : 0);
+  const adu=P.adu*12*0.85/V;
+  const fixed=P.ptax/100*(1-ca)+(P.insm+P.hoa)/100 - P.appr/100*(1-P.sellcost/100) - adu;
+  const day1=(L0/V)*costDebt+(cash/V)*costEquity+fixed+pmi;
+  const paid=costEquity+fixed;
+  const yield_=P.rent*12/V;
+  return {day1, paid, yield_};
+}
+
+function drawChart(sim){
+  const c=$("chart"), ctx=c.getContext("2d");
+  const W=c.width, Hc=c.height, padL=70, padR=16, padT=14, padB=34;
+  ctx.clearRect(0,0,W,Hc);
+  const H=sim.own.length;
+  const maxV=Math.max(...sim.own, ...sim.ren)*1.06;
+  const x=i=>padL+i/H*(W-padL-padR);
+  const y=v=>padT+(1-v/maxV)*(Hc-padT-padB);
+  ctx.strokeStyle="#E4E2DA"; ctx.fillStyle="#5B616E";
+  ctx.font="11px 'IBM Plex Mono',monospace"; ctx.lineWidth=1;
+  for(let s=0;s<=5;s++){
+    const v=maxV*s/5, yy=y(v);
+    ctx.beginPath(); ctx.moveTo(padL,yy); ctx.lineTo(W-padR,yy); ctx.stroke();
+    ctx.fillText(C().big(v), 6, yy+4);
+  }
+  const xstep=H<=12?2:5;
+  for(let yr=0; yr<=H; yr+=xstep) ctx.fillText(yr===0?"now":"yr "+yr, x(yr)-12, Hc-12);
+  ctx.beginPath();
+  ctx.moveTo(x(1), y(sim.ren[0]));
+  for(let i=1;i<H;i++) ctx.lineTo(x(i+1), y(sim.ren[i]));
+  for(let i=H-1;i>=0;i--) ctx.lineTo(x(i+1), y(sim.own[i]));
+  ctx.closePath(); ctx.fillStyle="rgba(14,159,110,0.07)"; ctx.fill();
+  const line=(arr,color)=>{
+    ctx.strokeStyle=color; ctx.lineWidth=2.6; ctx.beginPath();
+    ctx.moveTo(x(1), y(arr[0]));
+    for(let i=1;i<H;i++) ctx.lineTo(x(i+1), y(arr[i]));
+    ctx.stroke();
+  };
+  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  line(sim.ren, css("--rent")); line(sim.own, css("--buy"));
+  if(sim.be){
+    const bx=x(sim.be), by=y(sim.own[sim.be-1]);
+    ctx.fillStyle="#1A1D23";
+    ctx.beginPath(); ctx.arc(bx,by,5,0,7); ctx.fill();
+    ctx.font="600 12px 'IBM Plex Mono',monospace";
+    ctx.fillText("break-even: yr "+sim.be, Math.min(bx+8, W-160), by-10);
+  }
+}
+
+function drawGauge(pv){
+  const gg=$("gauge");
+  const lo=Math.min(pv.yield_, pv.day1, pv.paid)-0.008;
+  const hi=Math.max(pv.yield_, pv.day1, pv.paid)+0.008;
+  const pos=v=>((v-lo)/(hi-lo)*100).toFixed(2)+"%";
+  const bandL=Math.min(pv.day1,pv.paid), bandR=Math.max(pv.day1,pv.paid);
+  gg.innerHTML=`
+    <div class="track"></div>
+    <div class="band" style="left:${pos(bandL)}; width:calc(${pos(bandR)} - ${pos(bandL)})"></div>
+    <div class="tick" style="left:${pos(pv.day1)}"></div>
+    <div class="tlabel top" style="left:${pos(pv.day1)}">own, day 1: ${fmtP(pv.day1)}</div>
+    <div class="tick" style="left:${pos(pv.paid)}"></div>
+    <div class="tlabel bot" style="left:${pos(pv.paid)}">own, paid off: ${fmtP(pv.paid)}</div>
+    <div class="tick rent-tick" style="left:${pos(pv.yield_)}"></div>
+    <div class="tlabel ${pv.yield_>((pv.day1+pv.paid)/2)?'top':'bot'}" style="left:${pos(pv.yield_)}; color:var(--rent); font-weight:600">rent yield: ${fmtP(pv.yield_)}</div>`;
+  const note=$("gauge-note");
+  if(pv.yield_>=Math.max(pv.day1,pv.paid)) note.textContent="Rent yield sits above the whole owning band — buying wins at every stage of the mortgage.";
+  else if(pv.yield_<=Math.min(pv.day1,pv.paid)) note.textContent="Rent yield sits below the whole owning band — renting this cheaply beats owning at every stage of the mortgage.";
+  else note.textContent="Rent yield falls inside the band: buying wins on one side of the mortgage's life and loses on the other. The band slides from the day-1 end toward the paid-off end as the loan amortizes.";
+}
+
+let SAVED=[];
+const esc=s=>String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function renderSavedList(){
+  const box=$("savedlist");
+  box.innerHTML=SAVED.map((s,i)=>`
+    <div class="chip" data-i="${i}">
+      <input type="checkbox" class="cmpchk" data-i="${i}" ${s.cmp?"checked":""} title="Include in comparison">
+      <span class="chipname" title="${esc(s.name)}">${esc(s.name)}</span>
+      <span class="curtag">${s.cur}</span>
+      <button data-act="load" data-i="${i}">load</button>
+      <button data-act="del" data-i="${i}" title="Delete">×</button>
+    </div>`).join("");
+}
+$("savedlist").addEventListener("click", e=>{
+  const t=e.target, i=parseInt(t.dataset.i);
+  if(isNaN(i)) return;
+  if(t.classList.contains("cmpchk")){ SAVED[i].cmp=t.checked; renderCompare(); saveHash(); return; }
+  if(t.dataset.act==="del"){ SAVED.splice(i,1); renderSavedList(); renderCompare(); saveHash(); return; }
+  if(t.dataset.act==="load"){
+    const s=SAVED[i];
+    applyCurrency(s.cur, false);
+    for(const [k,v] of Object.entries(s.params)){
+      if(P.hasOwnProperty(k)){ P[k]=v; const inp=$("in-"+k); if(inp){
+        if(parseFloat(inp.min)>v) inp.min=v;
+        if(parseFloat(inp.max)<v) inp.max=v;
+        inp.value=v; } }
+    }
+    refreshLabels(); recompute(); saveHash();
+  }
+});
+$("savebtn").addEventListener("click", ()=>{
+  const name=($("savename").value||"").trim() || ("Scenario "+(SAVED.length+1));
+  SAVED.push({name, cur:curCode, params:{...P}, cmp:true});
+  $("savename").value="";
+  renderSavedList(); renderCompare(); saveHash();
+});
+const CMP_PALETTE=["#2456E6","#C77D0A","#7C3AED","#0E9F6E","#D6453D","#0891B2"];
+function renderCompare(){
+  const sel=SAVED.filter(s=>s.cmp);
+  const card=$("cmp-card");
+  if(!sel.length){ card.style.display="none"; return; }
+  card.style.display="block";
+  const entries=[{name:"Current (live)", params:{...P}, cur:curCode, color:"#1A1D23", dash:[6,4]}];
+  sel.forEach((s,i)=>entries.push({name:s.name, params:s.params, cur:s.cur, color:CMP_PALETTE[i%CMP_PALETTE.length]}));
+  const drawable=entries.filter(en=>en.cur===curCode).map(en=>({...en, sim:simulate(en.params, en.cur)}));
+  const skipped=entries.filter(en=>en.cur!==curCode);
+  // chart
+  const c=$("cmp-chart"), ctx=c.getContext("2d");
+  const W=c.width, Hc=c.height, padL=70, padR=16, padT=12, padB=32;
+  ctx.clearRect(0,0,W,Hc);
+  const Hmax=Math.max(...drawable.map(d=>d.sim.own.length));
+  const gaps=drawable.map(d=>d.sim.own.map((o,i)=>o-d.sim.ren[i]));
+  let lo=Math.min(0,...gaps.flat()), hi=Math.max(0,...gaps.flat());
+  const pad=(hi-lo)*0.06||1; lo-=pad; hi+=pad;
+  const x=i=>padL+i/Hmax*(W-padL-padR);
+  const y=v=>padT+(1-(v-lo)/(hi-lo))*(Hc-padT-padB);
+  ctx.strokeStyle="#E4E2DA"; ctx.fillStyle="#5B616E"; ctx.font="11px 'IBM Plex Mono',monospace"; ctx.lineWidth=1;
+  for(let s=0;s<=4;s++){
+    const v=lo+(hi-lo)*s/4, yy=y(v);
+    ctx.beginPath(); ctx.moveTo(padL,yy); ctx.lineTo(W-padR,yy); ctx.stroke();
+    ctx.fillText(C().big(v), 4, yy+4);
+  }
+  const xstep=Hmax<=12?2:5;
+  for(let yr=0; yr<=Hmax; yr+=xstep) ctx.fillText(yr===0?"now":"yr "+yr, x(yr)-12, Hc-10);
+  ctx.strokeStyle="#1A1D23"; ctx.lineWidth=1.4;
+  ctx.beginPath(); ctx.moveTo(padL,y(0)); ctx.lineTo(W-padR,y(0)); ctx.stroke();
+  for(let d=0; d<drawable.length; d++){
+    const gp=gaps[d];
+    ctx.strokeStyle=drawable[d].color; ctx.lineWidth=2.4;
+    ctx.setLineDash(drawable[d].dash||[]);
+    ctx.beginPath(); ctx.moveTo(x(1), y(gp[0]));
+    for(let i=1;i<gp.length;i++) ctx.lineTo(x(i+1), y(gp[i]));
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  $("cmp-legend").innerHTML=drawable.map(d=>`<span><span class="sw" style="background:${d.color}"></span>${esc(d.name)}</span>`).join("");
+  // table
+  $("cmp-table").innerHTML=`<tr style="font-weight:600"><td>Scenario</td><td>Break-even</td><td>Outcome at horizon</td><td>Monthly P+I</td></tr>`+
+    entries.map(en=>{
+      const sim=simulate(en.params, en.cur);
+      const H=sim.own.length, delta=sim.own[H-1]-sim.ren[H-1];
+      const big=CUR[en.cur].big, sym=CUR[en.cur].sym, loc=CUR[en.cur].loc;
+      const f=v=>(v<0?"−":"")+sym+Math.abs(Math.round(v)).toLocaleString(loc);
+      return `<tr><td>${esc(en.name)}${en.cur!==curCode?' <span class="curtag">('+en.cur+')</span>':''}</td>
+        <td>${sim.be?("yr "+sim.be):"never"}</td>
+        <td>${delta>=0?"Buy +":"Rent +"}${big(Math.abs(delta))} @ yr ${H}</td>
+        <td>${f(sim.pmt)}</td></tr>`;
+    }).join("");
+  $("cmp-note").textContent = skipped.length
+    ? "Note: "+skipped.map(s=>s.name).join(", ")+" use a different currency — shown in the table in their own units but not drawn on the chart."
+    : "Dashed black line = your live sliders. Save the current state to freeze it as a solid line.";
+}
+function recompute(){
+  const sim=simulate(), pv=pctView();
+  const H=sim.own.length;
+  const delta=sim.own[H-1]-sim.ren[H-1];
+  const win=delta>=0;
+  $("verdict").innerHTML=`<div class="v-line">${win
+    ?`<span class="win-buy">Buying wins</span> by ${fmtBig(delta)} over ${H} years`
+    :`<span class="win-rent">Renting wins</span> by ${fmtBig(-delta)} over ${H} years`}</div>
+    <div class="v-detail">${sim.be
+      ? `Buying pulls ahead in year ${sim.be}${win?" and stays ahead at the horizon.":", but the lead reverses before the horizon."}`
+      : `Buying never catches up within this horizon.`}</div>`;
+  $("s-be").textContent = sim.be? "yr "+sim.be : "never";
+  $("s-be").style.color = sim.be? "var(--buy)":"var(--alert)";
+  $("s-pmt").textContent = fmt$(sim.pmt);
+  $("s-close").textContent = fmt$(sim.cashClose);
+  $("s-berent").textContent = fmt$(pv.day1*P.value/12)+"/mo";
+  $("s-gap").textContent = (sim.m1gap>=0?"+":"−")+fmt$(Math.abs(sim.m1gap)).replace("−","")+"/mo";
+  $("s-gap").style.color = sim.m1gap>=0 ? "var(--alert)":"var(--rent)";
+  $("pmi-warn").style.display = P.down<20 ? "block":"none";
+  drawChart(sim); drawGauge(pv);
+  const y1=sim.yr1;
+  const opp=sim.cashClose*P.inv/100*(1-P.ltcg/100);
+  const appr=P.value*P.appr/100*(1-P.sellcost/100);
+  const net=y1.yint+y1.ptax+y1.insm+y1.hoa+y1.ypmi-y1.fs-y1.cs-y1.adu+opp-appr;
+  $("breakdown").innerHTML=`
+    <tr><td>Mortgage interest (yr 1)</td><td>${fmt$(y1.yint)}</td></tr>
+    ${y1.ypmi>0?`<tr><td>PMI</td><td>${fmt$(y1.ypmi)}</td></tr>`:""}
+    <tr><td>Property tax</td><td>${fmt$(y1.ptax)}</td></tr>
+    <tr><td>Insurance + maintenance + HOA</td><td>${fmt$(y1.insm+y1.hoa)}</td></tr>
+    <tr><td>Tax savings (national ${fmt$(y1.fs)} + local ${fmt$(y1.cs)})</td><td>−${fmt$(y1.fs+y1.cs)}</td></tr>
+    ${y1.adu>0?`<tr><td>ADU / rental income, after tax</td><td>−${fmt$(y1.adu)}</td></tr>`:""}
+    <tr><td>Opportunity cost on cash to close</td><td>${fmt$(opp)}</td></tr>
+    <tr><td>Appreciation credit (net of selling drag)</td><td>−${fmt$(appr)}</td></tr>
+    <tr class="total"><td>Net cost of owning, year 1</td><td>${fmt$(net)} &nbsp;(${fmt$(net/12)}/mo)</td></tr>`;
+  renderCompare();
+}
+loadHash();
+refreshLabels();
+$("tax-warn").style.display = curCode==="USD" ? "none":"block";
+recompute();
+</script>
+</body>
+</html>
