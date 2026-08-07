@@ -33,26 +33,6 @@
 
     <div class="cards" style="margin-top:20px">
 
-      <a class="card" href="projects/triagebridge.html">
-        <!-- TriageBridge: bridge arch with an ECG pulse crossing the deck -->
-        <div class="cover" style="padding:0">
-          <svg viewBox="0 0 320 130" style="width:100%;height:100%" aria-label="A bridge arch with a heartbeat line running across it">
-            <path d="M50 96 Q160 22 270 96" fill="none" stroke="#ffffff" stroke-width="2.6" opacity=".8"/>
-            <line x1="100" y1="96" x2="100" y2="63" stroke="#ffffff" stroke-width="1.6" opacity=".55"/>
-            <line x1="160" y1="96" x2="160" y2="50" stroke="#ffffff" stroke-width="1.6" opacity=".55"/>
-            <line x1="220" y1="96" x2="220" y2="63" stroke="#ffffff" stroke-width="1.6" opacity=".55"/>
-            <path d="M34 96 H124 L146 62 L174 118 L194 96 H286" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="286" cy="96" r="4" fill="#c4633b"/>
-          </svg>
-        </div>
-        <h3>TriageBridge</h3>
-        <p class="muted">"Is this serious?" — a digital health platform that answers it safely. Tap a body map,
-           describe symptoms in English, Hindi or Telugu, and AI triages them against your history — with
-           hard-coded safety rules it can never override, and a real physician queue behind it. Risk models,
-           an AI habit coach, lab-report reading, and FHIR interop round it out.</p>
-        <span class="tag">Python · MedGemma · FHIR · Live demo</span>
-      </a>
-
       <a class="card" href="projects/buy-vs-rent.html">
         <!-- Buy vs Rent: a house next to two comparison bars -->
         <div class="cover" style="padding:0">
@@ -74,6 +54,28 @@
         <span class="tag">Interactive tool · Live</span>
       </a>
 
+      <a class="card" href="projects/triagebridge.html">
+        <!-- TriageBridge: a pulse that splits into emergent / urgent / routine -->
+        <div class="cover" style="padding:0">
+          <svg viewBox="0 0 320 130" style="width:100%;height:100%" aria-label="A heartbeat pulse routed into three triage levels">
+            <polyline points="24,70 66,70 80,44 96,100 112,66 150,70" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+            <g stroke="#ffffff" stroke-width="2" opacity=".85">
+              <path d="M150 70 C 196 70 200 44 246 44" fill="none"/>
+              <path d="M150 70 H246" fill="none"/>
+              <path d="M150 70 C 196 70 200 96 246 96" fill="none"/>
+            </g>
+            <circle cx="252" cy="44" r="6" fill="#c4633b"/>
+            <circle cx="252" cy="70" r="6" fill="#ffffff"/>
+            <circle cx="252" cy="96" r="6" fill="#ffffff" opacity=".7"/>
+          </svg>
+        </div>
+        <h3>TriageBridge</h3>
+        <p class="muted">A weekend build: a health app that actually triages you. You tap where it hurts, describe
+           what's going on, and it sorts the symptom into emergent, urgent, or routine — then pushes the serious
+           ones to a real physician's queue. Plus meds, goals, and live "what-if" risk scores on the side.</p>
+        <span class="tag">Side project · Health app</span>
+      </a>
+
       <a class="card" href="projects/wanderyou.html">
         <!-- WanderYou: globe + paper plane -->
         <div class="cover" style="padding:0">
@@ -89,8 +91,9 @@
           </svg>
         </div>
         <h3>WanderYou</h3>
-        <p class="muted">A mobile-first, AI-powered group trip planner: swipe to vote on destinations, then Claude
-           builds the itinerary, packing list, and local cheat sheet. Live — click to try it.</p>
+        <p class="muted">Planning a group trip is chaos, so I built an app for it. Everyone swipes to vote on
+           destinations, then Claude spins up the itinerary, packing list, and a local cheat sheet. It's live —
+           go try it (and break it).</p>
         <span class="tag">React · Claude API · Live app</span>
       </a>
 
@@ -114,8 +117,9 @@
           </svg>
         </div>
         <h3>Direction-of-arrival estimation in realistic radar</h3>
-        <p class="muted">My M.S. thesis: comparing radar DoA algorithms (matched filter, MUSIC, compressed
-           sensing) under multipath and noise — and using a denoising autoencoder to recover accuracy.</p>
+        <p class="muted">My master's thesis. I pitted the classic radar direction-finding algorithms (matched
+           filter, MUSIC, compressed sensing) against messy real-world multipath and noise, then trained a
+           denoising autoencoder to claw the accuracy back.</p>
         <span class="tag">M.S. thesis · Radar signal processing</span>
       </a>
 
@@ -136,8 +140,9 @@
           </svg>
         </div>
         <h3>Chipless RFID: low-cost tags &amp; localisation</h3>
-        <p class="muted">Designed a fully passive chipless RFID tag — no chip, no power — encoding data as
-           impedance discontinuities, plus an Inverse SAR method to locate it. Best B.Tech. Project.</p>
+        <p class="muted">My undergrad thesis: an RFID tag with no chip and no battery — the data lives in the
+           tag's shape — plus a radar trick to work out where the tag actually is. It ended up winning best
+           B.Tech. project in my batch.</p>
         <span class="tag">RF design · Best B.Tech. Project</span>
       </a>
 
@@ -162,16 +167,17 @@
           </svg>
         </div>
         <h3>Radar image denoising with autoencoders</h3>
-        <p class="muted">Trained denoising autoencoders to suppress through-wall distortion and recover
-           sharper radar images. Published at the IEEE Radar Conference (RadarConf), 2018.</p>
+        <p class="muted">I trained autoencoders to clean up radar images distorted by walls — messy in,
+           sharp out. It became my first published paper, at IEEE RadarConf 2018.</p>
         <span class="tag">Machine learning · IEEE RadarConf</span>
       </a>
 
       <a class="card" href="projects/glucose-sensing.html">
         <div class="cover">🩸</div>
         <h3>Non-invasive glucose sensing</h3>
-        <p class="muted">A side project: a wearable rig (PPG, GSR &amp; temperature on an Arduino) exploring
-           whether blood glucose can be estimated without a finger prick.</p>
+        <p class="muted">A weekend-curiosity build — an Arduino wearable (PPG, skin response, temperature) to
+           see if you could ballpark blood glucose without the finger prick. Spoiler: harder than it looks, but
+           I learned a ton.</p>
         <span class="tag">Hardware · Side project</span>
       </a>
 
