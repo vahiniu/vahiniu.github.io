@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TriageBridge · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+    <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html" class="active">Projects</a>
+      <a href="../travel.html">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../projects.html">← Back to projects</a>
+    <h1 style="margin-top:18px">TriageBridge</h1>
+    <p class="pmeta" style="color:var(--ink-soft)">Digital health platform · AI symptom triage + telehealth · MedGemma · FHIR</p>
+
+    <p class="lead">A mobile health platform that answers the question everyone googles at 2 a.m. —
+       "is this serious?" — safely, in their own language, with a real physician one tap away.</p>
+
+    <p style="margin-top:18px">Patients face a bad choice with new symptoms: assume it's nothing (and risk
+       delaying care) or default to the ER (costly, overcrowded). TriageBridge sits in between. You tap an
+       interactive body map where it hurts, describe symptoms in your own words — typed or spoken, in English,
+       हिंदी, or తెలుగు — and an AI assesses them against your complete health history. The architecture is
+       deliberately safety-first: ~30 hard-coded red-flag rules (chest pain, stroke signs, crisis language —
+       including Hindi/Telugu emergency phrases) run <em>before</em> the model and set an acuity floor the AI can
+       raise but never lower. Anything urgent lands in a physician's queue automatically, where a doctor reviews
+       the full picture, messages the patient, prescribes — with automatic drug-interaction screening that
+       escalates dangerous combinations — or bumps the case to live care.</p>
+
+    <p>Around that core sits a full personal-health platform: trackers with longitudinal trend analysis and
+       Apple Health import; lab reports uploaded as photos or PDFs with automatic value extraction; validated
+       clinical risk models (FINDRISC diabetes, Framingham cardiovascular, CKD-EPI kidney) computed from the
+       patient's own data with a "what-if" simulator — drag a slider to lose 5 kg or quit smoking and watch the
+       real equations respond; an AI habit planner that decomposes an outcome like "lower my BP" into
+       personalized daily habits with points, streaks, and levels; a trend-alert engine that notices a rising
+       blood pressure before anyone thinks to look; and a medical timeline of the patient's whole story. Every
+       encounter exports as an HL7 FHIR R4 bundle any hospital EHR can ingest.</p>
+
+    <p>The stack is deliberately radical: a <strong>zero-dependency Python backend</strong> (stdlib only — it
+       runs in air-gapped clinical environments) serving a vanilla-JS PWA, with Google's open-weight
+       <strong>MedGemma</strong> model pluggable via Ollama for fully local, private inference. No frameworks,
+       no cloud APIs required, 88 automated tests plus a 68-check end-to-end workflow harness.</p>
+
+    <p><a href="https://triagebridge.onrender.com" target="_blank" rel="noopener">Try the live demo →</a>
+       <span style="color:var(--ink-soft);font-size:.9em">(free hosting — first load can take ~30 s to wake;
+       demo logins: <code>demo_patient / patient123</code>, <code>demo_doctor / doctor123</code>)</span></p>
+
+    <p style="color:var(--ink-soft);font-size:.9em">Research prototype for decision support — not a medical
+       device, and not a substitute for a clinician.</p>
+
+    <div class="chips" style="margin-top:14px">
+      <span class="chip">Python (zero dependencies)</span>
+      <span class="chip">MedGemma · Ollama</span>
+      <span class="chip">HL7 FHIR R4</span>
+      <span class="chip">PWA · offline-capable</span>
+      <span class="chip">English · हिंदी · తెలుగు</span>
+      <span class="chip">Clinical risk models</span>
+    </div>
+
+    <a class="back" href="../projects.html" style="display:inline-block;margin-top:24px">← Back to projects</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
