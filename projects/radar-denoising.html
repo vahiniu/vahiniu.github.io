@@ -29,15 +29,15 @@
     <h1 style="margin-top:18px">Radar image denoising with autoencoders</h1>
     <p class="pmeta" style="color:var(--ink-soft)">IEEE Radar Conference (RadarConf), 2018 · with S. Vishwakarma, A. Iqbal, A. Majumdar &amp; S. S. Ram (IIIT-Delhi)</p>
 
-    <p class="lead">Radar can see through walls — but the wall wrecks the picture. We taught a neural network to fix it.</p>
+    <p class="lead">Radar can see through walls, but the wall wrecks the picture. We taught a neural network to fix it.</p>
 
     <p>As a radar signal passes through a wall, attenuation, refraction, and multipath reflections distort the
        returned image, so a person or object imaged through a wall looks very different from the same target in
        open line-of-sight. Classical corrections need to know the wall's thickness and material and the room
-       geometry — information you rarely have in practice.</p>
+       geometry, information you rarely have in practice.</p>
 
     <p>In this work we treated the distortion as a denoising problem. We trained a denoising
-       autoencoder — a neural network that learns to map a corrupted input back to a clean version — on pairs of
+       autoencoder, a neural network that learns to map a corrupted input back to a clean version, on pairs of
        radar images: the distorted through-wall image as input, and the corresponding clean line-of-sight image as
        the target. After training on a large set of such pairs, the network learns to undo the wall's effects and
        reconstruct an image close to the free-space one, with no prior knowledge of the wall parameters or

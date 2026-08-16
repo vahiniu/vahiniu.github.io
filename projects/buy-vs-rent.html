@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buy vs Rent — Trade Study</title>
+<title>Buy vs Rent · Trade Study</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#FAFAF7; --panel:#FFFFFF; --ink:#1A1D23; --ink-soft:#5B616E; --line:#E4E2DA;
@@ -17,28 +17,28 @@ body{
   background:var(--paper);
   background-image:linear-gradient(var(--line) 1px, transparent 1px),linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size:32px 32px; background-position:-1px -1px;
-  color:var(--ink); font-family:'IBM Plex Sans',sans-serif; font-size:15px; line-height:1.45;
+  color:var(--ink); font-family:'Inter',sans-serif; font-size:15px; line-height:1.45;
 }
 header{padding:26px 28px 10px; max-width:1240px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px}
-h1{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; letter-spacing:-0.01em}
+h1{font-family:'Fraunces',serif; font-weight:700; font-size:26px; letter-spacing:-0.01em}
 h1 .buy-w{color:var(--buy)} h1 .rent-w{color:var(--rent)}
 .sub{color:var(--ink-soft); font-size:13.5px; margin-top:2px; max-width:640px}
 .hdr-right{display:flex; gap:8px; align-items:center}
-select#currency{font-family:'IBM Plex Mono',monospace; font-size:13px; padding:6px 10px; border:1px solid var(--line); border-radius:8px; background:var(--panel); cursor:pointer}
-button.share{font-family:'IBM Plex Sans',sans-serif; font-size:13px; font-weight:500; padding:6px 12px; border:1px solid var(--ink); border-radius:8px; background:var(--panel); cursor:pointer}
+select#currency{font-family:'Inter',sans-serif; font-size:13px; padding:6px 10px; border:1px solid var(--line); border-radius:8px; background:var(--panel); cursor:pointer}
+button.share{font-family:'Inter',sans-serif; font-size:13px; font-weight:500; padding:6px 12px; border:1px solid var(--ink); border-radius:8px; background:var(--panel); cursor:pointer}
 button.share:hover{background:var(--ink); color:var(--paper)}
 .wrap{max-width:1240px; margin:0 auto; padding:14px 28px 60px; display:grid; grid-template-columns:340px 1fr; gap:22px}
 @media(max-width:900px){.wrap{grid-template-columns:1fr}}
 .controls{display:flex; flex-direction:column; gap:14px}
 .group{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px 10px; box-shadow:0 1px 2px rgba(26,29,35,.04)}
-.group h2{font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-soft); margin-bottom:10px}
+.group h2{font-family:'Fraunces',serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-soft); margin-bottom:10px}
 .presets{display:flex; gap:8px}
 .presets button{flex:1; font-size:12.5px; font-weight:500; padding:7px 4px; border:1px solid var(--line); border-radius:8px; background:var(--paper); cursor:pointer}
 .presets button:hover{border-color:var(--ink)}
 .ctl{margin-bottom:12px}
 .ctl-top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2px}
 .ctl label{font-size:13px; font-weight:500}
-.ctl .val{font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600}
+.ctl .val{font-family:'Inter',sans-serif; font-size:13px; font-weight:600}
 input[type=range]{width:100%; height:22px; -webkit-appearance:none; background:transparent; cursor:pointer}
 input[type=range]:focus-visible{outline:2px solid var(--buy); outline-offset:2px; border-radius:4px}
 input[type=range]::-webkit-slider-runnable-track{height:4px; background:var(--line); border-radius:2px}
@@ -46,9 +46,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:16px; hei
 input[type=range]::-moz-range-track{height:4px; background:var(--line); border-radius:2px}
 input[type=range]::-moz-range-thumb{width:13px; height:13px; border-radius:50%; background:var(--ink); border:2.5px solid var(--paper); box-shadow:0 0 0 1px var(--ink)}
 .hint{font-size:11.5px; color:var(--ink-soft); margin-top:-4px}
-.info{display:inline-block; margin-left:6px; width:15px; height:15px; border-radius:50%; border:1px solid var(--ink-soft); color:var(--ink-soft); font-family:'IBM Plex Mono',monospace; font-size:10px; line-height:13px; text-align:center; cursor:help; position:relative; vertical-align:1px; font-weight:600}
+.info{display:inline-block; margin-left:6px; width:15px; height:15px; border-radius:50%; border:1px solid var(--ink-soft); color:var(--ink-soft); font-family:'Inter',sans-serif; font-size:10px; line-height:13px; text-align:center; cursor:help; position:relative; vertical-align:1px; font-weight:600}
 .info:hover,.info:focus{border-color:var(--ink); color:var(--ink); outline:none}
-.info .tt{position:absolute; bottom:calc(100% + 8px); left:-8px; width:250px; background:var(--ink); color:var(--paper); font-size:12px; font-weight:400; line-height:1.5; padding:9px 12px; border-radius:8px; opacity:0; visibility:hidden; transition:opacity .12s; z-index:60; text-transform:none; letter-spacing:0; text-align:left; font-family:'IBM Plex Sans',sans-serif; box-shadow:0 4px 14px rgba(26,29,35,.18)}
+.info .tt{position:absolute; bottom:calc(100% + 8px); left:-8px; width:250px; background:var(--ink); color:var(--paper); font-size:12px; font-weight:400; line-height:1.5; padding:9px 12px; border-radius:8px; opacity:0; visibility:hidden; transition:opacity .12s; z-index:60; text-transform:none; letter-spacing:0; text-align:left; font-family:'Inter',sans-serif; box-shadow:0 4px 14px rgba(26,29,35,.18)}
 .info:hover .tt,.info:focus .tt{opacity:1; visibility:visible}
 .stat .info{width:13px; height:13px; line-height:11px; font-size:9px}
 .stat .info .tt{left:auto; right:-8px}
@@ -57,19 +57,19 @@ input[type=range]::-moz-range-thumb{width:13px; height:13px; border-radius:50%; 
 .chip button{font-size:11.5px; padding:3px 8px; border:1px solid var(--line); border-radius:6px; background:var(--panel); cursor:pointer}
 .chip button:hover{border-color:var(--ink)}
 .chip input[type=checkbox]{accent-color:var(--buy); width:14px; height:14px; cursor:pointer}
-.chip .curtag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-soft)}
+.chip .curtag{font-family:'Inter',sans-serif; font-size:10.5px; color:var(--ink-soft)}
 .results{display:flex; flex-direction:column; gap:16px; min-width:0}
 .verdict{border-radius:10px; padding:16px 20px; border:1px solid var(--line); background:var(--panel); box-shadow:0 1px 2px rgba(26,29,35,.04)}
-.verdict .v-line{font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:700; letter-spacing:-.01em}
+.verdict .v-line{font-family:'Fraunces',serif; font-size:21px; font-weight:700; letter-spacing:-.01em}
 .verdict .v-line .win-rent{color:var(--rent)} .verdict .v-line .win-buy{color:var(--buy)}
 .verdict .v-detail{font-size:13.5px; color:var(--ink-soft); margin-top:3px}
 .stat-row{display:grid; grid-template-columns:repeat(5,1fr); gap:10px}
 @media(max-width:760px){.stat-row{grid-template-columns:repeat(2,1fr)}}
 .stat{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:10px 14px}
 .stat .k{font-size:11px; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-soft); font-weight:600}
-.stat .v{font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:600; margin-top:2px}
+.stat .v{font-family:'Inter',sans-serif; font-size:16px; font-weight:600; margin-top:2px}
 .card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px; box-shadow:0 1px 2px rgba(26,29,35,.04)}
-.card h3{font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; margin-bottom:8px}
+.card h3{font-family:'Fraunces',serif; font-size:13px; font-weight:700; margin-bottom:8px}
 canvas{width:100%; height:auto; display:block}
 .legend{display:flex; gap:18px; font-size:12.5px; margin-top:6px; color:var(--ink-soft); flex-wrap:wrap}
 .legend .sw{display:inline-block; width:18px; height:3px; border-radius:2px; vertical-align:middle; margin-right:6px}
@@ -78,13 +78,13 @@ canvas{width:100%; height:auto; display:block}
 .gauge .band{position:absolute; top:28px; height:8px; background:linear-gradient(90deg,var(--buy-soft),var(--buy)); border-radius:4px; opacity:.85}
 .gauge .tick{position:absolute; top:20px; width:2px; height:24px; background:var(--ink)}
 .gauge .tick.rent-tick{background:var(--rent)}
-.gauge .tlabel{position:absolute; font-family:'IBM Plex Mono',monospace; font-size:11px; white-space:nowrap; transform:translateX(-50%)}
+.gauge .tlabel{position:absolute; font-family:'Inter',sans-serif; font-size:11px; white-space:nowrap; transform:translateX(-50%)}
 .gauge .tlabel.top{top:0} .gauge .tlabel.bot{top:48px}
 .note{font-size:12px; color:var(--ink-soft); margin-top:8px}
 .warn{font-size:12px; color:var(--amber); margin-top:6px; display:none}
 table.bd{width:100%; border-collapse:collapse; font-size:13px}
 table.bd td{padding:4px 0; border-bottom:1px dashed var(--line)}
-table.bd td:last-child{text-align:right; font-family:'IBM Plex Mono',monospace; font-weight:500}
+table.bd td:last-child{text-align:right; font-family:'Inter',sans-serif; font-weight:500}
 table.bd tr.total td{border-bottom:none; font-weight:600; padding-top:7px}
 footer{max-width:1240px; margin:0 auto; padding:0 28px 40px; font-size:12px; color:var(--ink-soft)}
 @media (prefers-reduced-motion: no-preference){ .verdict,.stat .v{transition:color .2s} }
@@ -93,8 +93,8 @@ footer{max-width:1240px; margin:0 auto; padding:0 28px 40px; font-size:12px; col
 <body>
 <header>
   <div>
-    <h1><span class="buy-w">Buy</span> vs <span class="rent-w">Rent</span> — trade study console</h1>
-    <div class="sub">Every wealth figure is after taxes, selling costs, and capital-gains — comparing owner equity against a renter who invests the down payment and every monthly difference.</div>
+    <h1><span class="buy-w">Buy</span> vs <span class="rent-w">Rent</span>, trade study console</h1>
+    <div class="sub">Every wealth figure is after taxes, selling costs, and capital-gains, comparing owner equity against a renter who invests the down payment and every monthly difference.</div>
   </div>
   <div class="hdr-right">
     <select id="currency" aria-label="Currency">
@@ -111,9 +111,9 @@ footer{max-width:1240px; margin:0 auto; padding:0 28px 40px; font-size:12px; col
   <div class="controls">
     <div class="group">
       <h2>Location presets</h2>
-      <input id="loc" list="loc-list" placeholder="Type a city… e.g. Mountain View" style="width:100%; font-family:'IBM Plex Sans',sans-serif; font-size:13.5px; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--paper)">
+      <input id="loc" list="loc-list" placeholder="Type a city… e.g. Mountain View" style="width:100%; font-family:'Inter',sans-serif; font-size:13.5px; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--paper)">
       <datalist id="loc-list"></datalist>
-      <div class="hint" id="loc-note" style="margin-top:6px">Fills price, rent, tax &amp; growth rates with rough metro averages (mid-2020s data — verify locally). Currency switches automatically.</div>
+      <div class="hint" id="loc-note" style="margin-top:6px">Fills price, rent, tax &amp; growth rates with rough metro averages (mid-2020s data, verify locally). Currency switches automatically.</div>
     </div>
     <div class="group">
       <h2>Scenario presets</h2>
@@ -126,7 +126,7 @@ footer{max-width:1240px; margin:0 auto; padding:0 28px 40px; font-size:12px; col
     <div class="group">
       <h2>Saved scenarios</h2>
       <div style="display:flex; gap:8px">
-        <input id="savename" placeholder="Label, e.g. Fremont + ADU" style="flex:1; font-family:'IBM Plex Sans',sans-serif; font-size:13px; padding:7px 10px; border:1px solid var(--line); border-radius:8px; background:var(--paper)">
+        <input id="savename" placeholder="Label, e.g. Fremont + ADU" style="flex:1; font-family:'Inter',sans-serif; font-size:13px; padding:7px 10px; border:1px solid var(--line); border-radius:8px; background:var(--paper)">
         <button id="savebtn" class="share">Save</button>
       </div>
       <div id="savedlist"></div>
@@ -139,15 +139,15 @@ footer{max-width:1240px; margin:0 auto; padding:0 28px 40px; font-size:12px; col
     <div class="verdict" id="verdict"></div>
 
     <div class="stat-row">
-      <div class="stat"><div class="k">Break-even year<span class="info" tabindex="0">i<span class="tt">The first year the buyer's total wealth catches up to the renter-who-invests. 'Never' means it doesn't happen within your horizon.</span></span></div><div class="v" id="s-be">—</div></div>
-      <div class="stat"><div class="k">Monthly P+I<span class="info" tabindex="0">i<span class="tt">The fixed monthly loan payment (Principal + Interest). Property tax, insurance, and HOA come on top of this.</span></span></div><div class="v" id="s-pmt">—</div></div>
-      <div class="stat"><div class="k">Cash to close<span class="info" tabindex="0">i<span class="tt">Down payment plus closing costs — the total cash you hand over on day 1.</span></span></div><div class="v" id="s-close">—</div></div>
-      <div class="stat"><div class="k">Break-even rent (yr 1)<span class="info" tabindex="0">i<span class="tt">If renting a comparable home costs MORE than this, buying wins in year 1; if less, renting wins. The single-number summary of the whole model.</span></span></div><div class="v" id="s-berent">—</div></div>
-      <div class="stat"><div class="k">Month-1 cash gap<span class="info" tabindex="0">i<span class="tt">How much more (red) or less (green) owning costs than renting in actual monthly cash flow, in the first month — the number your budget feels.</span></span></div><div class="v" id="s-gap">—</div></div>
+      <div class="stat"><div class="k">Break-even year<span class="info" tabindex="0">i<span class="tt">The first year the buyer's total wealth catches up to the renter-who-invests. 'Never' means it doesn't happen within your horizon.</span></span></div><div class="v" id="s-be">-</div></div>
+      <div class="stat"><div class="k">Monthly P+I<span class="info" tabindex="0">i<span class="tt">The fixed monthly loan payment (Principal + Interest). Property tax, insurance, and HOA come on top of this.</span></span></div><div class="v" id="s-pmt">-</div></div>
+      <div class="stat"><div class="k">Cash to close<span class="info" tabindex="0">i<span class="tt">Down payment plus closing costs, the total cash you hand over on day 1.</span></span></div><div class="v" id="s-close">-</div></div>
+      <div class="stat"><div class="k">Break-even rent (yr 1)<span class="info" tabindex="0">i<span class="tt">If renting a comparable home costs MORE than this, buying wins in year 1; if less, renting wins. The single-number summary of the whole model.</span></span></div><div class="v" id="s-berent">-</div></div>
+      <div class="stat"><div class="k">Month-1 cash gap<span class="info" tabindex="0">i<span class="tt">How much more (red) or less (green) owning costs than renting in actual monthly cash flow, in the first month, the number your budget feels.</span></span></div><div class="v" id="s-gap">-</div></div>
     </div>
 
     <div class="card" id="cmp-card" style="display:none">
-      <h3>Scenario comparison — Buy − Rent wealth gap (above 0 = buying wins)</h3>
+      <h3>Scenario comparison, Buy − Rent wealth gap (above 0 = buying wins)</h3>
       <canvas id="cmp-chart" width="860" height="320"></canvas>
       <div class="legend" id="cmp-legend"></div>
       <table class="bd" id="cmp-table" style="margin-top:10px"></table>
@@ -155,23 +155,23 @@ footer{max-width:1240px; margin:0 auto; padding:0 28px 40px; font-size:12px; col
     </div>
 
     <div class="card">
-      <h3>Year-1 owning cost, itemized (annual) — updates live as you drag</h3>
+      <h3>Year-1 owning cost, itemized (annual), updates live as you drag</h3>
       <table class="bd" id="breakdown"></table>
-      <div class="warn" id="tax-warn">Non-USD currency selected: the tax model (mortgage-interest limits, SALT, CA rules) is US-specific and has been generalized — interest is treated as fully deductible at the rates you set. Set both tax sliders to your local relief rates, or to 0 if mortgage interest isn't deductible where you are.</div>
+      <div class="warn" id="tax-warn">Non-USD currency selected: the tax model (mortgage-interest limits, SALT, CA rules) is US-specific and has been generalized, interest is treated as fully deductible at the rates you set. Set both tax sliders to your local relief rates, or to 0 if mortgage interest isn't deductible where you are.</div>
     </div>
 
     <div class="card">
       <h3>Net worth trajectories</h3>
       <canvas id="chart" width="860" height="380"></canvas>
       <div class="legend">
-        <span><span class="sw" style="background:var(--buy)"></span>Buy — home equity after sale costs &amp; cap-gains tax</span>
-        <span><span class="sw" style="background:var(--rent)"></span>Rent — portfolio after cap-gains tax</span>
+        <span><span class="sw" style="background:var(--buy)"></span>Buy, home equity after sale costs &amp; cap-gains tax</span>
+        <span><span class="sw" style="background:var(--rent)"></span>Rent, portfolio after cap-gains tax</span>
       </div>
-      <div class="warn" id="pmi-warn">Down payment under 20% — PMI of 0.5%/yr on the loan is being charged until equity reaches 22%.</div>
+      <div class="warn" id="pmi-warn">Down payment under 20%, PMI of 0.5%/yr on the loan is being charged until equity reaches 22%.</div>
     </div>
 
     <div class="card">
-      <h3>The percentage view — rent yield vs cost-of-owning band<span class="info" tabindex="0">i<span class="tt">Rent yield = one year of rent ÷ home value. The blue band = what owning costs per year as a % of home value, from day 1 (mostly financed with the bank’s cheap money) to paid-off (all your own money, which could be earning elsewhere). Where the green rent line sits against the band is the whole decision.</span></span></h3>
+      <h3>The percentage view, rent yield vs cost-of-owning band<span class="info" tabindex="0">i<span class="tt">Rent yield = one year of rent ÷ home value. The blue band = what owning costs per year as a % of home value, from day 1 (mostly financed with the bank’s cheap money) to paid-off (all your own money, which could be earning elsewhere). Where the green rent line sits against the band is the whole decision.</span></span></h3>
       <div class="gauge" id="gauge"></div>
       <div class="note" id="gauge-note"></div>
     </div>
@@ -180,7 +180,7 @@ footer{max-width:1240px; margin:0 auto; padding:0 28px 40px; font-size:12px; col
 </div>
 
 <footer>
-  Fixed background assumptions: property tax grows 2%/yr (Prop 13-style), other ownership and rental figures use the growth rates you set, portfolio taxed at the cap-gains slider rate on gains at the horizon, ADU/rental income modeled at an effective 15% tax after expenses and depreciation. USD mode applies the $750k federal / $1M California interest-deduction limits against the live loan balance and a $500k home-sale gain exclusion. This is a model, not advice — the two sliders that matter most are appreciation and investment return.
+  Fixed background assumptions: property tax grows 2%/yr (Prop 13-style), other ownership and rental figures use the growth rates you set, portfolio taxed at the cap-gains slider rate on gains at the horizon, ADU/rental income modeled at an effective 15% tax after expenses and depreciation. USD mode applies the $750k federal / $1M California interest-deduction limits against the live loan balance and a $500k home-sale gain exclusion. This is a model, not advice, the two sliders that matter most are appreciation and investment return.
 </footer>
 
 <script>
@@ -205,31 +205,31 @@ const fmtP=v=>(v*100).toFixed(2)+"%";
 
 const SLIDERS = [
  {grp:"House"},
- {id:"value", label:"House value", tip:"The purchase price. Everything scales off this — property tax, upkeep, and appreciation are all charged or earned as a percentage of it.", cur:"house", fmt:v=>C().big(v)},
+ {id:"value", label:"House value", tip:"The purchase price. Everything scales off this, property tax, upkeep, and appreciation are all charged or earned as a percentage of it.", cur:"house", fmt:v=>C().big(v)},
  {id:"down", label:"Down payment", tip:"The share of the price you pay in cash upfront. More down = smaller loan and less interest, but more of your own money locked in the house. Below 20%, lenders add PMI (extra insurance you pay for their protection).", min:5, max:50, step:1, val:20, fmt:v=>v+"%"},
- {id:"closing", label:"Closing costs (of loan)", tip:"One-time fees to get the loan and close the purchase — lender, title, escrow, inspections. This money buys you nothing back; it's gone on day 1.", min:0.5, max:4, step:0.25, val:2, fmt:v=>v+"%"},
+ {id:"closing", label:"Closing costs (of loan)", tip:"One-time fees to get the loan and close the purchase, lender, title, escrow, inspections. This money buys you nothing back; it's gone on day 1.", min:0.5, max:4, step:0.25, val:2, fmt:v=>v+"%"},
  {id:"sellcost", label:"Selling cost at exit", tip:"What it costs to sell later: agent commissions and transfer taxes. You only ever pocket ~94% of the home's value, so it quietly eats into your appreciation.", min:2, max:8, step:0.5, val:6, fmt:v=>v+"%"},
  {grp:"Loan"},
- {id:"rate", label:"Mortgage rate", tip:"The yearly interest the bank charges on whatever you still owe. Small changes are huge at this loan size — each 0.25% is roughly a couple hundred a month.", min:1, max:10, step:0.05, val:6.25, fmt:v=>v.toFixed(2)+"%"},
+ {id:"rate", label:"Mortgage rate", tip:"The yearly interest the bank charges on whatever you still owe. Small changes are huge at this loan size, each 0.25% is roughly a couple hundred a month.", min:1, max:10, step:0.05, val:6.25, fmt:v=>v.toFixed(2)+"%"},
  {id:"years", label:"Loan duration", tip:"How long you take to repay. Shorter = higher monthly payment but far less lifetime interest. Longer = easier months, much more interest overall.", min:10, max:30, step:5, val:30, fmt:v=>v+" yrs"},
  {grp:"Carrying costs (%/yr of value)"},
- {id:"ptax", label:"Property tax", tip:"Annual tax your county charges as a % of the home's value. In California it's anchored to your purchase price and can only grow ~2%/yr (Prop 13) — a quiet long-term subsidy for owners.", min:0, max:2.5, step:0.05, val:1.2, fmt:v=>v.toFixed(2)+"%"},
- {id:"insm", label:"Insurance + maintenance", tip:"Homeowner's insurance plus the boring reality of repairs — roofs, water heaters, paint. About 1%/yr of home value is the standard rule of thumb. Renters never pay this line.", min:0.2, max:2, step:0.1, val:1.0, fmt:v=>v.toFixed(1)+"%"},
+ {id:"ptax", label:"Property tax", tip:"Annual tax your county charges as a % of the home's value. In California it's anchored to your purchase price and can only grow ~2%/yr (Prop 13), a quiet long-term subsidy for owners.", min:0, max:2.5, step:0.05, val:1.2, fmt:v=>v.toFixed(2)+"%"},
+ {id:"insm", label:"Insurance + maintenance", tip:"Homeowner's insurance plus the boring reality of repairs, roofs, water heaters, paint. About 1%/yr of home value is the standard rule of thumb. Renters never pay this line.", min:0.2, max:2, step:0.1, val:1.0, fmt:v=>v.toFixed(1)+"%"},
  {id:"hoa", label:"HOA / society fees", tip:"Dues if the home is in an association (or society/strata fees elsewhere). Covers shared maintenance; in this comparison it's a pure carrying cost.", min:0, max:1.5, step:0.1, val:0.4, fmt:v=>v.toFixed(1)+"%"},
- {grp:"Market beliefs — the two that decide everything"},
- {id:"appr", label:"Home appreciation /yr", tip:"How fast you believe the house's price rises each year. The most powerful slider on the BUY side — it earns on the full house value even though you only put ~20% down. That multiplier is called leverage.", min:0, max:10, step:0.25, val:3, fmt:v=>v.toFixed(2)+"%", hint:"Bay Area long-run ≈ 5%; US national ≈ 3–4%"},
- {id:"inv", label:"Alternative investment return /yr", tip:"What your money would earn if invested instead of parked in the house (index funds ≈ 8%, safe savings ≈ 4.5%). The most powerful slider on the RENT side — the renter's portfolio compounds at this rate.", min:1, max:12, step:0.25, val:8, fmt:v=>v.toFixed(2)+"%", hint:"Equities ≈ 8% nominal; safe/blended ≈ 4.5%"},
+ {grp:"Market beliefs, the two that decide everything"},
+ {id:"appr", label:"Home appreciation /yr", tip:"How fast you believe the house's price rises each year. The most powerful slider on the BUY side, it earns on the full house value even though you only put ~20% down. That multiplier is called leverage.", min:0, max:10, step:0.25, val:3, fmt:v=>v.toFixed(2)+"%", hint:"Bay Area long-run ≈ 5%; US national ≈ 3–4%"},
+ {id:"inv", label:"Alternative investment return /yr", tip:"What your money would earn if invested instead of parked in the house (index funds ≈ 8%, safe savings ≈ 4.5%). The most powerful slider on the RENT side, the renter's portfolio compounds at this rate.", min:1, max:12, step:0.25, val:8, fmt:v=>v.toFixed(2)+"%", hint:"Equities ≈ 8% nominal; safe/blended ≈ 4.5%"},
  {grp:"Rent"},
- {id:"rent", label:"Comparable monthly rent", tip:"What renting a truly comparable home costs — same size, same neighborhood. Comparing a house purchase against a cheaper apartment rigs the answer toward renting.", cur:"rent", fmt:v=>C().sym+v.toLocaleString(C().loc)},
- {id:"rentg", label:"Rent growth /yr", tip:"How fast rent climbs each year. Higher growth punishes renting and helps buying — a fixed mortgage payment never gets a rent increase.", min:0, max:8, step:0.05, val:3.85, fmt:v=>v.toFixed(2)+"%"},
+ {id:"rent", label:"Comparable monthly rent", tip:"What renting a truly comparable home costs, same size, same neighborhood. Comparing a house purchase against a cheaper apartment rigs the answer toward renting.", cur:"rent", fmt:v=>C().sym+v.toLocaleString(C().loc)},
+ {id:"rentg", label:"Rent growth /yr", tip:"How fast rent climbs each year. Higher growth punishes renting and helps buying, a fixed mortgage payment never gets a rent increase.", min:0, max:8, step:0.05, val:3.85, fmt:v=>v.toFixed(2)+"%"},
  {grp:"Rental income if you buy"},
  {id:"adu", label:"ADU / room / unit rent per month", tip:"Income from renting out part of the property (ADU, room, in-law unit). The strongest real-world lever for making buying win: it directly pays down your carrying costs every month.", cur:"adu", fmt:v=>C().sym+v.toLocaleString(C().loc), hint:"Grows with rent growth; taxed at ~15% effective after expenses & depreciation"},
  {grp:"Taxes"},
- {id:"fed", label:"Marginal federal / national rate", tip:"The tax on your LAST dollar of income — not your average rate. It's what each dollar of deductible mortgage interest actually saves you.", min:0, max:45, step:1, val:32, fmt:v=>v+"%"},
+ {id:"fed", label:"Marginal federal / national rate", tip:"The tax on your LAST dollar of income, not your average rate. It's what each dollar of deductible mortgage interest actually saves you.", min:0, max:45, step:1, val:32, fmt:v=>v+"%"},
  {id:"ca", label:"Marginal state / local rate", tip:"Same idea, for your state. In California both property tax and mortgage interest reduce state taxable income.", min:0, max:15, step:0.1, val:9.3, fmt:v=>v.toFixed(1)+"%"},
- {id:"ltcg", label:"Cap-gains rate on investments", tip:"The tax on investment profits when sold (capital gains). It's charged on the renter's portfolio gains at the end — a higher rate makes renting less attractive.", min:0, max:40, step:0.5, val:28.1, fmt:v=>v.toFixed(1)+"%"},
+ {id:"ltcg", label:"Cap-gains rate on investments", tip:"The tax on investment profits when sold (capital gains). It's charged on the renter's portfolio gains at the end, a higher rate makes renting less attractive.", min:0, max:40, step:0.5, val:28.1, fmt:v=>v.toFixed(1)+"%"},
  {grp:"Horizon"},
- {id:"horizon", label:"Years to evaluate", tip:"How many years until you'd realistically sell or compare outcomes. Buying almost never wins on short horizons — closing and selling costs need years to be earned back.", min:5, max:30, step:1, val:30, fmt:v=>v+" yrs"},
+ {id:"horizon", label:"Years to evaluate", tip:"How many years until you'd realistically sell or compare outcomes. Buying almost never wins on short horizons, closing and selling costs need years to be earned back.", min:5, max:30, step:1, val:30, fmt:v=>v+" yrs"},
 ];
 
 const P={};
@@ -329,7 +329,7 @@ $("loc").addEventListener("change", e=>{
       if(parseFloat(inp.max)<v) inp.max=v;
       inp.value=v; } }
   }
-  $("loc-note").textContent="Loaded rough averages for "+e.target.value+" — mid-2020s data, verify current figures locally. Tax sliders left untouched: set them to your own rates.";
+  $("loc-note").textContent="Loaded rough averages for "+e.target.value+", mid-2020s data, verify current figures locally. Tax sliders left untouched: set them to your own rates.";
   refreshLabels(); recompute(); saveHash();
 });
 
@@ -347,7 +347,7 @@ function saveHash(){
     let s=Object.entries(P).map(([k,v])=>k+"="+v).join("&");
     if(SAVED.length) s+="&sv="+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(SAVED)))));
     history.replaceState(null,"","#cur="+curCode+"&"+s);
-  }catch(e){ /* sandboxed preview (origin null) blocks history writes — sliders still work */ }
+  }catch(e){ /* sandboxed preview (origin null) blocks history writes, sliders still work */ }
 }
 function loadHash(){
   try{
@@ -446,7 +446,7 @@ function drawChart(sim){
   const x=i=>padL+i/H*(W-padL-padR);
   const y=v=>padT+(1-v/maxV)*(Hc-padT-padB);
   ctx.strokeStyle="#E4E2DA"; ctx.fillStyle="#5B616E";
-  ctx.font="11px 'IBM Plex Mono',monospace"; ctx.lineWidth=1;
+  ctx.font="11px 'Inter',sans-serif"; ctx.lineWidth=1;
   for(let s=0;s<=5;s++){
     const v=maxV*s/5, yy=y(v);
     ctx.beginPath(); ctx.moveTo(padL,yy); ctx.lineTo(W-padR,yy); ctx.stroke();
@@ -471,7 +471,7 @@ function drawChart(sim){
     const bx=x(sim.be), by=y(sim.own[sim.be-1]);
     ctx.fillStyle="#1A1D23";
     ctx.beginPath(); ctx.arc(bx,by,5,0,7); ctx.fill();
-    ctx.font="600 12px 'IBM Plex Mono',monospace";
+    ctx.font="600 12px 'Inter',sans-serif";
     ctx.fillText("break-even: yr "+sim.be, Math.min(bx+8, W-160), by-10);
   }
 }
@@ -492,8 +492,8 @@ function drawGauge(pv){
     <div class="tick rent-tick" style="left:${pos(pv.yield_)}"></div>
     <div class="tlabel ${pv.yield_>((pv.day1+pv.paid)/2)?'top':'bot'}" style="left:${pos(pv.yield_)}; color:var(--rent); font-weight:600">rent yield: ${fmtP(pv.yield_)}</div>`;
   const note=$("gauge-note");
-  if(pv.yield_>=Math.max(pv.day1,pv.paid)) note.textContent="Rent yield sits above the whole owning band — buying wins at every stage of the mortgage.";
-  else if(pv.yield_<=Math.min(pv.day1,pv.paid)) note.textContent="Rent yield sits below the whole owning band — renting this cheaply beats owning at every stage of the mortgage.";
+  if(pv.yield_>=Math.max(pv.day1,pv.paid)) note.textContent="Rent yield sits above the whole owning band, buying wins at every stage of the mortgage.";
+  else if(pv.yield_<=Math.min(pv.day1,pv.paid)) note.textContent="Rent yield sits below the whole owning band, renting this cheaply beats owning at every stage of the mortgage.";
   else note.textContent="Rent yield falls inside the band: buying wins on one side of the mortgage's life and loses on the other. The band slides from the day-1 end toward the paid-off end as the loan amortizes.";
 }
 
@@ -553,7 +553,7 @@ function renderCompare(){
   const pad=(hi-lo)*0.06||1; lo-=pad; hi+=pad;
   const x=i=>padL+i/Hmax*(W-padL-padR);
   const y=v=>padT+(1-(v-lo)/(hi-lo))*(Hc-padT-padB);
-  ctx.strokeStyle="#E4E2DA"; ctx.fillStyle="#5B616E"; ctx.font="11px 'IBM Plex Mono',monospace"; ctx.lineWidth=1;
+  ctx.strokeStyle="#E4E2DA"; ctx.fillStyle="#5B616E"; ctx.font="11px 'Inter',sans-serif"; ctx.lineWidth=1;
   for(let s=0;s<=4;s++){
     const v=lo+(hi-lo)*s/4, yy=y(v);
     ctx.beginPath(); ctx.moveTo(padL,yy); ctx.lineTo(W-padR,yy); ctx.stroke();
@@ -585,7 +585,7 @@ function renderCompare(){
         <td>${f(sim.pmt)}</td></tr>`;
     }).join("");
   $("cmp-note").textContent = skipped.length
-    ? "Note: "+skipped.map(s=>s.name).join(", ")+" use a different currency — shown in the table in their own units but not drawn on the chart."
+    ? "Note: "+skipped.map(s=>s.name).join(", ")+" use a different currency, shown in the table in their own units but not drawn on the chart."
     : "Dashed black line = your live sliders. Save the current state to freeze it as a solid line.";
 }
 function recompute(){

@@ -29,7 +29,7 @@
     <h1 style="margin-top:18px">Non-invasive glucose sensing</h1>
     <p class="pmeta" style="color:var(--ink-soft)">Side project · multi-sensor hardware + signal processing</p>
 
-    <p class="lead">Could you estimate blood glucose without a finger prick — frequently, and cheaply? A side project exploring non-invasive, multimodal glucose sensing.</p>
+    <p class="lead">Could you estimate blood glucose without a finger prick, frequently, and cheaply? A side project exploring non-invasive, multimodal glucose sensing.</p>
 
     <!-- sensor architecture diagram -->
     <div class="map-card reveal" style="padding:18px">
@@ -69,23 +69,23 @@
       </svg>
     </div>
 
-    <p style="margin-top:18px">Managing diabetes usually means pricking a finger and reading a drop of blood on a strip — accurate, but
+    <p style="margin-top:18px">Managing diabetes usually means pricking a finger and reading a drop of blood on a strip, accurate, but
        painful enough that people don't do it often. Continuous glucose monitors (CGMs) solve the frequency
        problem but are expensive and reach only a small slice of the population. The goal of this side project was
-       to explore a non-invasive, low-cost alternative someone could use as often as they like — eventually from a
-       phone paired with a simple wearable — and, along the way, to look for a correlation between glucose and
+       to explore a non-invasive, low-cost alternative someone could use as often as they like, eventually from a
+       phone paired with a simple wearable, and, along the way, to look for a correlation between glucose and
        galvanic skin response.</p>
 
     <p>The setup combined optical and electrical sensing: a PPG (photoplethysmography) pulse-oximeter, a GSR
        (galvanic skin response) sensor, and a temperature sensor, read by an Arduino. The premise is that glucose
-       in the interstitial fluid leaves a faint signature across these biomarkers — for instance, glucose subtly
+       in the interstitial fluid leaves a faint signature across these biomarkers, for instance, glucose subtly
        changes how near-infrared light is absorbed in blood. We used signal processing (filtering, denoising,
        feature extraction) to clean the raw signals, then trained a deep-learning model to map the combined
        features to a glucose estimate. A table-top fixture kept the sensors steady to cut motion noise.</p>
 
     <p>How it was validated: the model was trained on data we collected with our own setup, using a Freestyle
        Libre 3 continuous glucose monitor as the ground truth. Each reading was timestamped and paired with a short
-       journal note — workout, meal, stress, mood — so the dataset captured real glucose swings. A small pilot also
+       journal note, workout, meal, stress, mood, so the dataset captured real glucose swings. A small pilot also
        chased a side question: can galvanic skin response on its own flag rising glucose? (Prior work has reported
        correlations as high as ~94%.)</p>
 
