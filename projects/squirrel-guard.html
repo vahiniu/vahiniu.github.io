@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Squirrel Guard · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+    <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html" class="active">Projects</a>
+      <a href="../travel.html">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../projects.html">← Back to projects</a>
+    <h1 style="margin-top:18px">The Squirrel Guard</h1>
+    <p class="pmeta" style="color:var(--ink-soft)">Side project · Raspberry Pi · on-device computer vision</p>
+
+    <p class="lead">A Raspberry Pi that watches our vegetable garden, works out whether the thing that just moved
+       is actually a squirrel, and if it is, swings a little arm into a windchime. Harmless, chemical-free, and
+       weirdly satisfying.</p>
+
+    <!-- pipeline diagram -->
+    <div class="map-card reveal" style="padding:18px">
+      <svg viewBox="0 0 720 250" role="img" aria-label="Pipeline: Pi camera detects motion, an on-device model classifies squirrel or not, a squirrel triggers a servo arm and windchime, and every visitor is photographed and logged to a dashboard" style="width:100%;height:auto;display:block">
+        <g style="font-family:var(--font-sans);font-size:12px">
+          <!-- camera -->
+          <rect x="12" y="98" width="140" height="54" rx="10" style="fill:var(--bg-soft);stroke:var(--line);stroke-width:1.5"/>
+          <text x="82" y="120" text-anchor="middle" style="fill:var(--ink);font-weight:700">Pi camera</text>
+          <text x="82" y="137" text-anchor="middle" style="fill:var(--ink-soft);font-size:11px">motion in the garden</text>
+
+          <!-- arrow -->
+          <path d="M152 125 H190" style="stroke:var(--ink-soft);stroke-width:2;fill:none"/>
+          <path d="M190 125 l-8 -5 v10 z" style="fill:var(--ink-soft)"/>
+
+          <!-- classifier -->
+          <rect x="192" y="98" width="164" height="54" rx="10" style="fill:var(--accent);opacity:.92"/>
+          <text x="274" y="120" text-anchor="middle" style="fill:#fff;font-weight:700">Squirrel, or not?</text>
+          <text x="274" y="137" text-anchor="middle" style="fill:#fff;font-size:11px;opacity:.9">small model, on the Pi</text>
+
+          <!-- branch arrows -->
+          <g style="stroke:var(--ink-soft);stroke-width:2;fill:none">
+            <path d="M356 125 C 388 125, 388 62, 420 62"/>
+            <path d="M356 125 C 388 125, 388 196, 420 196"/>
+          </g>
+          <path d="M420 62 l-8 -5 v10 z" style="fill:var(--ink-soft)"/>
+          <path d="M420 196 l-8 -5 v10 z" style="fill:var(--ink-soft)"/>
+
+          <!-- deterrent -->
+          <rect x="422" y="34" width="286" height="56" rx="10" style="fill:var(--accent-2);opacity:.95"/>
+          <text x="565" y="57" text-anchor="middle" style="fill:#3a2a14;font-weight:700">Servo swings a 3D-printed arm</text>
+          <text x="565" y="74" text-anchor="middle" style="fill:#3a2a14;font-size:11px">into the windchime — squirrel leaves</text>
+
+          <!-- log -->
+          <rect x="422" y="168" width="286" height="56" rx="10" style="fill:var(--bg-soft);stroke:var(--line);stroke-width:1.5"/>
+          <text x="565" y="191" text-anchor="middle" style="fill:var(--ink);font-weight:700">Every visitor photographed</text>
+          <text x="565" y="208" text-anchor="middle" style="fill:var(--ink-soft);font-size:11px">and logged to a little web dashboard</text>
+        </g>
+      </svg>
+    </div>
+
+    <p style="margin-top:18px">We lose vegetables to squirrels. Not occasionally, but pretty much every time something's
+       ready to pick, they get to it first. We tried neem oil. We tried draping mesh over everything. We even tried
+       growing just chillis. None of it worked. (Fun fact: a small portion of squirrels, like us humans, get addicted
+       to spice.)</p>
+
+    <p>So I went looking for a real solution, and everything online was either ultrasonic or toxic. The problem is our
+       neighbors have pets, and we didn't want to put out anything that might affect them. That ruled out most of what's
+       sold for this. So I built my own instead — something safe, harmless to animals, and honestly kind of fun to have
+       running.</p>
+
+    <p>Here's how it works. A Raspberry Pi with a camera watches the garden. When something moves, a small AI model
+       sitting on the Pi checks whether it's actually a squirrel (not a bird, not a blowing leaf), and if it is, a servo
+       swings a little 3D-printed arm that knocks a windchime to scare it off. That's it. No chemicals, no ultrasonic
+       noise, nothing that bothers the neighbors' pets. Just a startling jingle aimed only at the squirrels.</p>
+
+    <p>Has it worked? In progress… ask me at the end of the season. It also photographs every animal that visits and
+       logs them to a little web dashboard, which has turned into a surprisingly fun way to check who's been in the
+       backyard.</p>
+
+    <p>The one catch: it's built to survive outdoors, but I don't have a power outlet anywhere near the garden, so I
+       haven't figured out how to make it a permanent fixture yet. For now we run it off a power bank during the day
+       (I added battery-saving options to the code so it lasts longer) and bring it in to recharge overnight. Squirrels
+       are daytime raiders anyway, so it mostly works out. A proper always-on setup is still on the to-do list.</p>
+
+    <div class="chips" style="margin-top:14px">
+      <span class="chip">Raspberry Pi</span>
+      <span class="chip">On-device computer vision</span>
+      <span class="chip">Servo &amp; 3D printing</span>
+      <span class="chip">Web dashboard</span>
+      <span class="chip">Garden defense</span>
+    </div>
+
+    <a class="back" href="../projects.html" style="display:inline-block;margin-top:24px">← Back to projects</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
