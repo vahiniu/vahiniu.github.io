@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MAUDE Explorer · Vahini Ummalaneni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Vahini Ummalaneni</a>
+    <div class="links">
+      <a href="../index.html">About</a>
+      <a href="../projects.html" class="active">Projects</a>
+      <a href="../travel.html">Travel</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="article reveal" style="padding:48px 0">
+    <a class="back" href="../projects.html">← Back to projects</a>
+    <h1 style="margin-top:18px">MAUDE Explorer</h1>
+    <p class="pmeta" style="color:var(--ink-soft)">Live tool · FDA adverse-event data · openFDA</p>
+
+    <p class="lead">Type what a device is ("IVUS imaging", "insulin pump", "heart valve") and get a dashboard of
+       what has actually been reported to FDA about it: the failure modes, the manufacturers, the harm, the recalls.
+       Every number comes from a live query, so nothing is cached, estimated, or left over from a previous run.</p>
+
+    <p><a href="../tools/maude-explorer.html" target="_blank" rel="noopener">Open the live tool &rarr;</a></p>
+
+    <!-- pipeline diagram -->
+    <div class="map-card reveal" style="padding:18px">
+      <svg viewBox="0 0 720 230" role="img" aria-label="Pipeline: a plain-language device search resolves to FDA product codes, you review and edit the scope, then live openFDA queries produce a dashboard of failure modes, manufacturers and recalls" style="width:100%;height:auto;display:block">
+        <g style="font-family:var(--font-sans);font-size:12px">
+          <rect x="10" y="88" width="150" height="56" rx="10" style="fill:var(--bg-soft);stroke:var(--line);stroke-width:1.5"/>
+          <text x="85" y="111" text-anchor="middle" style="fill:var(--ink);font-weight:700">"IVUS imaging"</text>
+          <text x="85" y="128" text-anchor="middle" style="fill:var(--ink-soft);font-size:11px">plain language in</text>
+
+          <path d="M160 116 H196" style="stroke:var(--ink-soft);stroke-width:2;fill:none"/>
+          <path d="M196 116 l-8 -5 v10 z" style="fill:var(--ink-soft)"/>
+
+          <rect x="198" y="88" width="166" height="56" rx="10" style="fill:var(--accent);opacity:.92"/>
+          <text x="281" y="111" text-anchor="middle" style="fill:#fff;font-weight:700">Resolve product codes</text>
+          <text x="281" y="128" text-anchor="middle" style="fill:#fff;font-size:11px;opacity:.9">+ the regulation family</text>
+
+          <path d="M364 116 H400" style="stroke:var(--ink-soft);stroke-width:2;fill:none"/>
+          <path d="M400 116 l-8 -5 v10 z" style="fill:var(--ink-soft)"/>
+
+          <rect x="402" y="88" width="140" height="56" rx="10" style="fill:var(--bg-soft);stroke:var(--line);stroke-width:1.5"/>
+          <text x="472" y="111" text-anchor="middle" style="fill:var(--ink);font-weight:700">openFDA</text>
+          <text x="472" y="128" text-anchor="middle" style="fill:var(--ink-soft);font-size:11px">live, from the browser</text>
+
+          <g style="stroke:var(--ink-soft);stroke-width:2;fill:none">
+            <path d="M542 116 C 566 116, 566 44, 590 44"/>
+            <path d="M542 116 H590"/>
+            <path d="M542 116 C 566 116, 566 188, 590 188"/>
+          </g>
+          <g style="fill:var(--ink-soft)">
+            <path d="M590 44 l-8 -5 v10 z"/><path d="M590 116 l-8 -5 v10 z"/><path d="M590 188 l-8 -5 v10 z"/>
+          </g>
+
+          <rect x="592" y="24" width="118" height="40" rx="9" style="fill:var(--accent-2);opacity:.95"/>
+          <text x="651" y="49" text-anchor="middle" style="fill:#3a2a14;font-weight:700">Failure modes</text>
+          <rect x="592" y="96" width="118" height="40" rx="9" style="fill:var(--accent-2);opacity:.95"/>
+          <text x="651" y="121" text-anchor="middle" style="fill:#3a2a14;font-weight:700">Manufacturers</text>
+          <rect x="592" y="168" width="118" height="40" rx="9" style="fill:var(--accent-2);opacity:.95"/>
+          <text x="651" y="193" text-anchor="middle" style="fill:#3a2a14;font-weight:700">Recalls</text>
+        </g>
+      </svg>
+    </div>
+
+    <p style="margin-top:18px">I lean on MAUDE a lot at work. It's FDA's database of medical device adverse event
+       reports, and it's the closest thing we have to a record of how a device category behaves in the field
+       instead of how the design file says it should. The catch is getting at it: you need the right three-letter
+       product code first, the codes are in FDA's vocabulary and not yours (there is no "IVUS" in there, only
+       "intravascular ultrasound"), and one category's reports are usually split across several codes sharing a
+       regulation. That lookup ate an afternoon every time, so I built something to do it for me.</p>
+
+    <div class="subhead">What I use it for</div>
+
+    <p><strong>Known use problems,</strong> for a usability or human factors file: which failures are the user and
+       the device interacting badly, and which are already known rather than hypothetical.
+       <strong>Risk analysis,</strong> because ISO 14971 wants post-market data feeding the hazard analysis and
+       real counts give your severity and probability calls something to sit on, including for devices you compete
+       with. <strong>Unmet needs,</strong> because the failure modes that show up for every manufacturer in a
+       category, year after year, are the ones nobody has solved yet.</p>
+
+    <div class="subhead">How it works</div>
+
+    <p>Describe the device in plain language and it searches FDA's classification database, expanding the acronyms
+       FDA doesn't use. Each candidate code comes back with its regulation, class and report count, so you can see
+       which one holds the traffic. It will pull in the rest of the regulation family too, which is the closest
+       thing to a predicate list that's actually in the data. You approve the scope before anything runs. The
+       dashboard ranks failure modes by volume and by harm, with each row's rank in the other ordering, since the
+       two almost always disagree, plus a manufacturer view with harm rates and the recalls in the window.</p>
+
+    <p>On the limits, I was strict. MAUDE has no denominator, so none of this is a rate and the page says so.
+       Counts are a floor. Harm rate reflects how a manufacturer classified its own reports. A failed query is
+       flagged as an error, never counted as a zero.</p>
+
+    <p>One self-contained HTML file, querying openFDA straight from your browser, so nothing you type goes anywhere
+       except FDA. Without a key openFDA allows 1,000 requests a day and a full run uses roughly 100 to 150, so
+       about seven runs. A <a href="https://open.fda.gov/apis/authentication/" target="_blank" rel="noopener">free
+       key</a> takes that to 120,000.</p>
+
+    <div class="chips" style="margin-top:14px">
+      <span class="chip">openFDA API</span>
+      <span class="chip">Post-market surveillance</span>
+      <span class="chip">Vanilla JS, single file</span>
+      <span class="chip">Live tool</span>
+    </div>
+
+    <p style="margin-top:20px"><a href="../tools/maude-explorer.html" target="_blank" rel="noopener">Open the live tool →</a></p>
+
+    <a class="back" href="../projects.html" style="display:inline-block;margin-top:24px">← Back to projects</a>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Vahini Ummalaneni</div>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

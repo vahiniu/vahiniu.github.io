@@ -6,6 +6,7 @@
 (function () {
   var places = [
     // --- trips with write-ups (solid, clickable) ---
+    { label: "Dakotas",          lat: 44.05,  lon: -103.50, href: "trips/dakotas.html" },
     { label: "San Diego",        lat: 32.72,  lon: -117.16, href: "trips/san-diego.html" },
     { label: "Lassen",           lat: 40.49,  lon: -121.51, href: "trips/lassen.html" },
     { label: "Lost Coast",       lat: 40.10,  lon: -124.07, href: "trips/lost-coast.html" },
@@ -40,6 +41,9 @@
     { name: "Mount Rainier",     lat: 46.85, lon: -121.75 },
     { name: "Olympic",           lat: 47.80, lon: -123.60 },
     { name: "Glacier",           lat: 48.70, lon: -113.72 },
+    { name: "Wind Cave",         lat: 43.57, lon: -103.48 },
+    { name: "Badlands",          lat: 43.85, lon: -102.34 },
+    { name: "Theodore Roosevelt",lat: 46.98, lon: -103.54 },
     { name: "Yellowstone",       lat: 44.60, lon: -110.50 },
     { name: "Grand Teton",       lat: 43.79, lon: -110.68 },
     { name: "Arches",            lat: 38.73, lon: -109.59 },

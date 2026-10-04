@@ -1,0 +1,1166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MAUDE Explorer</title>
+<meta name="description" content="Pull FDA adverse-event signal for any medical device product code.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+ --ground:#F4F7F9;--surface:#fff;--surface-2:#EDF1F5;--line:#D3DCE4;--line-soft:#E4EAF0;
+ --ink:#0F1720;--ink-2:#44535F;--ink-3:#6C7B88;
+ --accent:#0C6F79;--accent-soft:#E2F0F1;--accent-line:#9CC9CD;--on-accent:#fff;
+ --crit:#AE3A31;--crit-soft:#FAE9E7;--warn:#96690F;--warn-soft:#FBF0DC;--ok:#2A6E4E;
+ --r:3px;--maxw:1150px;
+ --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,sans-serif;
+ --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+ --ground:#0C1116;--surface:#141B23;--surface-2:#1B242E;--line:#2C3945;--line-soft:#222D38;
+ --ink:#E6EDF3;--ink-2:#A3B2BF;--ink-3:#778895;
+ --accent:#43B4BE;--accent-soft:#113034;--accent-line:#2A6B72;--on-accent:#08181A;
+ --crit:#E5776C;--crit-soft:#331A17;--warn:#D9A441;--warn-soft:#2E2413;--ok:#5DBD8C;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:14px;
+ line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:20px}
+.narrow{max-width:880px}
+h1,h2{margin:0;text-wrap:balance}
+h1{font-size:24px;font-weight:600;letter-spacing:-.018em}
+h2{font-size:17px;font-weight:600;letter-spacing:-.01em}
+h3{font-size:13px;font-weight:600;margin:0 0 4px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+header{background:var(--surface);border-bottom:1px solid var(--line)}
+.hin{padding-block:20px 17px;display:flex;justify-content:space-between;gap:18px;
+ align-items:flex-end;flex-wrap:wrap}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+ color:var(--accent);margin-bottom:6px}
+.sub{color:var(--ink-2);font-size:13px;margin-top:6px;max-width:64ch}
+section{padding-block:24px;border-top:1px solid var(--line-soft)}
+section:first-of-type{border-top:0}
+.sechead{display:flex;align-items:baseline;gap:11px;margin-bottom:13px;flex-wrap:wrap}
+.secno{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.tag{display:inline-flex;align-items:center;font-family:var(--mono);font-size:9.5px;
+ letter-spacing:.13em;text-transform:uppercase;padding:3px 7px;border-radius:2px;font-weight:500;
+ background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+form{display:flex;flex-direction:column;gap:17px}
+.field label{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;
+ text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.field .hint{font-size:12px;color:var(--ink-3);margin-top:5px;line-height:1.45}
+input[type=text],input[type=date],input[type=number],input[type=password]{width:100%;
+ padding:9px 11px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
+ color:var(--ink);font-family:var(--mono);font-size:13px}
+input:focus-visible,button:focus-visible,summary:focus-visible,tr:focus-visible{
+ outline:2px solid var(--accent);outline-offset:1px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.presets button{font-family:var(--mono);font-size:10.5px;padding:4px 9px;border:1px solid var(--line);
+ background:var(--surface);color:var(--ink-2);border-radius:var(--r);cursor:pointer}
+.presets button:hover{border-color:var(--accent);color:var(--accent)}
+.searchrow{display:flex;gap:8px}
+.searchrow input{flex:1}
+.searchrow button{align-self:stretch;padding:9px 16px;white-space:nowrap}
+.check{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);
+ border-radius:var(--r);background:var(--surface)}
+.check input{margin:2px 0 0;width:16px;height:16px;flex:none;accent-color:var(--accent)}
+.check .t{font-weight:600;font-size:13px;display:block}
+.check .d{font-size:12.5px;color:var(--ink-2);line-height:1.45;margin-top:2px;display:block}
+button.go{align-self:flex-start;padding:10px 20px;border:0;border-radius:var(--r);
+ background:var(--accent);color:var(--on-accent);font-family:var(--mono);font-size:11.5px;
+ letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-weight:500}
+button.go.sec{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+button.go[disabled]{opacity:.45;cursor:default}
+.actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.hits .note{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin:9px 0 6px;
+ letter-spacing:.04em}
+.hit{display:flex;gap:11px;align-items:baseline;width:100%;text-align:left;padding:9px 11px;
+ border:1px solid var(--line);border-bottom:0;background:var(--surface);cursor:pointer;
+ font-family:var(--sans);font-size:13px;color:var(--ink)}
+.hit:first-of-type{border-radius:var(--r) var(--r) 0 0}
+.hit:last-of-type{border-bottom:1px solid var(--line);border-radius:0 0 var(--r) var(--r)}
+.hit:hover{background:var(--accent-soft);border-color:var(--accent-line)}
+.hit .c{font-family:var(--mono);font-weight:600;color:var(--accent);flex:none;width:38px}
+.hit .nm{flex:1;line-height:1.35}
+.hit .meta{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:none;text-align:right;
+ white-space:nowrap}
+.hit[data-added="1"]{background:var(--accent-soft);border-color:var(--accent-line)}
+table{border-collapse:collapse;width:100%;background:var(--surface)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--line-soft);font-size:13px;
+ vertical-align:top}
+thead th{background:var(--surface-2);font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;
+ text-transform:uppercase;color:var(--ink-2);font-weight:500;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rk{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.mode{font-weight:500;line-height:1.3}
+tr.exp{cursor:pointer}
+tr.exp:hover td:first-child{color:var(--accent)}
+.caret{display:inline-block;width:11px;color:var(--ink-3);font-size:10px;transition:transform .12s}
+tr.exp[aria-expanded="true"] .caret{transform:rotate(90deg);color:var(--accent)}
+tr.detail>td{background:var(--surface-2);padding:0}
+.det{padding:13px 15px;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:18px}
+.det h4{margin:0 0 7px;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;
+ text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.kv{display:flex;flex-direction:column;gap:3px}
+.kv .r{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;padding-block:3px;
+ border-bottom:1px solid var(--line-soft)}
+.kv .r:last-child{border-bottom:0}
+.kv .k{font-size:12.5px;line-height:1.3;word-break:break-word}
+.kv .v{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;color:var(--ink-2);
+ white-space:nowrap}
+.kv .v em{font-style:normal;color:var(--ink-3)}
+.det .none{font-size:12.5px;color:var(--ink-3)}
+.shift{font-family:var(--mono);font-size:10px;padding:1px 4px;border-radius:2px;margin-left:6px;
+ font-weight:500;white-space:nowrap}
+.shift.up{background:var(--crit-soft);color:var(--crit);border:1px solid var(--crit)}
+.shift.dn{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--line)}
+.shift.flat{background:transparent;color:var(--ink-3);border:1px solid var(--line-soft)}
+.pct{font-weight:600}.pct.hi{color:var(--crit)}.pct.mid{color:var(--warn)}
+.bar{height:5px;border-radius:1px;background:var(--surface-2);margin-top:5px;overflow:hidden;
+ min-width:58px}
+.bar i{display:block;height:100%;background:var(--accent)}
+.bar.h i{background:var(--crit)}
+.ctl{display:flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+ background:var(--surface);width:fit-content;margin-bottom:12px}
+.ctl button{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+ padding:7px 14px;border:0;background:transparent;color:var(--ink-2);cursor:pointer;
+ border-right:1px solid var(--line)}
+.ctl button:last-child{border-right:0}
+.ctl button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(152px,1fr));gap:1px;
+ background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.tile{background:var(--surface);padding:13px 15px}
+.tile dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+ color:var(--ink-3);margin:0}
+.tile dd{margin:7px 0 0;font-family:var(--mono);font-size:22px;font-weight:600;
+ letter-spacing:-.025em;line-height:1}
+.tile.crit dd{color:var(--crit)}
+.tile .fine{font-size:11px;color:var(--ink-3);margin-top:5px;font-family:var(--mono)}
+.mix{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:15px 17px 11px}
+.mixrow{display:grid;grid-template-columns:166px 1fr;gap:15px;align-items:center;padding-block:9px;
+ border-bottom:1px solid var(--line-soft)}
+.mixrow:last-of-type{border-bottom:0}
+.mixlab{font-size:12.5px;line-height:1.3;text-align:right}
+.mixbars{display:flex;flex-direction:column;gap:3px}
+.mixbar{display:grid;grid-template-columns:1fr 62px;gap:9px;align-items:center}
+.mixtrack{height:11px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.mixtrack i{display:block;height:100%;min-width:2px}
+.mixval{font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;color:var(--ink-2);
+ text-align:right}
+.mixnote{font-size:11px;color:var(--ink-3);margin-top:9px;font-family:var(--mono)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:11.5px;color:var(--ink-2);margin-top:10px;
+ align-items:center}
+.sw{width:9px;height:9px;border-radius:1px;flex:none;display:inline-block;margin-right:5px}
+.recalls{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);
+ border-radius:var(--r);overflow:hidden}
+.rc{background:var(--surface);padding:12px 15px;display:grid;grid-template-columns:92px 1fr;gap:15px}
+.rc .dt{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);white-space:nowrap}
+.rc .firm{font-weight:600;font-size:13px;margin-bottom:2px}
+.rc .why{font-size:12.5px;color:var(--ink-2);line-height:1.45}
+.warn{background:var(--warn-soft);border:1px solid var(--warn);border-left:3px solid var(--warn);
+ border-radius:0 var(--r) var(--r) 0;padding:11px 14px;margin-bottom:12px;font-size:12.5px;
+ line-height:1.5}
+.err{background:var(--crit-soft);border:1px solid var(--crit);border-left:3px solid var(--crit);
+ border-radius:0 var(--r) var(--r) 0;padding:11px 14px;font-size:12.5px;line-height:1.5;
+ margin-bottom:12px}
+.ok{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r);
+ padding:13px 15px}
+.q{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);background:var(--surface-2);
+ border:1px solid var(--line-soft);border-radius:2px;padding:7px 9px;margin-top:11px;
+ overflow-x:auto;white-space:pre-wrap;word-break:break-word;line-height:1.5}
+.limits{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1px;
+ background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.limits div{background:var(--surface);padding:12px 15px}
+.limits dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink-3);margin:0 0 4px}
+.limits dd{margin:0;font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+.logbox{font-family:var(--mono);font-size:11.5px;background:var(--surface);border:1px solid var(--line);
+ border-radius:var(--r);padding:11px 13px;max-height:260px;overflow-y:auto;white-space:pre-wrap;
+ color:var(--ink-2);line-height:1.6}
+.meter{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;
+ color:var(--ink-3);margin-top:9px}
+details{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
+ padding:10px 13px}
+summary{cursor:pointer;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;
+ text-transform:uppercase;color:var(--ink-2)}
+details[open] summary{margin-bottom:10px}
+footer{border-top:1px solid var(--line);padding-block:18px 32px;color:var(--ink-3);font-size:11px;
+ font-family:var(--mono);line-height:1.7}
+a{color:var(--accent)}
+[hidden]{display:none!important}
+@media (max-width:620px){.row{grid-template-columns:1fr}.rc{grid-template-columns:1fr;gap:5px}
+ .mixrow{grid-template-columns:1fr;gap:6px}.mixlab{text-align:left;font-weight:600}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap hin">
+  <div>
+    <div class="eyebrow">openFDA · device adverse events</div>
+    <h1>MAUDE Explorer</h1>
+    <p class="sub">Pull FDA adverse-event signal for any device product code. Every figure comes
+      from a live openFDA query made by your own browser — nothing is estimated, and no data
+      passes through any other server.</p>
+  </div>
+</div></header>
+
+<main class="wrap narrow" id="viewForm">
+  <section>
+    <div id="formErr"></div>
+    <form id="mainForm">
+      <div class="field">
+        <label for="q">Find a product code</label>
+        <div class="searchrow">
+          <input type="text" id="q" placeholder="IVUS imaging, insulin pump, heart valve…"
+                 autocomplete="off">
+          <button type="button" class="go sec" id="qbtn">Search</button>
+        </div>
+        <div class="hint">Describe the device in plain words and FDA's classification database is
+          searched. Common acronyms are expanded first — FDA's own device names never use them.</div>
+        <div class="hits" id="qres"></div>
+      </div>
+
+      <div class="field">
+        <label for="codes">Product codes</label>
+        <input type="text" id="codes" placeholder="QBJ, QLG" autocomplete="off" required>
+        <div class="hint">Three-letter FDA product codes, comma separated. Each is checked against
+          FDA's classification database before anything runs.</div>
+        <div class="presets">
+          <button type="button" data-c="QBJ">QBJ — integrated CGM</button>
+          <button type="button" data-c="LZG">LZG — insulin infusion pump</button>
+          <button type="button" data-c="NBW">NBW — OTC blood glucose test</button>
+          <button type="button" data-c="DXN">DXN — non-invasive blood pressure</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field"><label for="dfrom">From</label><input type="date" id="dfrom" required></div>
+        <div class="field"><label for="dto">To</label><input type="date" id="dto" required></div>
+      </div>
+      <div class="field" style="margin-top:-8px">
+        <div class="presets">
+          <button type="button" data-w="365">Last 12 months</button>
+          <button type="button" data-w="730">Last 24 months</button>
+          <button type="button" data-w="1825">Last 5 years</button>
+          <button type="button" data-w="0">All time</button>
+        </div>
+        <div class="hint">Filters on <span class="num">date_received</span>. A trailing window keeps
+          the analysis on currently-shipping devices; a long window pulls in retired hardware, which
+          can distort a competitive read.</div>
+      </div>
+
+      <div class="field">
+        <label>Scope expansion</label>
+        <div class="check">
+          <input type="checkbox" id="predicates" checked>
+          <label for="predicates" style="font-family:var(--sans);text-transform:none;letter-spacing:0;
+            font-size:inherit;color:inherit;margin:0">
+            <span class="t">Include the predicate family</span>
+            <span class="d">Looks up each code's regulation number and adds every other code sharing
+              it. Entering QBJ resolves to 21 CFR 862.1355 and adds QDK, SAF, SBH, QDL, QLG and QII.
+              Derived from FDA's classification data — FDA does not publish predicate-of-record
+              chains anywhere in the API.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field"><label for="topn">Failure modes to analyse</label>
+          <input type="number" id="topn" value="20" min="5" max="40">
+          <div class="hint">Each mode costs about 4 API requests.</div></div>
+        <div class="field"><label for="label">Dashboard title (optional)</label>
+          <input type="text" id="label" placeholder="Next-gen CGM review"></div>
+      </div>
+
+      <details id="keyBox">
+        <summary>openFDA API key — optional, but read this before a big run</summary>
+        <div class="field">
+          <input type="password" id="apikey" placeholder="paste key here" autocomplete="off">
+          <div class="hint">Without a key openFDA allows <b>1,000 requests per day</b> from your IP
+            address, and a full run uses roughly 100–150. With a free key that becomes 120,000 per
+            day. The key is stored only in this browser (localStorage) and is sent only to
+            api.fda.gov. Get one at
+            <a href="https://open.fda.gov/apis/authentication/" target="_blank"
+               rel="noopener">open.fda.gov/apis/authentication</a>.</div>
+        </div>
+      </details>
+
+      <button class="go" type="submit" id="previewBtn">Preview scope</button>
+    </form>
+  </section>
+</main>
+
+<main class="wrap narrow" id="viewScope" hidden>
+  <section>
+    <h2>Scope preview</h2>
+    <p class="sub">Nothing has been analysed yet. Tick the codes to include, add more, then run.</p>
+    <div id="scopeWarn"></div>
+    <div class="field" style="margin-bottom:14px">
+      <label for="q2">Add another code</label>
+      <div class="searchrow">
+        <input type="text" id="q2" placeholder="Search by name, or type a code" autocomplete="off">
+        <button type="button" class="go sec" id="qbtn2">Search</button>
+      </div>
+      <div class="hits" id="qres2"></div>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th style="width:34px">Use</th><th>Code</th><th>Device name</th><th>Reg</th>
+        <th>Class</th><th>Summary reporting</th><th class="n">Reports</th><th>Why</th>
+        <th style="width:30px"></th></tr></thead>
+      <tbody id="scopebody"></tbody>
+    </table></div>
+    <p class="sub" id="tally" style="margin-top:12px"></p>
+    <div class="actions" style="margin-top:14px">
+      <button class="go" id="runBtn">Run full analysis</button>
+      <button class="go sec" id="backBtn" type="button">Start over</button>
+    </div>
+  </section>
+</main>
+
+<main class="wrap narrow" id="viewRun" hidden>
+  <section>
+    <h2 id="runTitle">Running analysis</h2>
+    <p class="sub" id="runSub">Querying openFDA. This can take a few minutes for a wide scope —
+      each failure mode needs its own crosstab.</p>
+    <div class="logbox" id="log">starting…</div>
+    <div class="meter" id="meter"></div>
+    <div class="actions" style="margin-top:14px">
+      <button class="go sec" id="cancelBtn" type="button">Cancel</button>
+    </div>
+  </section>
+</main>
+
+<div id="viewDash" hidden>
+  <div class="wrap" style="padding-top:16px">
+    <div class="actions">
+      <button class="go sec" id="newRunBtn" type="button">← New analysis</button>
+      <button class="go sec" id="saveBtn" type="button">Download this dashboard</button>
+      <button class="go sec" id="saveJsonBtn" type="button">Download data (JSON)</button>
+    </div>
+  </div>
+  <div id="dash"></div>
+</div>
+
+<footer class="wrap">
+  Queries <span class="num">api.fda.gov</span> directly from your browser. Aggregate counts only —
+  no report-level records, no narrative text, no personal data is requested or stored.
+  Nothing you enter is sent anywhere except to FDA.
+</footer>
+
+<script>
+"use strict";
+/* ============================================================ config */
+const EVENT="https://api.fda.gov/device/event.json";
+const CLASSIF="https://api.fda.gov/device/classification.json";
+const RECALL="https://api.fda.gov/device/recall.json";
+const PALETTE=["#0C6F79","#A8571C","#2A6E4E","#565196","#8A6D1F","#6B3A5B"];
+
+const ACRONYMS={
+ "ivus":"intravascular ultrasound","cgm":"continuous glucose","bgm":"blood glucose",
+ "oct":"optical coherence tomography","aed":"defibrillator automated external",
+ "icd":"defibrillator implantable","crt":"cardiac resynchronization","lvad":"ventricular assist",
+ "tavr":"transcatheter aortic valve","tavi":"transcatheter aortic valve",
+ "picc":"catheter peripherally inserted central","cpap":"continuous positive airway pressure",
+ "bipap":"positive airway pressure","ecg":"electrocardiograph","ekg":"electrocardiograph",
+ "eeg":"electroencephalograph","emg":"electromyograph","mri":"magnetic resonance",
+ "ct":"computed tomography","pet":"positron emission tomography","iol":"intraocular lens",
+ "ptca":"percutaneous transluminal coronary angioplasty","pci":"percutaneous coronary",
+ "ecmo":"extracorporeal membrane oxygenation","nibp":"blood pressure non-invasive",
+ "spo2":"oximeter","pulse ox":"oximeter","tens":"stimulator transcutaneous",
+ "dbs":"stimulator brain deep","pfo":"patent foramen ovale","asd":"atrial septal defect",
+ "aid":"automated insulin delivery"
+};
+const STOP=new Set(["a","an","the","for","of","and","or","with","device","devices","system",
+ "systems","to","in","on","type","kind"]);
+
+/* CGM mechanism buckets. Category-specific by design: applied only when the scope
+   overlaps applies_to, so a pacemaker run shows no mix chart rather than a wrong one. */
+const BUCKETS={
+ name:"CGM failure mechanisms",
+ source:"Grouped on clinical mechanism, not string similarity. These groupings are a judgment call and should be reviewed by someone with category expertise before being presented as findings.",
+ applies_to:["QBJ","QLG","SAF","QDK","QII","SBH","SBA","QDL","PQF","MDS","QCD","PJT","QRX","PHV","PYV"],
+ buckets:[
+  {name:"Reading accuracy",terms:["Incorrect, Inadequate or Imprecise Result or Readings","Low Readings","High Readings","Imprecision","Erroneous Readings","Incorrect Measurement","Measurement Error","Variance"]},
+  {name:"Loss of reading / no output",terms:["No Device Output","Unable to Obtain Readings","Device Displays Incorrect Message","Failure to Read Sensor","Signal Loss","Intermittent Readings","Delayed Readings"]},
+  {name:"Wireless / connectivity",terms:["Wireless Communication Problem","Communication or Transmission Problem","Loss of Communication","Connection Problem","Failure To Transmit Records","Intermittent Communication","Synchronization Problem"]},
+  {name:"Adhesion / detachment",terms:["Detachment of Device or Device Component","Unintended Ejection","Device Slipped","Adhesion Problem","Device Dislodged","Migration or Expulsion of Device"]},
+  {name:"Alarm / alerting",terms:["No Audible Alarm","Defective Alarm","Low Audible Alarm","Device Alarm System","Alarm Problem","Failure To Alarm","Delayed Alarm","False Alarm","Audible Alarm Problem","Alarm Silenced","Protective Measures Problem"]},
+  {name:"Calibration",terms:["Calibration Problem","Device Calibration Problem","Improper Calibration","Calibration Discrepancy","Loss of Calibration"]},
+  {name:"App / software",terms:["Unintended Application Program Shut Down","Application Program Freezes or Fails to Launch","Operating System Version or Upgrade Problem","Unexpected Shutdown","Inappropriate or Unexpected Reset","Application Program Problem","Software Problem","Computer Software Problem","Application Program Version Problem"]},
+  {name:"Sensor life / premature end",terms:["Premature End-of-Life Indicator","Device Expired","Premature Discharge","Shortened Device Life","Battery Problem","Battery Fault"]},
+  {name:"Break / fracture",terms:["Break","Fracture","Material Rupture","Material Separation","Material Deformation","Crack"]},
+  {name:"Insertion / site",terms:["Difficult to Insert","Device Difficult to Insert","Insertion Problem","Device Damaged During Insertion","Patient-Device Incompatibility","Difficult to Remove","Device Remains Implanted"]}
+ ]
+};
+const BUCKET_LOOKUP={};BUCKETS.buckets.forEach(b=>b.terms.forEach(t=>BUCKET_LOOKUP[t]=b.name));
+const BUCKET_ORDER=BUCKETS.buckets.map(b=>b.name);
+
+/* ============================================================ helpers */
+const $=id=>document.getElementById(id);
+const f=n=>(n==null?"—":Number(n).toLocaleString("en-US"));
+function esc(s){const d=document.createElement("span");d.textContent=s==null?"":String(s);
+ return d.innerHTML;}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function pctClass(p){return p>=20?"hi":(p>=5?"mid":"");}
+function iso(d){return d.toISOString().slice(0,10);}
+function compact(s){return (s||"").replace(/-/g,"");}
+
+let STATE={cancelled:false,requests:0,t0:0};
+class FDAError extends Error{}
+
+/* Paced fetch with retry. A failed query is reported, never silently counted as zero. */
+async function api(base,params){
+ if(STATE.cancelled) throw new FDAError("cancelled");
+ const key=($("apikey")?.value||"").trim();
+ const u=new URL(base);
+ Object.entries(params).forEach(([k,v])=>u.searchParams.set(k,v));
+ if(key) u.searchParams.set("api_key",key);
+ let last=null;
+ for(let i=0;i<5;i++){
+  if(STATE.cancelled) throw new FDAError("cancelled");
+  try{
+   const r=await fetch(u.toString());
+   STATE.requests++;
+   if(r.status===404) return {results:[],meta:{results:{total:0}}};
+   if(r.status===429){last="rate limited (HTTP 429)";await sleep(2500*(i+1));continue;}
+   if(!r.ok){last="HTTP "+r.status;await sleep(900*(i+1));continue;}
+   await sleep(180);
+   return await r.json();
+  }catch(e){last=e.message||String(e);await sleep(900*(i+1));}
+ }
+ throw new FDAError(last+" — "+u.pathname+"?"+u.searchParams.get("search"));
+}
+async function total(search){
+ const d=await api(EVENT,{search,limit:1});
+ return d.meta?.results?.total||0;
+}
+async function counts(search,field,limit=500){
+ const d=await api(EVENT,{search,count:field,limit});
+ return (d.results||[]).map(r=>[r.term,r.count]);
+}
+function scopeQuery(codes,dfrom,dto){
+ return "("+codes.map(c=>"device.device_report_product_code:"+c).join(" ")+
+        ") AND date_received:["+compact(dfrom)+" TO "+compact(dto)+"]";
+}
+
+/* ---------- normalization ---------- */
+const LEGAL=/[\s,./-]*\b(INC|INCORPORATED|LTD|LIMITED|LLC|CORP|CORPORATION|CO|COMPANY|GMBH|AG|SA|BV|PLC|PTY|KK|NV|AB|AS|OY|SRL|SPA|HOLDINGS?|GROUP|USA|US)\b\.?/gi;
+function normMfr(n){
+ let s=(n||"").toUpperCase().trim();
+ if(!s) return "(not stated)";
+ s=s.replace(LEGAL,"").replace(/[.,/]+/g," ").replace(/\s+/g," ").replace(/^[-,. ]+|[-,. ]+$/g,"");
+ return s||"(not stated)";
+}
+function normBrand(n){
+ const s=(n||"").toUpperCase().trim().replace(/\s+/g," ");
+ return s||"(blank brand field)";
+}
+function rollup(pairs,fn){
+ const m=new Map();
+ for(const [t,n] of pairs){const k=fn(t);m.set(k,(m.get(k)||0)+n);}
+ return [...m.entries()].sort((a,b)=>b[1]-a[1]);
+}
+function groupRaw(pairs,fn){
+ const m=new Map();
+ for(const [t,n] of pairs){const k=fn(t);if(!m.has(k))m.set(k,[]);m.get(k).push(t);}
+ return m;
+}
+
+/* ============================================================ code search */
+function tokens(text){
+ let t=(text||"").toLowerCase().trim();
+ Object.keys(ACRONYMS).sort((a,b)=>b.length-a.length).forEach(k=>{
+  t=t.replace(new RegExp("(?<![a-z0-9])"+k.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"(?![a-z0-9])","g"),
+              " "+ACRONYMS[k]+" ");
+ });
+ const out=[],seen=new Set();
+ for(const w of t.split(/[^a-z0-9]+/)){
+  if(w&&w.length>1&&!STOP.has(w)&&!seen.has(w)){seen.add(w);out.push(w);}
+ }
+ return out;
+}
+function classifyRow(r){
+ return {code:r.product_code,name:r.device_name,
+         regulation:(r.regulation_number||"").trim(),device_class:r.device_class,
+         summary_eligible:r.summary_malfunction_reporting};
+}
+async function classify(code){
+ const d=await api(CLASSIF,{search:"product_code:"+code,limit:1});
+ const rs=d.results||[];
+ return rs.length?classifyRow(rs[0]):null;
+}
+async function searchCodes(text,limit=10){
+ const toks=tokens(text);
+ if(!toks.length) return {rows:[],note:"Enter a few words describing the device."};
+ const raw=(text||"").trim().toUpperCase();
+ if(/^[A-Z]{3}$/.test(raw)){
+  const m=await classify(raw);
+  if(m) return {rows:await attachCounts([m]),note:"Exact product code."};
+ }
+ const pool=Math.max(limit*3,25);
+ const wild=t=>t.length>=4?t+"*":t;
+ const attempts=[];
+ if(toks.some(t=>t.length>=4))
+  attempts.push([toks.map(t=>"device_name:"+wild(t)).join(" AND "),"all of: "+toks.join(", ")]);
+ attempts.push([toks.map(t=>"device_name:"+t).join(" AND "),
+                "all of: "+toks.join(", ")+" (exact words)"]);
+ attempts.push([toks.map(t=>"(device_name:"+t+" OR definition:"+t+")").join(" AND "),
+                "all of: "+toks.join(", ")+" (name or definition)"]);
+ for(let drop=1;drop<toks.length;drop++){
+  const keep=toks.slice(0,toks.length-drop);
+  if(!keep.length) break;
+  attempts.push([keep.map(t=>"device_name:"+t).join(" AND "),
+                 "partial — matched: "+keep.join(", ")]);
+ }
+ attempts.push([toks.map(t=>"device_name:"+t).join(" OR "),"loose — any of: "+toks.join(", ")]);
+ for(const [clause,note] of attempts){
+  let d;
+  try{ d=await api(CLASSIF,{search:clause,limit:pool}); }catch(e){ continue; }
+  const rs=(d.results||[]).filter(r=>r.product_code);
+  if(rs.length){
+   const rows=await attachCounts(rs.map(classifyRow));
+   return {rows:rows.slice(0,limit),note};
+  }
+ }
+ return {rows:[],note:"Nothing matched "+toks.join(", ")+". Try different words."};
+}
+async function attachCounts(rows){
+ for(const r of rows){
+  try{ r.reports_all_time=await total("device.device_report_product_code:"+r.code); }
+  catch(e){ r.reports_all_time=null; }
+ }
+ rows.sort((a,b)=>(b.reports_all_time||0)-(a.reports_all_time||0));
+ return rows;
+}
+
+/* ============================================================ scope */
+async function resolveScope(codes,expand,dfrom,dto,say){
+ const seen=new Map(),warnings=[];
+ for(const c of codes){
+  const m=await classify(c);
+  if(!m){warnings.push("Product code "+c+" was not found in FDA's classification database and has been dropped.");continue;}
+  m.origin="entered";seen.set(c,m);say("resolved "+c);
+ }
+ if(expand){
+  for(const c of [...seen.keys()]){
+   const reg=seen.get(c).regulation;
+   if(!reg){warnings.push(c+" has no regulation number in FDA's data, so its predicate family could not be expanded.");continue;}
+   const d=await api(CLASSIF,{search:"regulation_number:"+reg,limit:100});
+   for(const r of (d.results||[])){
+    if(r.product_code&&!seen.has(r.product_code)){
+     const row=classifyRow(r);row.origin="predicate family of "+c+" ("+reg+")";
+     seen.set(r.product_code,row);say("added sibling "+r.product_code);
+    }
+   }
+  }
+ }
+ const win="date_received:["+compact(dfrom)+" TO "+compact(dto)+"]";
+ const rows=[];
+ for(const [c,m] of seen){
+  m.reports=await total("device.device_report_product_code:"+c+" AND "+win);
+  rows.push(m);say(c+": "+f(m.reports)+" reports");
+ }
+ rows.sort((a,b)=>b.reports-a.reports);
+ const elig=[...new Set(rows.map(r=>r.summary_eligible).filter(Boolean))];
+ if(elig.length>1){
+  warnings.push("Scope mixes summary-malfunction Eligible and Ineligible codes: "+
+   rows.filter(r=>r.summary_eligible).map(r=>r.code+" ("+r.summary_eligible+")").join(", ")+
+   ". Eligible codes aggregate many malfunctions into single reports, so a report in one is not "+
+   "the same unit of observation as a report in the other. Counts across these codes are not "+
+   "directly comparable.");
+ }
+ const regs=[...new Set(rows.map(r=>r.regulation).filter(Boolean))];
+ if(regs.length>1) warnings.push("Scope spans more than one regulation ("+regs.join(", ")+
+  "). Devices under different regulations may not be comparable.");
+ const cls=[...new Set(rows.map(r=>String(r.device_class)).filter(x=>x&&x!=="undefined"))];
+ if(cls.length>1) warnings.push("Scope mixes device classes ("+cls.join(", ")+
+  "). Class III devices follow different reporting rules than Class II.");
+ return {rows,warnings};
+}
+
+/* ============================================================ analysis */
+async function sumOverGroup(scope,field,raws,fields,chunk=6){
+ let tot=0;const aggs={};fields.forEach(x=>aggs[x]=new Map());
+ for(let i=0;i<raws.length;i+=chunk){
+  const clause="("+raws.slice(i,i+chunk).map(v=>field+'.exact:"'+v+'"').join(" ")+")";
+  const s=scope+" AND "+clause;
+  tot+=await total(s);
+  for(const fl of fields){
+   for(const [t,n] of await counts(s,fl,500)) aggs[fl].set(t,(aggs[fl].get(t)||0)+n);
+  }
+ }
+ return {tot,aggs};
+}
+
+async function analyse(cfg,say){
+ const {codes,dfrom,dto,topn,scopeRows,warnings}=cfg;
+ const scope=scopeQuery(codes,dfrom,dto);
+ const out={generated:new Date().toISOString().slice(0,16).replace("T"," "),
+  date_from:dfrom,date_to:dto,codes,scope_query:scope,top_n:topn,
+  scope_rows:scopeRows,warnings:[...warnings],errors:[]};
+
+ try{
+  const m=await api(EVENT,{search:"device.device_report_product_code:QBJ",limit:1});
+  out.api_last_updated=m.meta?.last_updated||null;
+ }catch(e){out.api_last_updated=null;}
+
+ say("counting scope");
+ out.total=await total(scope);
+ if(!out.total){out.empty=true;return out;}
+
+ out.event_type=Object.fromEntries(await counts(scope,"event_type.exact",20));
+ say("pulling device problems");
+ out.problems_all=await counts(scope,"product_problems.exact",500);
+ say("pulling patient problems");
+ out.patient_all=await counts(scope,"patient.patient_problems.exact",500);
+
+ say("rolling up manufacturers");
+ const mfrRaw=await counts(scope,"device.manufacturer_d_name.exact",300);
+ const mfrGroups=groupRaw(mfrRaw,normMfr);
+ out.manufacturers=rollup(mfrRaw,normMfr).slice(0,25);
+
+ say("rolling up brands");
+ const brandRaw=await counts(scope,"device.brand_name.exact",500);
+ out.brands=rollup(brandRaw,normBrand).slice(0,25);
+
+ const modes=[];
+ for(const [term,n] of out.problems_all.slice(0,topn)){
+  const s=scope+' AND product_problems:"'+term+'"';
+  let et,pat,mf,br;
+  try{
+   et=Object.fromEntries(await counts(s,"event_type.exact",20));
+   pat=await counts(s,"patient.patient_problems.exact",40);
+   mf=rollup(await counts(s,"device.manufacturer_d_name.exact",150),normMfr);
+   br=rollup(await counts(s,"device.brand_name.exact",200),normBrand);
+  }catch(e){
+   if(e.message==="cancelled") throw e;
+   out.errors.push(e.message);continue;
+  }
+  const inj=et.Injury||0,dth=et.Death||0;
+  const totMf=mf.reduce((a,x)=>a+x[1],0)||1;
+  modes.push({term,n,injury:inj,death:dth,harm:inj+dth,
+   harm_pct:n?Number((100*(inj+dth)/n).toFixed(3)):0,
+   patient_top:pat.slice(0,8),
+   mfr:mf.slice(0,6).map(x=>({name:x[0],n:x[1],pct:Number((100*x[1]/totMf).toFixed(1))})),
+   products:br.slice(0,12),mfr_all:mf.slice(0,12)});
+  say(term.slice(0,40)+" — "+f(n)+" reports, "+f(inj+dth)+" harm");
+ }
+ const byVol=[...modes].sort((a,b)=>b.n-a.n);
+ const byHarm=[...modes].sort((a,b)=>b.harm-a.harm);
+ byVol.forEach((m,i)=>m.vol_rank=i+1);
+ byHarm.forEach((m,i)=>m.harm_rank=i+1);
+ out.top=byVol;
+
+ say("manufacturer harm profiles");
+ const prof={},probByMfr={};
+ for(const [name] of out.manufacturers.slice(0,6)){
+  if(name==="(not stated)") continue;
+  let g;
+  try{
+   g=await sumOverGroup(scope,"device.manufacturer_d_name",mfrGroups.get(name)||[],
+     ["event_type.exact","device.brand_name.exact","product_problems.exact"]);
+  }catch(e){
+   if(e.message==="cancelled") throw e;
+   out.errors.push(e.message);continue;
+  }
+  if(!g.tot) continue;
+  const et=g.aggs["event_type.exact"];
+  const inj=et.get("Injury")||0,dth=et.get("Death")||0;
+  const brands=rollup([...g.aggs["device.brand_name.exact"].entries()],normBrand);
+  prof[name]={total:g.tot,injury:inj,death:dth,
+   harm_pct:Number((100*(inj+dth)/g.tot).toFixed(3)),
+   raw_names:(mfrGroups.get(name)||[]).length,
+   legal_names:(mfrGroups.get(name)||[]).slice().sort().slice(0,12),
+   products:brands.slice(0,15),distinct_products:brands.length,
+   problems:[...g.aggs["product_problems.exact"].entries()].sort((a,b)=>b[1]-a[1]).slice(0,10)};
+  probByMfr[name]=g.aggs["product_problems.exact"];
+  say(name.slice(0,34)+" — "+f(g.tot)+" reports");
+ }
+ out.mfr_profiles=prof;
+
+ out.mix=null;
+ const covers=BUCKETS.applies_to.some(c=>codes.includes(c));
+ if(covers&&Object.keys(prof).length){
+  say("failure mix by mechanism");
+  const mix={};
+  for(const name of Object.keys(prof)){
+   const agg={};BUCKET_ORDER.forEach(b=>agg[b]=0);
+   for(const [t,n] of (probByMfr[name]||new Map())){
+    const b=BUCKET_LOOKUP[t];if(b)agg[b]+=n;
+   }
+   const tot=prof[name].total;
+   const pct={};BUCKET_ORDER.forEach(b=>pct[b]=Number((100*agg[b]/tot).toFixed(2)));
+   mix[name]={total:tot,pct,n:agg,
+    coded_pct:Number((100*Object.values(agg).reduce((a,b)=>a+b,0)/tot).toFixed(1))};
+  }
+  out.mix={order:BUCKET_ORDER,name:BUCKETS.name,source:BUCKETS.source,mfr:mix};
+ }
+
+ say("pulling recalls");
+ const seen=new Set(),recs=[];
+ for(const c of codes){
+  let d;
+  try{ d=await api(RECALL,{search:"product_code:"+c,limit:100}); }
+  catch(e){
+   if(e.message==="cancelled") throw e;
+   out.errors.push(e.message);continue;
+  }
+  for(const r of (d.results||[])){
+   const num=r.product_res_number;
+   if(seen.has(num)) continue;
+   seen.add(num);
+   const dt=r.event_date_initiated||"";
+   if(dt&&(dt<dfrom||dt>dto)) continue;
+   recs.push({date:dt,firm:r.recalling_firm,num,
+    device_class:r.openfda?.device_class,
+    product:(r.product_description||"").split("\n")[0].slice(0,170),
+    reason:(r.reason_for_recall||"").slice(0,600)});
+  }
+ }
+ recs.sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+ out.recalls=recs;
+ say("done — "+f(out.total)+" reports, "+recs.length+" recalls in window");
+ return out;
+}
+
+/* ============================================================ dashboard render */
+function kvBlock(h,pairs,denom,empty){
+ if(!pairs||!pairs.length)
+  return '<div><h4>'+esc(h)+'</h4><div class="none">'+esc(empty||"None recorded.")+'</div></div>';
+ return '<div><h4>'+esc(h)+'</h4><div class="kv">'+pairs.map(p=>{
+  const share=denom?' <em>'+(100*p[1]/denom).toFixed(1)+'%</em>':'';
+  return '<div class="r"><span class="k">'+esc(p[0])+'</span><span class="v">'+
+    f(p[1])+share+'</span></div>';}).join("")+'</div></div>';
+}
+
+function renderDash(d,title){
+ const el=$("dash");
+ if(d.empty){
+  el.innerHTML='<main class="wrap narrow"><section><h2>No reports found</h2>'+
+   '<p>Codes <span class="num">'+esc(d.codes.join(", "))+'</span> returned no MAUDE reports '+
+   'between '+esc(d.date_from)+' and '+esc(d.date_to)+'.</p><div class="q">search = '+
+   esc(d.scope_query)+'</div><p>This is a real result, not an error — the codes exist but have '+
+   'no reports in that window.</p></section></main>';
+  return;
+ }
+ const et=d.event_type||{},tot=d.total;
+ const prof=d.mfr_profiles||{};
+ const firms=Object.keys(prof).sort((a,b)=>prof[b].total-prof[a].total);
+ const colour={};firms.forEach((n,i)=>colour[n]=PALETTE[i%PALETTE.length]);
+ const P=[];
+
+ P.push('<header><div class="wrap hin"><div><div class="eyebrow">openFDA MAUDE · '+
+  esc(d.codes.join(", "))+'</div><h1>'+esc(title)+'</h1></div>'+
+  '<dl class="prov tiles" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">'+
+  [["Window",d.date_from+" → "+d.date_to],["FDA data to",d.api_last_updated||"—"],
+   ["Reports",f(tot)],["Generated",d.generated]]
+   .map(x=>'<div class="tile"><dt>'+esc(x[0])+'</dt><dd style="font-size:13px">'+
+     esc(x[1])+'</dd></div>').join("")+
+  '</dl></div></header><main class="wrap">');
+
+ /* scope */
+ P.push('<section><div class="sechead"><span class="secno">01</span><h2>Scope</h2>'+
+  '<span class="tag">Evidence</span></div>');
+ (d.warnings||[]).forEach(w=>P.push('<div class="warn"><b>Scope caution.</b> '+esc(w)+'</div>'));
+ P.push('<dl class="tiles">'+[
+  ["Reports in scope",f(tot),d.codes.length+" product code(s)",0],
+  ["Malfunction",f(et.Malfunction||0),(100*(et.Malfunction||0)/tot).toFixed(1)+"% of scope",0],
+  ["Injury",f(et.Injury||0),(100*(et.Injury||0)/tot).toFixed(2)+"% of scope",1],
+  ["Death",f(et.Death||0),"causality not established",1],
+  ["Recalls in window",f((d.recalls||[]).length),"on in-scope codes",0]
+ ].map(t=>'<div class="tile'+(t[3]?" crit":"")+'"><dt>'+esc(t[0])+'</dt><dd>'+esc(t[1])+
+   '</dd><div class="fine">'+esc(t[2])+'</div></div>').join("")+'</dl>');
+ if((d.scope_rows||[]).length){
+  P.push('<div class="tablewrap" style="margin-top:14px"><table><thead><tr><th>Code</th>'+
+   '<th>Device name</th><th>Reg</th><th>Class</th><th>Summary reporting</th>'+
+   '<th class="n">Reports</th><th>In scope because</th></tr></thead><tbody>'+
+   d.scope_rows.map(r=>'<tr><td class="num">'+esc(r.code)+'</td><td>'+esc(r.name)+
+    '</td><td class="num">'+esc(r.regulation)+'</td><td class="num">'+esc(r.device_class)+
+    '</td><td>'+esc(r.summary_eligible)+'</td><td class="n">'+f(r.reports)+
+    '</td><td class="rk">'+esc(r.origin)+'</td></tr>').join("")+'</tbody></table></div>');
+ }
+ P.push('<div class="q">search = '+esc(d.scope_query)+'</div></section>');
+
+ /* top modes */
+ const top=d.top||[];
+ if(top.length){
+  P.push('<section><div class="sechead"><span class="secno">02</span><h2>Top '+top.length+
+   ' failure modes</h2><span class="tag">Evidence</span></div>'+
+   '<div class="ctl" role="group" aria-label="Ranking">'+
+   '<button id="bv" aria-pressed="true">Rank by volume</button>'+
+   '<button id="bh" aria-pressed="false">Rank by harm</button></div>'+
+   '<div class="tablewrap"><table><thead><tr><th style="width:40px">#</th>'+
+   '<th>Failure mode (FDA device problem code)</th><th class="n">Reports</th>'+
+   '<th class="n">Injury + death</th><th class="n">Harm rate</th>'+
+   '<th>Reported against</th></tr></thead><tbody id="tb"></tbody></table></div>'+
+   '<div class="legend"><span>Harm rate = (injury + death) ÷ reports for that mode. '+
+   'Event type is an FDA field set by the reporting manufacturer. Click any row for detail.'+
+   '</span></div></section>');
+ }
+
+ /* manufacturers */
+ if(firms.length){
+  P.push('<section><div class="sechead"><span class="secno">03</span><h2>By manufacturer</h2>'+
+   '<span class="tag">Evidence</span></div><div class="tablewrap"><table><thead><tr>'+
+   '<th>Manufacturer</th><th class="n">Reports</th><th class="n">Injury</th>'+
+   '<th class="n">Death</th><th class="n">Harm rate</th><th>Share of scope</th>'+
+   '</tr></thead><tbody>');
+  firms.forEach((name,i)=>{
+   const v=prof[name],share=100*v.total/tot;
+   P.push('<tr class="exp" aria-expanded="false" data-t="m'+i+'"><td>'+
+    '<span class="caret">▸</span> <span class="sw" style="background:'+colour[name]+'"></span>'+
+    esc(name)+'<div class="rk" style="margin-top:3px;padding-left:18px">'+
+    f(v.distinct_products)+' product name(s) · '+f(v.raw_names)+' legal entity name(s)</div></td>'+
+    '<td class="n">'+f(v.total)+'</td><td class="n">'+f(v.injury)+'</td><td class="n">'+
+    f(v.death)+'</td><td class="n"><span class="pct '+pctClass(v.harm_pct)+'">'+
+    v.harm_pct.toFixed(2)+'%</span></td><td><div class="bar"><i style="width:'+
+    share.toFixed(1)+'%"></i></div><div class="rk" style="margin-top:4px">'+
+    share.toFixed(1)+'%</div></td></tr>');
+   P.push('<tr class="detail" id="m'+i+'" hidden><td colspan="6"><div class="det">'+
+    kvBlock("Products reported",v.products,v.total,"No brand names recorded on these reports.")+
+    kvBlock("Top device problems",v.problems,v.total,"")+
+    '<div><h4>Filed under these legal names</h4><div class="kv">'+
+    (v.legal_names||[]).map(x=>'<div class="r"><span class="k">'+esc(x)+'</span></div>').join("")+
+    '</div></div></div></td></tr>');
+  });
+  P.push('</tbody></table></div><div class="warn" style="margin-top:14px">'+
+   '<b>Harm rate is not relative device safety.</b> The event type on each report is assigned by '+
+   'the reporting manufacturer, not adjudicated by FDA, so a gap between firms may reflect '+
+   'reporting convention rather than patient outcome. There is also no exposure denominator in '+
+   'MAUDE — these are counts, not failures per device.</div></section>');
+ }
+
+ /* mix */
+ if(d.mix){
+  const order=d.mix.order,mf=d.mix.mfr;
+  const fl=Object.keys(mf).sort((a,b)=>mf[b].total-mf[a].total);
+  const totals={};order.forEach(b=>totals[b]=fl.reduce((a,n)=>a+mf[n].n[b],0));
+  const shown=order.slice().sort((a,b)=>totals[b]-totals[a]).filter(b=>totals[b]>0).slice(0,3);
+  if(shown.length){
+   let maxp=0;shown.forEach(b=>fl.forEach(n=>{if(mf[n].pct[b]>maxp)maxp=mf[n].pct[b];}));
+   const scale=Math.max(20,(Math.floor(maxp/20)+1)*20);
+   P.push('<section><div class="sechead"><span class="secno">04</span>'+
+    '<h2>Failure mix by manufacturer</h2><span class="tag">Evidence</span></div>'+
+    '<div class="legend" style="margin:0 0 11px">'+
+    fl.map(n=>'<span><span class="sw" style="background:'+colour[n]+'"></span>'+esc(n)+
+      '</span>').join("")+
+    "<span>Each bar is that firm's share of its <em>own</em> reports — composition, not a rate. "+
+    "Shapes this extreme reflect how each firm codes complaints, not how the devices fail.</span>"+
+    '</div><div class="mix">');
+   shown.forEach(b=>{
+    P.push('<div class="mixrow"><div class="mixlab">'+esc(b)+'</div><div class="mixbars">'+
+     fl.map(n=>{
+      const p=mf[n].pct[b],w=100*p/scale;
+      const lab=p>=0.1?p.toFixed(1)+"%":(p>0?"&lt;0.1%":"0%");
+      return '<div class="mixbar"><div class="mixtrack"><i style="width:'+w.toFixed(2)+
+       '%;background:'+colour[n]+'"></i></div><div class="mixval" title="'+f(mf[n].n[b])+
+       ' reports">'+lab+'</div></div>';}).join("")+'</div></div>');
+   });
+   P.push('<div class="mixnote">top '+shown.length+' of '+order.length+
+    ' mechanisms by total reports  ·  scale 0–'+scale+'%  ·  base: '+
+    fl.map(n=>esc(n)+" "+f(mf[n].total)).join("  ·  ")+' reports</div></div>'+
+    '<div class="legend"><span>'+esc(d.mix.source)+'</span></div></section>');
+  }
+ }
+
+ /* recalls */
+ const recs=d.recalls||[];
+ if(recs.length){
+  P.push('<section><div class="sechead"><span class="secno">05</span><h2>Recalls in window</h2>'+
+   '<span class="tag">Evidence</span></div><div class="recalls">'+
+   recs.slice(0,20).map(r=>'<div class="rc"><div class="dt">'+esc(r.date||"—")+'</div><div>'+
+    '<div class="firm">'+esc(r.product||r.firm)+'</div><div class="why">'+esc(r.reason)+
+    '</div><div class="rk" style="margin-top:4px">'+esc(r.firm)+' · '+esc(r.num)+
+    ' · class '+esc(r.device_class)+'</div></div></div>').join("")+'</div>'+
+   (recs.length>20?'<div class="legend"><span>'+(recs.length-20)+
+     ' further recalls in window not shown.</span></div>':'')+'</section>');
+ }
+
+ /* limits */
+ P.push('<section><div class="sechead"><span class="secno">06</span><h2>How to read this</h2>'+
+  '</div><dl class="limits">'+[
+  ["Not a rate","MAUDE carries no exposure denominator — no units sold, no device-days. Everything here is counts and within-scope shares."],
+  ["Counts are a floor","Passive surveillance, and underreported. No correction factor is applied; none is citable."],
+  ["Unique reports","One row is one MDR report. Follow-ups update a record rather than adding one. FDA's event_key field is typically empty, so duplication at the level of a real-world event cannot be measured."],
+  ["Reporter-assigned","Both the product code and the device problem code are chosen by the reporter. Comparing problem codes across manufacturers can measure taxonomy rather than engineering."],
+  ["Redacted narratives","Manufacturer analysis is routinely withheld as (b)(4). A redacted narrative means absent, not no-finding."],
+  ["Brand strings are raw","Brand names are normalized for case and whitespace only. Two spellings of one product are NOT merged — that needs a human-reviewed mapping per category."]
+ ].map(x=>'<div><dt>'+esc(x[0])+'</dt><dd>'+esc(x[1])+'</dd></div>').join("")+'</dl>');
+ if((d.errors||[]).length){
+  P.push('<div class="warn" style="margin-top:14px"><b>Queries that failed.</b> These sections '+
+   'are incomplete; the figures shown exclude them.<br>'+
+   d.errors.slice(0,6).map(e=>'<span class="num">'+esc(e)+'</span>').join("<br>")+'</div>');
+ }
+ P.push('</section></main>');
+ el.innerHTML=P.join("");
+
+ wireExpand(el);
+ if(top.length) wireModeTable(top,colour);
+}
+
+function wireExpand(root){
+ root.querySelectorAll("tr.exp").forEach(tr=>{
+  if(tr.dataset.wired) return; tr.dataset.wired="1";
+  tr.setAttribute("tabindex","0");
+  const toggle=ev=>{
+   if(ev.target.closest("a,button")) return;
+   const d=document.getElementById(tr.dataset.t); if(!d) return;
+   const open=tr.getAttribute("aria-expanded")==="true";
+   tr.setAttribute("aria-expanded",open?"false":"true"); d.hidden=open;
+  };
+  tr.addEventListener("click",toggle);
+  tr.addEventListener("keydown",e=>{
+   if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle(e);}});
+ });
+}
+
+function wireModeTable(rows,colour){
+ let mode="vol";
+ const maxN=Math.max(...rows.map(r=>r.n))||1;
+ const maxH=Math.max(...rows.map(r=>r.harm))||1;
+ function draw(){
+  const rs=[...rows].sort((a,b)=>mode==="vol"?b.n-a.n:b.harm-a.harm);
+  $("tb").innerHTML=rs.map((r,i)=>{
+   const gain=r.vol_rank-r.harm_rank;
+   const cls=gain>=3?"up":(gain<=-3?"dn":"flat");
+   const lab=mode==="vol"?("harm #"+r.harm_rank):("vol #"+r.vol_rank);
+   const w=mode==="vol"?(100*r.n/maxN):(100*r.harm/maxH);
+   const seg=r.mfr.map(m=>'<i style="width:'+m.pct+'%;background:'+
+     (colour[m.name]||"#8894A0")+'"></i>').join("");
+   const names=r.mfr.slice(0,2).map(m=>m.name.length>15?m.name.slice(0,15)+"…":m.name).join(" · ");
+   const det='<div class="det">'+
+    kvBlock("Products reported",r.products,r.n,"No brand names recorded on these reports.")+
+    kvBlock("Manufacturers",r.mfr_all,r.n,"")+
+    kvBlock("Patient outcomes",r.patient_top,null,"No patient problems coded on these reports.")+
+    '</div>';
+   return '<tr class="exp" aria-expanded="false" data-t="f'+i+'">'+
+    '<td class="rk"><span class="caret">▸</span> '+(i+1)+'</td>'+
+    '<td><div class="mode">'+esc(r.term)+'<span class="shift '+cls+'" title="volume rank '+
+      r.vol_rank+' · harm rank '+r.harm_rank+'">'+lab+'</span></div>'+
+    '<div class="bar'+(mode==="harm"?" h":"")+'"><i style="width:'+w.toFixed(1)+
+      '%"></i></div></td>'+
+    '<td class="n">'+f(r.n)+'</td><td class="n">'+f(r.harm)+'</td>'+
+    '<td class="n"><span class="pct '+pctClass(r.harm_pct)+'">'+r.harm_pct.toFixed(2)+
+      '%</span></td>'+
+    '<td><div class="bar" style="display:flex;background:var(--surface-2)">'+seg+'</div>'+
+    '<div class="rk" style="margin-top:4px">'+esc(names)+'</div></td></tr>'+
+    '<tr class="detail" id="f'+i+'" hidden><td colspan="6">'+det+'</td></tr>';
+  }).join("");
+  wireExpand($("tb"));
+ }
+ const set=m=>{mode=m;$("bv").setAttribute("aria-pressed",m==="vol");
+  $("bh").setAttribute("aria-pressed",m==="harm");draw();};
+ $("bv").onclick=()=>set("vol");
+ $("bh").onclick=()=>set("harm");
+ draw();
+}
+
+/* ============================================================ UI */
+let SCOPE_ROWS=[],SCOPE_WARN=[],CFG={},RESULT=null;
+
+function show(view){
+ ["viewForm","viewScope","viewRun","viewDash"].forEach(v=>$(v).hidden=(v!==view));
+ window.scrollTo({top:0,behavior:"instant"});
+}
+function logLine(msg){
+ const b=$("log");
+ b.textContent=(b.textContent==="starting…"?"":b.textContent+"\n")+msg;
+ b.scrollTop=b.scrollHeight;
+ $("meter").textContent=STATE.requests+" API requests · "+
+  Math.round((Date.now()-STATE.t0)/1000)+"s elapsed";
+}
+function addCode(c){
+ const i=$("codes");
+ const v=i.value.split(",").map(s=>s.trim().toUpperCase()).filter(Boolean);
+ if(!v.includes(c)) v.push(c);
+ i.value=v.join(", ");
+}
+function renderHits(box,res,onPick){
+ if(!res.rows.length){box.innerHTML='<div class="note">'+esc(res.note)+'</div>';return;}
+ box.innerHTML='<div class="note">'+esc(res.note)+' — click to add</div>'+
+  res.rows.map(r=>'<button type="button" class="hit" data-code="'+esc(r.code)+'">'+
+   '<span class="c">'+esc(r.code)+'</span><span class="nm">'+esc(r.name)+'</span>'+
+   '<span class="meta">'+esc(r.regulation||"—")+' · class '+esc(r.device_class||"?")+
+   (r.reports_all_time!=null?'<br>'+f(r.reports_all_time)+' reports':'')+
+   '</span></button>').join("");
+ box.querySelectorAll(".hit").forEach(b=>{
+  b.onclick=()=>onPick(b,b.dataset.code);
+ });
+}
+
+/* form search */
+async function doSearch(inputId,boxId,onPick){
+ const q=$(inputId).value.trim(); if(!q) return;
+ const box=$(boxId);
+ box.innerHTML='<div class="note">searching FDA classification…</div>';
+ try{ renderHits(box,await searchCodes(q),onPick); }
+ catch(e){ box.innerHTML='<div class="note">Search failed: '+esc(e.message)+'</div>'; }
+}
+$("qbtn").onclick=()=>doSearch("q","qres",(b,code)=>{addCode(code);b.dataset.added="1";});
+$("q").addEventListener("keydown",e=>{
+ if(e.key==="Enter"){e.preventDefault();$("qbtn").click();}});
+
+document.querySelectorAll(".presets button[data-c]").forEach(b=>{
+ b.onclick=()=>addCode(b.dataset.c);});
+document.querySelectorAll(".presets button[data-w]").forEach(b=>{
+ b.onclick=()=>{
+  const d=parseInt(b.dataset.w,10),to=new Date();
+  const from=d?new Date(to.getTime()-d*86400000):new Date("1991-01-01");
+  $("dto").value=iso(to);$("dfrom").value=iso(from);};});
+
+/* defaults + stored key */
+(function(){
+ const to=new Date(),from=new Date(to.getTime()-730*86400000);
+ $("dto").value=iso(to);$("dfrom").value=iso(from);
+ try{
+  const k=localStorage.getItem("openfda_key");
+  if(k){$("apikey").value=k;$("keyBox").open=false;}
+ }catch(e){}
+ $("apikey").addEventListener("change",()=>{
+  try{localStorage.setItem("openfda_key",$("apikey").value.trim());}catch(e){}});
+})();
+
+/* preview */
+$("mainForm").addEventListener("submit",async ev=>{
+ ev.preventDefault();
+ $("formErr").innerHTML="";
+ const codes=$("codes").value.split(/[,\s]+/).map(s=>s.trim().toUpperCase()).filter(Boolean);
+ const bad=codes.filter(c=>!/^[A-Z]{3}$/.test(c));
+ if(!codes.length){$("formErr").innerHTML='<div class="err">Enter at least one product code.</div>';return;}
+ if(bad.length){$("formErr").innerHTML='<div class="err">FDA product codes are exactly three '+
+  'letters. Not valid: '+esc(bad.join(", "))+'</div>';return;}
+ const dfrom=$("dfrom").value,dto=$("dto").value;
+ if(dfrom>dto){$("formErr").innerHTML='<div class="err">The From date is after the To date.</div>';return;}
+ CFG={codes,dfrom,dto,expand:$("predicates").checked,
+      topn:Math.max(5,Math.min(40,parseInt($("topn").value,10)||20)),
+      label:$("label").value.trim()};
+ STATE={cancelled:false,requests:0,t0:Date.now()};
+ $("log").textContent="starting…";
+ $("runTitle").textContent="Resolving scope";
+ $("runSub").textContent="Checking each product code against FDA's classification database.";
+ show("viewRun");
+ try{
+  const r=await resolveScope(CFG.codes,CFG.expand,dfrom,dto,logLine);
+  SCOPE_ROWS=r.rows.map(x=>({...x,use:x.reports>0}));
+  SCOPE_WARN=r.warnings;
+  drawScope();show("viewScope");
+ }catch(e){
+  if(e.message==="cancelled"){show("viewForm");return;}
+  $("formErr").innerHTML='<div class="err"><b>Could not resolve the scope.</b><br>'+
+   esc(e.message)+'</div>';
+  show("viewForm");
+ }
+});
+
+/* scope editing */
+function drawScope(){
+ $("scopeWarn").innerHTML=SCOPE_WARN.map(w=>'<div class="warn"><b>Caution.</b> '+esc(w)+
+  '</div>').join("");
+ $("scopebody").innerHTML=SCOPE_ROWS.map((r,i)=>{
+  const why=r.origin==="entered"?"entered":
+   (String(r.origin||"").startsWith("predicate")?"predicate family":(r.origin||"added"));
+  return '<tr'+(r.use?"":' style="opacity:.45"')+'>'+
+   '<td><input type="checkbox" data-i="'+i+'"'+(r.use?" checked":"")+
+     ' aria-label="include '+esc(r.code)+'"></td>'+
+   '<td class="num">'+esc(r.code)+'</td><td>'+esc(r.name)+'</td>'+
+   '<td class="num">'+esc(r.regulation||"—")+'</td><td class="num">'+
+     esc(r.device_class||"—")+'</td>'+
+   '<td>'+esc(r.summary_eligible||"—")+'</td><td class="n">'+f(r.reports)+'</td>'+
+   '<td class="rk">'+esc(why)+'</td>'+
+   '<td><button type="button" class="rm" data-i="'+i+'" title="Remove" aria-label="Remove '+
+     esc(r.code)+'" style="border:0;background:none;color:var(--ink-3);cursor:pointer;'+
+     'font-size:15px;line-height:1;padding:2px 5px">&times;</button></td></tr>';
+ }).join("");
+ $("scopebody").querySelectorAll('input[type=checkbox]').forEach(c=>{
+  c.onchange=()=>{SCOPE_ROWS[+c.dataset.i].use=c.checked;drawScope();};});
+ $("scopebody").querySelectorAll("button.rm").forEach(b=>{
+  b.onclick=()=>{SCOPE_ROWS.splice(+b.dataset.i,1);drawScope();};});
+ const on=SCOPE_ROWS.filter(r=>r.use);
+ const t=on.reduce((a,r)=>a+(r.reports||0),0);
+ const zero=on.filter(r=>!r.reports).length;
+ $("tally").innerHTML="<b>"+f(t)+"</b> reports across "+on.length+" selected code"+
+  (on.length===1?"":"s")+
+  (zero?" · "+zero+" selected code"+(zero===1?"":"s")+" has no reports in this window":"");
+ $("runBtn").disabled=!on.length||!t;
+}
+$("qbtn2").onclick=()=>doSearch("q2","qres2",async(b,code)=>{
+ b.dataset.added="1";
+ const meta=b.querySelector(".meta");
+ const was=meta.innerHTML;meta.textContent="counting…";
+ try{
+  const m=await classify(code);
+  if(!m){meta.textContent="not found";return;}
+  m.reports=await total("device.device_report_product_code:"+code+" AND date_received:["+
+   compact(CFG.dfrom)+" TO "+compact(CFG.dto)+"]");
+  m.origin="added by hand";
+  const ex=SCOPE_ROWS.find(x=>x.code===code);
+  if(ex){ex.use=true;} else {m.use=true;SCOPE_ROWS.push(m);}
+  drawScope();
+  meta.innerHTML=was+"<br>added";
+ }catch(e){meta.textContent="failed";}
+});
+$("q2").addEventListener("keydown",e=>{
+ if(e.key==="Enter"){e.preventDefault();$("qbtn2").click();}});
+$("backBtn").onclick=()=>show("viewForm");
+
+/* run */
+$("runBtn").onclick=async()=>{
+ const on=SCOPE_ROWS.filter(r=>r.use);
+ if(!on.length) return;
+ STATE={cancelled:false,requests:0,t0:Date.now()};
+ $("log").textContent="starting…";
+ $("runTitle").textContent="Running analysis";
+ $("runSub").textContent="Querying openFDA. This can take a few minutes for a wide scope — "+
+  "each failure mode needs its own crosstab.";
+ show("viewRun");
+ try{
+  RESULT=await analyse({codes:on.map(r=>r.code),dfrom:CFG.dfrom,dto:CFG.dto,topn:CFG.topn,
+   scopeRows:on,warnings:SCOPE_WARN},logLine);
+  renderDash(RESULT,CFG.label||("MAUDE Signal Register — "+on.slice(0,4).map(r=>r.code).join(", ")));
+  show("viewDash");
+ }catch(e){
+  if(e.message==="cancelled"){show("viewScope");return;}
+  $("log").textContent+="\n\nSTOPPED: "+e.message;
+  $("runSub").textContent="The run stopped.";
+ }
+};
+$("cancelBtn").onclick=()=>{STATE.cancelled=true;};
+$("newRunBtn").onclick=()=>show("viewForm");
+
+/* downloads */
+function download(name,text,type){
+ const b=new Blob([text],{type});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(b);a.download=name;a.click();
+ setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+$("saveBtn").onclick=()=>{
+ if(!RESULT) return;
+ const css=document.querySelector("style").textContent;
+ const title=CFG.label||("MAUDE Signal Register — "+RESULT.codes.join(", "));
+ const html='<!doctype html><html lang="en"><head><meta charset="utf-8">'+
+  '<meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+
+  '</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?'+
+  'family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700'+
+  '&display=swap"><style>'+css+'</style></head><body>'+$("dash").innerHTML+
+  '<footer class="wrap">openFDA MAUDE · generated '+esc(RESULT.generated)+' · window '+
+  esc(RESULT.date_from)+' → '+esc(RESULT.date_to)+' · '+f(RESULT.total)+
+  ' reports<br>Static snapshot — the sort control and row expanders are inactive in this '+
+  'saved copy. Aggregate counts only; no personal data.</footer></body></html>';
+ download("maude-"+RESULT.codes.slice(0,3).join("-")+"-"+RESULT.date_from+".html",
+  html,"text/html");
+};
+$("saveJsonBtn").onclick=()=>{
+ if(!RESULT) return;
+ download("maude-"+RESULT.codes.slice(0,3).join("-")+"-"+RESULT.date_from+".json",
+  JSON.stringify(RESULT,null,1),"application/json");
+};
+</script>
+</body>
+</html>
